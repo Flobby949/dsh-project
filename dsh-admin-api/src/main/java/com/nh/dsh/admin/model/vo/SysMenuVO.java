@@ -1,7 +1,9 @@
 package com.nh.dsh.admin.model.vo;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.nh.dsh.admin.common.model.TreeNode;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.nh.dsh.admin.serializer.MenuSerializer;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -53,5 +55,9 @@ public class SysMenuVO extends TreeNode<SysMenuVO> {
     @Schema(description = "父级菜单名称")
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private String parentName;
+
+    @Schema(description = "是否显示")
+    @JsonSerialize(using = MenuSerializer.class)
+    private Integer hide;
 
 }

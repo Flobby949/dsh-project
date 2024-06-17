@@ -13,7 +13,7 @@
         </collection>
     </resultMap>
 
-    <select id="getRolePage" resultMap="SysRoleVOMap">
+    <select id="getRoleList" resultMap="SysRoleVOMap">
         select sr.*,srm.menu_id as menuId from sys_role sr
         left join sys_role_menu srm on sr.pk_id = srm.role_id and srm.delete_flag = 0
         where sr.delete_flag = 0

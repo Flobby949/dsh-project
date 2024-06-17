@@ -12,6 +12,7 @@ import com.nh.dsh.admin.service.SysManagerRoleService;
 import com.nh.dsh.admin.service.SysRoleMenuService;
 import com.nh.dsh.admin.service.SysRoleService;
 import com.nh.dsh.admin.model.vo.SysRoleVO;
+import com.nh.dsh.admin.utils.PageUtil;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -26,9 +27,9 @@ public class SysRoleServiceImpl extends BaseServiceImpl<SysRoleMapper, SysRole> 
 
     @Override
     public PageResult<SysRoleVO> page(SysRoleQuery query) {
-        Page<SysRoleVO> page = new Page<>(query.getPage(),query.getLimit());
-        List<SysRoleVO> list = baseMapper.getRolePage(page, query);
-        return new PageResult<>(list, page.getTotal());
+        List<SysRoleVO> list = baseMapper.getRoleList(query);
+        Page<SysRoleVO> page = PageUtil.getPages(query.getPage(), query.getLimit(), list);
+        return new PageResult<>(page.getRecords(), page.getTotal());
     }
 
     @Override
