@@ -15,6 +15,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
@@ -95,5 +96,12 @@ public class BookController {
     public Result<String> saveResource(@RequestBody List<Integer> ids) {
         bookResourceService.deleteInBatch(ids);
         return Result.ok();
+    }
+
+    @PostMapping("resource/download")
+    @Operation(summary = "下载资源")
+    @PreAuthorize("hasAuthority('sys:book:view')")
+    public ResponseEntity<byte[]> downloadResourcesQrCode(@RequestParam(name = "bookId") Integer bookId) {
+        return bookResourceService.downloadResourcesQrCode(bookId);
     }
 }

@@ -6,6 +6,7 @@ import com.nh.dsh.admin.model.dto.BookResourceDTO;
 import com.nh.dsh.admin.model.entity.BookResourceEntity;
 import com.nh.dsh.admin.model.query.BookResourceQuery;
 import com.nh.dsh.admin.model.vo.BookResourceVO;
+import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 
@@ -25,4 +26,6 @@ public interface BookResourceService extends IService<BookResourceEntity> {
     void deleteInBatch(List<Integer> ids);
 
     PageResult<BookResourceVO> page(BookResourceQuery query);
+
+    ResponseEntity<byte[]> downloadResourcesQrCode(int bookId);
 }

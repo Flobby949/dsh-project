@@ -73,6 +73,9 @@ public class BookDTO {
     @Schema(description = "书本简介")
     private String bookIntroduction;
 
+    @Schema(description = "论坛链接")
+    private String forumLink;
+
     @Schema(description = "书本封面")
     @NotBlank(message = "书本封面不能为空")
     private String bookCover;

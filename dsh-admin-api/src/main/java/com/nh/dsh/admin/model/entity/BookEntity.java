@@ -68,6 +68,9 @@ public class BookEntity {
     @Schema(description = "书本简介")
     private String bookIntroduction;
 
+    @Schema(description = "论坛链接")
+    private String forumLink;
+
     @Schema(description = "书本封面")
     private String bookCover;
 
