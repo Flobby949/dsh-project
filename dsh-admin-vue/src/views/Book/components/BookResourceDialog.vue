@@ -1,0 +1,132 @@
+<template>
+  <Dialog :model-value="dialogVisible" :title="dialogProps.title" :fullscreen="dialogProps.fullscreen" :cancel-dialog="cancelDialog">
+    <div class="el-dialog__body">
+      <ProTable rowKey="id" ref="proTable" title="书籍资源列表" :columns="columns" :requestApi="getTableList" :dataCallback="dataCallback">
+        <!-- 表格 header 按钮 -->
+        <template #tableHeader>
+          <el-button type="primary" :icon="CirclePlus" @click="openDrawer('新增')" v-hasPermi="['sys:book:add']">新增资源</el-button>
+        </template>
+        <!-- 表格操作 -->
+        <template #operation="scope">
+          <!-- <el-button type="primary" link :icon="List">资源码</el-button> -->
+          <!-- <el-button type="primary" link :icon="Grid" @click="showQrCode(scope.row)">二维码</el-button> -->
+          <el-button type="primary" link :icon="Edit" @click="openDrawer('编辑', scope.row)">编辑</el-button>
+        </template>
+      </ProTable>
+    </div>
+  </Dialog>
+  <BookResourceEditDialog ref="dialogRef" />
+</template>
+
+<script setup lang="tsx">
+import { Dialog } from '@/components/Dialog'
+import { ref } from 'vue'
+import { BookResourceApi } from '@/api/modules/book'
+import { ColumnProps } from '@/components/ProTable/interface'
+import { Edit, CirclePlus } from '@element-plus/icons-vue'
+import ProTable from '@/components/ProTable/index.vue'
+import BookResourceEditDialog from './BookResourceEditDialog.vue'
+
+// 定义弹出框类型
+interface DialogProps {
+  title: string
+  isView: boolean
+  fullscreen?: boolean
+  row: any
+  labelWidth?: number
+  maxHeight?: number | string
+  api?: (params: any) => Promise<any>
+  getTableList?: () => Promise<any>
+}
+// 弹出框是否显示
+const dialogVisible = ref(false)
+// 弹出框属性
+const dialogProps = ref<DialogProps>({
+  isView: false,
+  title: '',
+  row: {},
+  labelWidth: 160,
+  fullscreen: true,
+  maxHeight: '80vh'
+})
+
+// 接收父组件传过来的参数
+const acceptParams = async (params: DialogProps) => {
+  params.row = { ...dialogProps.value.row, ...params.row }
+  dialogProps.value = { ...dialogProps.value, ...params }
+  dialogVisible.value = true
+}
+
+defineExpose({
+  acceptParams
+})
+
+// 关闭弹框
+const cancelDialog = () => {
+  dialogVisible.value = false
+}
+
+// 获取 ProTable 元素，调用其获取刷新数据方法（还能获取到当前查询参数，方便导出携带参数）
+const proTable = ref()
+
+// dataCallback 是对于返回的表格数据做处理，如果你后台返回的数据不是 list && total 这些字段，那么你可以在这里进行处理成这些字段
+const dataCallback = (data: any) => {
+  return {
+    list: data.list,
+    total: data.total
+  }
+}
+
+const getTableList = (params: any) => {
+  params.bookId = dialogProps.value.row.id
+  return BookResourceApi.page(params)
+}
+
+const columns: ColumnProps[] = [
+  { type: 'selection', fixed: 'left', width: 60 },
+  //   {
+  //     prop: 'bookCover',
+  //     label: '封面',
+  //     width: 150,
+  //     render: (scope) => {
+  //       return (
+  //         <div class={['flex', 'justify-center', 'p-1']}>
+  //           <el-avatar shape={'square'} size={100} src={scope.row.bookCover} />
+  //         </div>
+  //       )
+  //     }
+  //   },
+  {
+    prop: 'resourceName',
+    label: '资源名',
+    width: 280
+  },
+  {
+    prop: 'link',
+    label: '链接',
+    width: 350
+  },
+  { prop: 'operation', label: '操作', fixed: 'right', width: 300 }
+]
+
+const dialogRef = ref()
+const openDrawer = (title: string, row = {}) => {
+  console.log('row', row)
+  let params = {
+    title,
+    row: { ...row, bookId: dialogProps.value.row.id },
+    isView: title === '查看',
+    api: title === '编辑' ? BookResourceApi.edit : BookResourceApi.add,
+    getTableList: proTable.value.getTableList,
+    maxHeight: '500px'
+  }
+  dialogRef.value.acceptParams(params)
+}
+</script>
+
+<style scoped lang="less">
+.el-dialog__body {
+  height: 50vh;
+  overflow: auto;
+}
+</style>

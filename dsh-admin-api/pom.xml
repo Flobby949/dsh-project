@@ -28,6 +28,7 @@
         <easytrans.version>3.0.2</easytrans.version>
         <commons-fileupload.version>2.0.0-M1</commons-fileupload.version>
         <aliyun-sdk-oss.version>3.17.4</aliyun-sdk-oss.version>
+        <minio.version>8.5.10</minio.version>
     </properties>
 
     <dependencies>
@@ -151,19 +152,20 @@
             <version>${captcha.version}</version>
         </dependency>
 
-        <!-- aliyun OSS -->
-        <dependency>
-            <groupId>com.aliyun.oss</groupId>
-            <artifactId>aliyun-sdk-oss</artifactId>
-            <version>${aliyun-sdk-oss.version}</version>
-        </dependency>
-
         <!--file upload-->
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-fileupload2-jakarta</artifactId>
             <version>${commons-fileupload.version}</version>
         </dependency>
+
+        <!-- https://mvnrepository.com/artifact/io.minio/minio -->
+        <dependency>
+            <groupId>io.minio</groupId>
+            <artifactId>minio</artifactId>
+            <version>${minio.version}</version>
+        </dependency>
+
 
     </dependencies>
 

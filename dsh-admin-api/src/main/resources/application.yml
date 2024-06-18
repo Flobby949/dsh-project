@@ -6,6 +6,10 @@ spring:
   mvc:
     path-match:
       matching-strategy: ant_path_matcher #解决
+  servlet:
+    multipart:
+      max-file-size: 10485760 # 上传文件大小限定为10M
+      max-request-size: 10485760
 
 mybatis-plus:
   mapper-locations: classpath:/mapper/*Mapper.xml
@@ -64,14 +68,11 @@ auth:
     - /swagger-ui/**
     - /doc.html
     - /
+    - /**/upload
 
-aliyun:
-  oss:
-    # oss对外服务的访问域名
-    endpoint: oss-cn-hangzhou.aliyuncs.com
-    # 访问身份验证中用到用户标识
-    accessKeyId: 你的accessKeyId
-    # 用户用于加密签名字符串和oss用来验证签名字符串的密钥
-    accessKeySecret: 你的accessKeySecret
-    # oss的存储空间
-    bucketName: 你的bucket
+
+minio:
+  host: http://106.15.104.19:9000/
+  access-key: admin123
+  secret-key: flobby529
+  bucket: dsh

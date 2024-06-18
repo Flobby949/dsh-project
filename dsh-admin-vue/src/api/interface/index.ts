@@ -115,8 +115,14 @@ export namespace SysMenu {
 
 // * 文件上传模块
 export namespace Upload {
+  export interface MinioUpload {
+    bucketName: string
+    file: FormData[]
+  }
+
   export interface ResFileUrl {
-    fileUrl: string
+    bucketName: string
+    urlList: string[]
   }
 }
 
@@ -136,4 +142,74 @@ export interface DictConfigRes {
   title: string
   updateTime: string
   value: number
+}
+
+export namespace Book {
+  export interface BookDTO {
+    id: number
+    bookName: string
+    isbn: string
+    classificationId: number
+    publishingHouse: string
+    translator: string
+    writer: string
+    price: number
+    pageNumber: number
+    bookStyle: string
+    publishDate: string
+    authorIntroduction: string
+    bookIntroduction: string
+    bookCover: string
+  }
+
+  export interface BookQuery extends ReqPage {
+    bookName: string
+  }
+
+  export interface BookVO {
+    id: number
+    bookName: string
+    isbn: string
+    classification?: string
+    classificationId?: number
+    publishingHouse: string
+    translator: string
+    writer: string
+    price: number
+    pageNumber: number
+    bookStyle: string
+    publishDate: string
+    authorIntroduction: string
+    bookIntroduction: string
+    bookCover: string
+    createTime: string
+  }
+}
+
+export namespace BookResource {
+  export interface BookResourceBO {
+    id: number
+    bookId: number
+    userId: number
+    link: string
+    resourceName: string
+  }
+  export interface BookResourceQuery extends ReqPage {
+    bookId: number
+  }
+}
+
+export namespace Category {
+  export interface CategoryDTO {
+    id: number
+    name: string
+    description: string
+  }
+  export interface CategoryVO {
+    id: number
+    name: string
+    description: string
+    createTime: string
+  }
+  export type CategoryQuery = ReqPage
 }

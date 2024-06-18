@@ -6,7 +6,7 @@ import http from '@/api'
  * @name 文件上传模块
  */
 // * 图片上传
-export const uploadImg = (params: FormData) => {
+export const uploadImg = (params: Upload.MinioUpload) => {
   return http.post<Upload.ResFileUrl>(_API + `/common/upload/img`, params, {
     headers: { 'Content-Type': 'multipart/form-data' }
   })
