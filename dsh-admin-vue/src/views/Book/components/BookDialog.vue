@@ -48,6 +48,9 @@
         <el-form-item label="书本简介" prop="bookIntroduction">
           <el-input v-model="dialogProps.row!.bookIntroduction" style="width: 240px" :autosize="{ minRows: 2 }" type="textarea" placeholder="请输入书本简介" clearable />
         </el-form-item>
+        <el-form-item label="论坛链接" prop="forumLink">
+          <el-input v-model="dialogProps.row!.forumLink" placeholder="" clearable></el-input>
+        </el-form-item>
         <el-form-item label="书籍封面" prop="bookCover">
           <UploadImg v-model:image-url="dialogProps.row!.bookCover" width="135px" height="135px" :file-size="5">
             <template #empty>

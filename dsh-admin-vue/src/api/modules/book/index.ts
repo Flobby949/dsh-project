@@ -16,5 +16,13 @@ export const BookResourceApi = {
   page: (params: BookResource.BookResourceQuery) => http.post<ResPage<BookResource.BookResourceBO>>(_API + '/book/resource/page', params),
   add: (params: any) => http.post(_API + '/book/resource/save', params),
   remove: (params: number[]) => http.post(_API + '/book/resource/delete', params),
-  edit: (params: any) => http.post(_API + '/book/resource/update', params)
+  edit: (params: any) => http.post(_API + '/book/resource/update', params),
+  download: (bookId: number) =>
+    http.post(
+      _API + `/book/resource/download?bookId=${bookId}`,
+      {},
+      {
+        responseType: 'blob'
+      }
+    )
 }

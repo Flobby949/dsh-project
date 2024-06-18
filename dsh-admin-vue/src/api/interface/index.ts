@@ -160,6 +160,7 @@ export namespace Book {
     authorIntroduction: string
     bookIntroduction: string
     bookCover: string
+    forumLink: string
   }
 
   export interface BookQuery extends ReqPage {
@@ -182,6 +183,7 @@ export namespace Book {
     authorIntroduction: string
     bookIntroduction: string
     bookCover: string
+    forumLink: string
     createTime: string
   }
 }

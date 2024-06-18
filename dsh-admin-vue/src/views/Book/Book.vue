@@ -23,7 +23,12 @@
     </ProTable>
     <BookDialog ref="dialogRef" />
     <Dialog :model-value="showQrCodeFlag" title="书籍二维码" :cancel-dialog="cancelDialog">
-      <img :src="qrcode" />
+      <el-image :src="qrcode" width="500"></el-image>
+      <template #footer>
+        <slot name="footer">
+          <el-button type="primary" v-loading.fullscreen.lock="fullscreenLoading" @click="downloadQrCode">下载</el-button>
+        </slot>
+      </template>
     </Dialog>
     <BookResourceDialog ref="bookResourceDialog" />
   </div>
@@ -130,13 +135,27 @@ const openDrawer = (title: string, row = {}) => {
 }
 
 let qrcode
+const qrRow = ref()
+const fullscreenLoading = ref(false)
 const showQrCodeFlag = ref(false)
 const showQrCode = (row = {}) => {
-  qrcode = useQRCode(JSON.stringify(row))
+  qrcode = useQRCode(row.forumLink)
   showQrCodeFlag.value = true
+  qrRow.value = row
 }
 const cancelDialog = () => {
   showQrCodeFlag.value = false
+}
+
+const downloadQrCode = () => {
+  fullscreenLoading.value = true
+  setTimeout(() => {
+    fullscreenLoading.value = false
+  }, 1500)
+  let a = document.createElement('a')
+  a.href = qrcode.value
+  a.setAttribute('download', qrRow.value.isbn)
+  a.click()
 }
 
 const bookResourceDialog = ref()

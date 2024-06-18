@@ -5,10 +5,10 @@ import { ElNotification } from 'element-plus'
  * @param {String} tempName 导出的文件名(必传)
  * @param {Object} params 导出的参数(默认为空对象)
  * @param {Boolean} isNotify 是否有导出消息提示(默认为 true)
- * @param {String} fileType 导出的文件格式(默认为.xlsx)
+ * @param {String} fileType 导出的文件格式
  * @return void
  * */
-export const useDownload = async (api: (param: any) => Promise<any>, tempName: string, params: any = {}, isNotify: boolean = true, fileType: string = '.xls') => {
+export const useDownload = async (api: (param: any) => Promise<any>, tempName: string, params: any = {}, isNotify: boolean = true, fileType: string = '.zip') => {
   if (isNotify) {
     ElNotification({
       title: '温馨提示',
@@ -23,7 +23,7 @@ export const useDownload = async (api: (param: any) => Promise<any>, tempName: s
     // const blob = new Blob([res], {
     //   type: 'application/vnd.ms-excel'
     // })
-    const blob = new Blob([res])
+    const blob = new Blob([res], { type: 'application/zip' })
     // 兼容edge不支持createObjectURL方法
     if ('msSaveOrOpenBlob' in navigator) return window.navigator.msSaveOrOpenBlob(blob, tempName + fileType)
     const blobUrl = window.URL.createObjectURL(blob)

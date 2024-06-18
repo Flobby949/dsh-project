@@ -5,15 +5,24 @@
         <!-- 表格 header 按钮 -->
         <template #tableHeader>
           <el-button type="primary" :icon="CirclePlus" @click="openDrawer('新增')" v-hasPermi="['sys:book:add']">新增资源</el-button>
+          <el-button type="primary" :icon="Download" @click="downloadFile" v-hasPermi="['sys:book:view']">下载资源</el-button>
         </template>
         <!-- 表格操作 -->
         <template #operation="scope">
           <!-- <el-button type="primary" link :icon="List">资源码</el-button> -->
-          <!-- <el-button type="primary" link :icon="Grid" @click="showQrCode(scope.row)">二维码</el-button> -->
+          <el-button type="primary" link :icon="Grid" @click="showQrCode(scope.row)">二维码</el-button>
           <el-button type="primary" link :icon="Edit" @click="openDrawer('编辑', scope.row)">编辑</el-button>
         </template>
       </ProTable>
     </div>
+  </Dialog>
+  <Dialog :model-value="showQrCodeFlag" title="资源二维码" :cancel-dialog="cancelResourceDialog">
+    <el-image :src="qrcode"></el-image>
+    <template #footer>
+      <slot name="footer">
+        <el-button type="primary" v-loading.fullscreen.lock="fullscreenLoading" @click="downloadQrCode">下载</el-button>
+      </slot>
+    </template>
   </Dialog>
   <BookResourceEditDialog ref="dialogRef" />
 </template>
@@ -23,9 +32,12 @@ import { Dialog } from '@/components/Dialog'
 import { ref } from 'vue'
 import { BookResourceApi } from '@/api/modules/book'
 import { ColumnProps } from '@/components/ProTable/interface'
-import { Edit, CirclePlus } from '@element-plus/icons-vue'
+import { Edit, CirclePlus, Grid, Download } from '@element-plus/icons-vue'
 import ProTable from '@/components/ProTable/index.vue'
 import BookResourceEditDialog from './BookResourceEditDialog.vue'
+import { useQRCode } from '@vueuse/integrations/useQRCode'
+import { useDownload } from '@/hooks/useDownload'
+import { ElMessageBox } from 'element-plus'
 
 // 定义弹出框类型
 interface DialogProps {
@@ -84,22 +96,10 @@ const getTableList = (params: any) => {
 
 const columns: ColumnProps[] = [
   { type: 'selection', fixed: 'left', width: 60 },
-  //   {
-  //     prop: 'bookCover',
-  //     label: '封面',
-  //     width: 150,
-  //     render: (scope) => {
-  //       return (
-  //         <div class={['flex', 'justify-center', 'p-1']}>
-  //           <el-avatar shape={'square'} size={100} src={scope.row.bookCover} />
-  //         </div>
-  //       )
-  //     }
-  //   },
   {
     prop: 'resourceName',
     label: '资源名',
-    width: 280
+    width: 180
   },
   {
     prop: 'link',
@@ -121,6 +121,34 @@ const openDrawer = (title: string, row = {}) => {
     maxHeight: '500px'
   }
   dialogRef.value.acceptParams(params)
+}
+
+let qrcode
+const showQrCodeFlag = ref(false)
+const showQrCode = (row = {}) => {
+  qrcode = useQRCode(row.link)
+  qrRow.value = row
+  showQrCodeFlag.value = true
+}
+const fullscreenLoading = ref(false)
+const qrRow = ref()
+const downloadQrCode = () => {
+  fullscreenLoading.value = true
+  setTimeout(() => {
+    fullscreenLoading.value = false
+  }, 1500)
+  let a = document.createElement('a')
+  a.href = qrcode.value
+  a.setAttribute('download', qrRow.value.resourceName)
+  a.click()
+}
+
+const cancelResourceDialog = () => {
+  showQrCodeFlag.value = false
+}
+
+const downloadFile = async () => {
+  ElMessageBox.confirm('确认下载全部资源?', '温馨提示', { type: 'warning' }).then(() => useDownload(BookResourceApi.download, '资源二维码', dialogProps.value.row.id, true, '.zip'))
 }
 </script>
 
