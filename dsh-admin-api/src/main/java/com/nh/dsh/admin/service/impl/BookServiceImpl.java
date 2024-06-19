@@ -56,6 +56,8 @@ public class BookServiceImpl extends BaseServiceImpl<BookMapper, BookEntity> imp
         Page<BookEntity> entityPage = getPage(query);
         LambdaQueryWrapper<BookEntity> wrapper = new LambdaQueryWrapper<BookEntity>()
                 .like(StringUtils.isNotBlank(query.getBookName()), BookEntity::getBookName, "%" + query.getBookName() + "%")
+                .like(StringUtils.isNotBlank(query.getWriter()), BookEntity::getWriter, "%" + query.getWriter() + "%")
+                .like(StringUtils.isNotBlank(query.getIsbn()), BookEntity::getIsbn, "%" + query.getIsbn() + "%")
                 .orderByDesc(BookEntity::getCreateTime);
         Page<BookEntity> pageResult = baseMapper.selectPage(entityPage, wrapper);
         List<BookVO> collectList = pageResult.getRecords().stream().map(item -> {

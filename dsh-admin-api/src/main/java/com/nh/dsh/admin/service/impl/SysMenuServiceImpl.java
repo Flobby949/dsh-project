@@ -119,7 +119,7 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
             throw new ServerException("上级菜单不能为自己");
         }
         // 更新菜单
-        updateById(entity);
+        baseMapper.updateById(entity);
     }
 
     @Override

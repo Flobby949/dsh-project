@@ -1,13 +1,13 @@
 package com.nh.dsh.admin.model.entity;
 
 import com.baomidou.mybatisplus.annotation.*;
-import com.nh.dsh.admin.serializer.MenuSerializer;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.nh.dsh.admin.serializer.MenuSerializer;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.time.LocalDateTime;
+import java.util.Date;
 
 @Getter
 @Setter
@@ -107,12 +107,12 @@ public class SysMenu {
      * 创建时间
      */
     @TableField(value = "create_time", fill = FieldFill.INSERT)
-    private LocalDateTime createTime;
+    private Date createTime;
 
 
     /**
      * 更新时间
      */
     @TableField(value = "update_time", fill = FieldFill.INSERT_UPDATE)
-    private LocalDateTime updateTime;
+    private Date updateTime;
 }

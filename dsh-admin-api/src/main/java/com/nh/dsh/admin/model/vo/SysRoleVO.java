@@ -1,15 +1,14 @@
 package com.nh.dsh.admin.model.vo;
 
-import com.nh.dsh.admin.utils.DateUtils;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.nh.dsh.admin.utils.DateUtils;
 import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.Data;
-
 import jakarta.validation.constraints.NotBlank;
+import lombok.Data;
 
 import java.io.Serial;
 import java.io.Serializable;
-import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 
 @Data
@@ -33,6 +32,6 @@ public class SysRoleVO implements Serializable {
 
     @Schema(description = "创建时间")
     @JsonFormat(pattern = DateUtils.DATE_TIME_PATTERN)
-    private LocalDateTime createTime;
+    private Date createTime;
 
 }
