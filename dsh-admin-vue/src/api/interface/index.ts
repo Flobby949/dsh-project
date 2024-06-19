@@ -215,3 +215,15 @@ export namespace Category {
   }
   export type CategoryQuery = ReqPage
 }
+
+export namespace Feedback {
+  export type FeedbackQuery = ReqPage
+  export interface FeedbackVO {
+    id: number
+    userId: number
+    username: string
+    content: string
+    img?: string
+    createTime: string
+  }
+}

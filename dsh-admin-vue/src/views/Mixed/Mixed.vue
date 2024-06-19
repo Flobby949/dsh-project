@@ -10,27 +10,7 @@
       :dataCallback="dataCallback"
       :searchCol="{ xs: 1, sm: 2, md: 3, lg: 4, xl: 4 }"
     >
-      <!-- 表格 header 按钮 -->
-      <template #tableHeader>
-        <el-button type="primary" :icon="CirclePlus" @click="openDrawer('新增')" v-hasPermi="['sys:manager:add']">新增书籍</el-button>
-      </template>
-      <!-- 表格操作 -->
-      <template #operation="scope">
-        <el-button type="primary" link :icon="List" @click="openBookResourceDialog(scope.row)">资源码</el-button>
-        <el-button type="primary" link :icon="Grid" @click="showQrCode(scope.row)">二维码</el-button>
-        <el-button type="primary" link :icon="Edit" @click="openDrawer('编辑', scope.row)">编辑</el-button>
-      </template>
     </ProTable>
-    <BookDialog ref="dialogRef" />
-    <Dialog :model-value="showQrCodeFlag" title="书籍二维码" :cancel-dialog="cancelDialog">
-      <el-image :src="qrcode" width="500"></el-image>
-      <template #footer>
-        <slot name="footer">
-          <el-button type="primary" v-loading.fullscreen.lock="fullscreenLoading" @click="downloadQrCode">下载</el-button>
-        </slot>
-      </template>
-    </Dialog>
-    <BookResourceDialog ref="bookResourceDialog" />
   </div>
 </template>
 
@@ -38,13 +18,7 @@
 import { ref, reactive } from 'vue'
 import { ColumnProps } from '@/components/ProTable/interface'
 import ProTable from '@/components/ProTable/index.vue'
-import BookDialog from './components/BookDialog.vue'
-import { Edit, CirclePlus, Grid, List } from '@element-plus/icons-vue'
 import { BookApi } from '@/api/modules/book'
-import { useQRCode } from '@vueuse/integrations/useQRCode'
-import { Dialog } from '@/components/Dialog'
-import { Book } from '@/api/interface'
-import BookResourceDialog from './components/BookResourceDialog.vue'
 
 // 获取 ProTable 元素，调用其获取刷新数据方法（还能获取到当前查询参数，方便导出携带参数）
 const proTable = ref()
@@ -115,54 +89,4 @@ const columns: ColumnProps[] = [
   },
   { prop: 'operation', label: '操作', fixed: 'right', width: 240 }
 ]
-
-// 打开 drawer(新增、查看、编辑)
-const dialogRef = ref()
-const openDrawer = (title: string, row = {}) => {
-  let params = {
-    title,
-    row: { ...row },
-    isView: title === '查看',
-    api: title === '编辑' ? BookApi.edit : BookApi.add,
-    getTableList: proTable.value.getTableList,
-    maxHeight: '500px'
-  }
-  dialogRef.value.acceptParams(params)
-}
-
-let qrcode
-const qrRow = ref()
-const fullscreenLoading = ref(false)
-const showQrCodeFlag = ref(false)
-const showQrCode = (row = {}) => {
-  qrcode = useQRCode(row.forumLink)
-  showQrCodeFlag.value = true
-  qrRow.value = row
-}
-const cancelDialog = () => {
-  showQrCodeFlag.value = false
-}
-
-const downloadQrCode = () => {
-  fullscreenLoading.value = true
-  setTimeout(() => {
-    fullscreenLoading.value = false
-  }, 1500)
-  let a = document.createElement('a')
-  a.href = qrcode.value
-  a.setAttribute('download', qrRow.value.isbn)
-  a.click()
-}
-
-const bookResourceDialog = ref()
-const openBookResourceDialog = (row: Book.BookVO) => {
-  // 合并对应属性
-  let params = {
-    title: row.bookName,
-    row: { ...row },
-    maxHeight: '400px'
-  }
-  // 打开弹框
-  bookResourceDialog.value.acceptParams(params)
-}
 </script>
