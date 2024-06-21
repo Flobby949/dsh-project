@@ -101,7 +101,8 @@ const dialogProps = ref<DialogProps>({
 // 获取分类列表
 const classificationList = ref()
 const getClassificationList = async () => {
-  classificationList.value = await CategoryApi.list()
+  const res = await CategoryApi.list()
+  classificationList.value = res.data
 }
 
 onMounted(() => {

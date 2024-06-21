@@ -7,6 +7,7 @@ import { Book, ResPage, BookResource } from '@/api/interface/index'
  */
 export const BookApi = {
   page: (params: Book.BookQuery) => http.post<ResPage<Book.BookVO>>(_API + '/book/page', params),
+  list: () => http.post<ResPage<Book.BookVO>>(_API + '/book/list'),
   add: (params: any) => http.post(_API + '/book/save', params),
   remove: (params: number[]) => http.post(_API + '/book/delete', params),
   edit: (params: any) => http.post(_API + '/book/update', params)

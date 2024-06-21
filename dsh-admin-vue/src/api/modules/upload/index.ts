@@ -16,3 +16,10 @@ export const uploadImg = (params: Upload.MinioUpload) => {
 export const uploadVideo = (params: FormData) => {
   return http.post<Upload.ResFileUrl>(_API + `/file/upload/video`, params)
 }
+
+// * 语音上传
+export const uploadVoice = (params: Upload.MinioUpload) => {
+  return http.post<Upload.ResFileUrl>(_API + `/common/upload/voice`, params, {
+    headers: { 'Content-Type': 'multipart/form-data' }
+  })
+}

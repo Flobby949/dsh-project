@@ -4,6 +4,7 @@ import com.nh.dsh.admin.model.dto.BookDTO;
 import com.nh.dsh.admin.model.entity.BookEntity;
 import com.nh.dsh.admin.model.vo.BookVO;
 import org.mapstruct.Mapper;
+import org.mapstruct.ReportingPolicy;
 import org.mapstruct.factory.Mappers;
 
 import java.util.List;

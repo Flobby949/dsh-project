@@ -8,6 +8,7 @@ import com.nh.dsh.admin.model.query.UserQuery;
 import com.nh.dsh.admin.model.vo.UserVO;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author : Flobby
@@ -25,4 +26,6 @@ public interface UserService extends IService<UserEntity> {
     void deleteInBatch(List<Integer> ids);
 
     PageResult<UserVO> page(UserQuery query);
+
+    List<Map<String, Object>> selectedList();
 }

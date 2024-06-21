@@ -65,6 +65,12 @@ public class BookController {
         return Result.ok();
     }
 
+    @PostMapping("list")
+    @PreAuthorize("hasAuthority('sys:book:view')")
+    public Result<List<BookVO>> page() {
+        return Result.ok(bookService.selectedList());
+    }
+
     @PostMapping("resource/save")
     @Operation(summary = "新增资源")
     @PreAuthorize("hasAuthority('sys:book:add')")

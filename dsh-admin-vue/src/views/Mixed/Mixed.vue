@@ -1,24 +1,32 @@
 <template>
   <div class="table-box">
-    <ProTable
-      rowKey="id"
-      ref="proTable"
-      title="书籍列表"
-      :columns="columns"
-      :requestApi="getTableList"
-      :initParam="initParam"
-      :dataCallback="dataCallback"
-      :searchCol="{ xs: 1, sm: 2, md: 3, lg: 4, xl: 4 }"
-    >
+    <ProTable rowKey="id" ref="proTable" title="融合管理" :columns="columns" :requestApi="getTableList" :initParam="initParam" :dataCallback="dataCallback">
+      <!-- 表格 header 按钮 -->
+      <template #tableHeader>
+        <el-button type="primary" :icon="CirclePlus" @click="openDrawer('新增')" v-hasPermi="['sys:manager:add']">新建圈子</el-button>
+      </template>
+      <!-- 表格操作 -->
+      <template #operation="scope">
+        <el-button type="primary" link @click="showDetail(scope.row)">查看</el-button>
+        <el-button type="primary" link @click="openDrawer('编辑', scope.row)">编辑</el-button>
+        <el-button type="primary" link @click="showNotice(scope.row)">公告</el-button>
+      </template>
     </ProTable>
+    <forum-edit-dialog ref="editDialogRef" />
+    <forum-dialog ref="detailDialogRef" />
+    <NoticeListDialog ref="noticeDialogRef" />
   </div>
 </template>
 
 <script setup lang="tsx" name="Book">
 import { ref, reactive } from 'vue'
+import { CirclePlus } from '@element-plus/icons-vue'
 import { ColumnProps } from '@/components/ProTable/interface'
 import ProTable from '@/components/ProTable/index.vue'
-import { BookApi } from '@/api/modules/book'
+import { MixedApi } from '@/api/modules/mixed'
+import forumEditDialog from './components/ForumEditDialog.vue'
+import forumDialog from './components/ForumDialog.vue'
+import NoticeListDialog from './components/NoticeListDialog.vue'
 
 // 获取 ProTable 元素，调用其获取刷新数据方法（还能获取到当前查询参数，方便导出携带参数）
 const proTable = ref()
@@ -35,53 +43,56 @@ const dataCallback = (data: any) => {
 
 // 默认不做操作就直接在 ProTable 组件上绑定	:requestApi="getUserList"
 const getTableList = (params: any) => {
-  return BookApi.page(params)
+  return MixedApi.page(params)
 }
 
 // 表格配置项
 const columns: ColumnProps[] = [
   { type: 'selection', fixed: 'left', width: 60 },
   {
-    prop: 'bookCover',
+    prop: 'cover',
     label: '封面',
     width: 150,
     render: (scope) => {
       return (
         <div class={['flex', 'justify-center', 'p-1']}>
-          <el-avatar shape={'square'} size={100} src={scope.row.bookCover} />
+          <el-avatar shape={'square'} size={100} src={scope.row.cover} />
         </div>
       )
     }
   },
   {
-    prop: 'bookName',
-    label: '书名',
+    prop: 'avatar',
+    label: '头像',
     width: 150,
-    search: { el: 'input' }
+    render: (scope) => {
+      return (
+        <div class={['flex', 'justify-center', 'p-1']}>
+          <el-avatar shape={'square'} size={100} src={scope.row.avatar} />
+        </div>
+      )
+    }
   },
-  { prop: 'isbn', label: 'ISBN号', width: 150, search: { el: 'input' } },
   {
-    prop: 'classification',
-    label: '分类',
-    width: 100
+    prop: 'name',
+    label: '论坛名',
+    width: 150,
+    search: { el: 'input', key: 'forumName' }
   },
-  { prop: 'publishingHouse', label: '出版社', width: 100 },
-  { prop: 'translator', label: '译者', width: 100 },
-  { prop: 'writer', label: '作者', width: 100, search: { el: 'input' } },
-  { prop: 'price', label: '价格', width: 70 },
-  { prop: 'pageNumber', label: '页数', width: 70 },
-  { prop: 'bookStyle', label: '装帧', width: 70 },
+  { prop: 'username', label: '圈主', width: 150, search: { el: 'input' } },
+  { prop: 'bookName', label: '书名', width: 150 },
+  { prop: 'categoryName', label: '类别', width: 150 },
   {
-    prop: 'publishDate',
-    label: '出版时间',
-    width: 150
-    // search: {
-    //   el: 'date-picker',
-    //   props: { type: 'datetime', format: 'YYYY-MM-DD', valueFormat: 'YYYY-MM-DD', placeholder: '请选择日期' }
-    // }
+    prop: 'voiceIntroduction',
+    label: '语音介绍',
+    width: 400,
+    render: (scope) => {
+      return <audio controls src={scope.row.voiceIntroduction} class={'audio-voice'}></audio>
+    }
   },
-  { prop: 'authorIntroduction', label: '作者简介', width: 150 },
-  { prop: 'bookIntroduction', label: '书本简介', width: 150 },
+  { prop: 'price', label: '作者答缺省价', width: 150 },
+  { prop: 'writerIntroduction', label: '作者简介', width: 300 },
+  { prop: 'userNumber', label: '参与人数', width: 100 },
   {
     prop: 'createTime',
     label: '创建时间',
@@ -89,4 +100,40 @@ const columns: ColumnProps[] = [
   },
   { prop: 'operation', label: '操作', fixed: 'right', width: 240 }
 ]
+
+// 打开 drawer(新增、查看、编辑)
+const editDialogRef = ref()
+const openDrawer = (title: string, row = {}) => {
+  let params = {
+    title,
+    row: { ...row },
+    isView: title === '查看',
+    api: title === '编辑' ? MixedApi.edit : MixedApi.add,
+    getTableList: proTable.value.getTableList,
+    maxHeight: '500px'
+  }
+  editDialogRef.value.acceptParams(params)
+}
+
+const detailDialogRef = ref()
+const showDetail = (row = {}) => {
+  let params = {
+    row: { ...row }
+  }
+  detailDialogRef.value.acceptParams(params)
+}
+
+const noticeDialogRef = ref()
+const showNotice = (row = {}) => {
+  let params = {
+    row: { ...row }
+  }
+  noticeDialogRef.value.acceptParams(params)
+}
 </script>
+
+<style scoped lang="less">
+:deep(audio) {
+  width: 100% !important;
+}
+</style>

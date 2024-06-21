@@ -32,7 +32,7 @@ public class Dict {
     private String description;
 
     @Schema(description = "0:未删除  1:已删除")
-    @TableField("delete_flag")
+    @TableField(value = "delete_flag", fill = FieldFill.INSERT)
     @TableLogic
     @JsonIgnore
     private Integer deleteFlag;

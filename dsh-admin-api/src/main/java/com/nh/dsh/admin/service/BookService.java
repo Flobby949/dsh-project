@@ -2,6 +2,7 @@ package com.nh.dsh.admin.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.nh.dsh.admin.common.result.PageResult;
+import com.nh.dsh.admin.convert.BookConvert;
 import com.nh.dsh.admin.model.dto.BookDTO;
 import com.nh.dsh.admin.model.entity.BookEntity;
 import com.nh.dsh.admin.model.query.BookQuery;
@@ -25,4 +26,8 @@ public interface BookService extends IService<BookEntity> {
     void deleteBookInBatch(List<Integer> ids);
 
     PageResult<BookVO> page(BookQuery query);
+
+    default List<BookVO> selectedList() {
+        return BookConvert.INSTANCE.convertList(list());
+    }
 }

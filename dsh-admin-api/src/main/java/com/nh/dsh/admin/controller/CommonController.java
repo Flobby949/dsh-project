@@ -28,8 +28,15 @@ public class CommonController {
     private final MinioUtils minioUtils;
 
     @PostMapping("upload/img")
-    @Operation(summary = "上传文件")
-    public Result<Map<String, Object>> uploadFiles(@RequestParam(defaultValue = "dsh") String bucketName,
+    @Operation(summary = "上传图片")
+    public Result<Map<String, Object>> uploadImg(@RequestParam(defaultValue = "dsh") String bucketName,
+                                   @RequestParam(name = "file", required = false) MultipartFile[] file) {
+        return Result.ok(minioUtils.uploadFile(bucketName, file));
+    }
+
+    @PostMapping("upload/voice")
+    @Operation(summary = "上传语音")
+    public Result<Map<String, Object>> uploadVoice(@RequestParam(defaultValue = "dsh") String bucketName,
                                    @RequestParam(name = "file", required = false) MultipartFile[] file) {
         return Result.ok(minioUtils.uploadFile(bucketName, file));
     }

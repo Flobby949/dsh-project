@@ -22,5 +22,7 @@ public interface BookResourceConvert {
 
     BookResourceEntity convert(BookResourceDTO dto);
 
+
+
     List<BookResourceVO> convertList(List<BookResourceEntity> list);
 }

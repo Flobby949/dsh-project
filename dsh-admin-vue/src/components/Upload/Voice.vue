@@ -1,63 +1,55 @@
 <template>
-  <div class="upload-box">
-    <el-upload
-      action="#"
-      :id="uuid"
-      :class="['upload', self_disabled ? 'disabled' : '', drag ? 'no-border' : '']"
-      :multiple="false"
-      :disabled="self_disabled"
-      :show-file-list="false"
-      :http-request="handleHttpUpload"
-      :before-upload="beforeUpload"
-      :on-success="uploadSuccess"
-      :on-error="uploadError"
-      :drag="drag"
-      :accept="fileType.join(',')"
-    >
-      <template v-if="imageUrl">
-        <img :src="imageUrl" class="upload-image" />
-        <div class="upload-handle" @click.stop>
-          <div class="handle-icon" @click="editImg" v-if="!self_disabled">
-            <el-icon><Edit /></el-icon>
-            <span>编辑</span>
+  <div class="audio-uplaod-bar">
+    <div class="upload-box">
+      <el-upload
+        action="#"
+        :id="uuid"
+        :class="['upload', self_disabled ? 'disabled' : '', drag ? 'no-border' : '']"
+        :multiple="false"
+        :disabled="self_disabled"
+        :show-file-list="false"
+        :http-request="handleHttpUpload"
+        :before-upload="beforeUpload"
+        :on-success="uploadSuccess"
+        :on-error="uploadError"
+        :drag="drag"
+        :accept="fileType.join(',')"
+      >
+        <template v-if="voiceUrl">
+          <audio controls="controls" :src="voiceUrl" class="upload-voice" style="width: 100%"></audio>
+        </template>
+        <template v-else>
+          <div class="upload-empty">
+            <slot name="empty">
+              <el-icon><Plus /></el-icon>
+            </slot>
           </div>
-          <div class="handle-icon" @click="imgViewVisible = true">
-            <el-icon><ZoomIn /></el-icon>
-            <span>查看</span>
-          </div>
-          <div class="handle-icon" @click="deleteImg" v-if="!self_disabled">
-            <el-icon><Delete /></el-icon>
-            <span>删除</span>
-          </div>
-        </div>
-      </template>
-      <template v-else>
-        <div class="upload-empty">
-          <slot name="empty">
-            <el-icon><Plus /></el-icon>
-            <!-- <span>请上传图片</span> -->
-          </slot>
-        </div>
-      </template>
-    </el-upload>
-    <div class="el-upload__tip">
-      <slot name="tip"></slot>
+        </template>
+      </el-upload>
+      <div class="el-upload__tip">
+        <slot name="tip"></slot>
+      </div>
     </div>
-    <el-image-viewer v-if="imgViewVisible" @close="imgViewVisible = false" :url-list="[imageUrl]" />
+    <div @click.stop>
+      <el-button type="danger" @click="deleteVoice" class="mx-4">删除文件</el-button>
+    </div>
   </div>
 </template>
 
 <script setup lang="ts" name="UploadImg">
 import { ref, computed, inject } from 'vue'
-import { uploadImg } from '@/api/modules/upload'
+import { uploadVoice } from '@/api/modules/upload'
 import { generateUUID } from '@/utils/util'
 import { ElNotification, formContextKey, formItemContextKey } from 'element-plus'
 import type { UploadProps, UploadRequestOptions } from 'element-plus'
 
-type FileTypes = 'image/apng' | 'image/bmp' | 'image/gif' | 'image/jpeg' | 'image/pjpeg' | 'image/png' | 'image/svg+xml' | 'image/tiff' | 'image/webp' | 'image/x-icon'
+type FileTypes =
+  | 'audio/mpeg' // MP3文件类型
+  | 'audio/wav' // WAV文件类型
+  | 'audio/ogg' // OGG文件类型
 
 interface UploadFileProps {
-  imageUrl: string // 图片地址 ==> 必传
+  voiceUrl: string // 图片地址 ==> 必传
   api?: (params: any) => Promise<any> // 上传图片的 api 方法，一般项目上传都是同一个 api 方法，在组件里直接引入即可 ==> 非必传
   drag?: boolean // 是否支持拖拽上传 ==> 非必传（默认为 true）
   disabled?: boolean // 是否禁用上传组件 ==> 非必传（默认为 false）
@@ -70,11 +62,11 @@ interface UploadFileProps {
 
 // 接受父组件参数
 const props = withDefaults(defineProps<UploadFileProps>(), {
-  imageUrl: '',
+  voiceUrl: '',
   drag: true,
   disabled: false,
   fileSize: 5,
-  fileType: () => ['image/jpeg', 'image/png', 'image/gif'],
+  fileType: () => ['audio/mpeg', 'audio/wav', 'audio/ogg'],
   height: '150px',
   width: '150px',
   borderRadius: '8px'
@@ -84,7 +76,6 @@ const props = withDefaults(defineProps<UploadFileProps>(), {
 const uuid = ref('id-' + generateUUID())
 
 // 查看图片
-const imgViewVisible = ref(false)
 // 获取 el-form 组件上下文
 const formContext = inject(formContextKey, void 0)
 // 获取 el-form-item 组件上下文
@@ -99,7 +90,7 @@ const self_disabled = computed(() => {
  * @param options 上传的文件
  * */
 interface UploadEmits {
-  (e: 'update:imageUrl', value: string): void
+  (e: 'update:voiceUrl', value: string): void
   (e: 'check-validate'): void
 }
 const emit = defineEmits<UploadEmits>()
@@ -107,9 +98,10 @@ const handleHttpUpload = async (options: UploadRequestOptions) => {
   let formData = new FormData()
   formData.append('file', options.file)
   try {
-    const api = props.api ?? uploadImg
+    const api = props.api ?? uploadVoice
+    console.log(api)
     const { data } = await api(formData)
-    emit('update:imageUrl', data.urlList[0])
+    emit('update:voiceUrl', data.urlList[0])
     // 调用 el-form 内部的校验方法（可自动校验）
     formItemContext?.prop && formContext?.validateField([formItemContext.prop as string])
     emit('check-validate')
@@ -121,16 +113,8 @@ const handleHttpUpload = async (options: UploadRequestOptions) => {
 /**
  * @description 删除图片
  * */
-const deleteImg = () => {
-  emit('update:imageUrl', '')
-}
-
-/**
- * @description 编辑图片
- * */
-const editImg = () => {
-  const dom = document.querySelector(`#${uuid.value} .el-upload__input`)
-  dom && dom.dispatchEvent(new MouseEvent('click'))
+const deleteVoice = () => {
+  emit('update:voiceUrl', '')
 }
 
 /**
@@ -138,28 +122,29 @@ const editImg = () => {
  * @param rawFile 上传的文件
  * */
 const beforeUpload: UploadProps['beforeUpload'] = (rawFile) => {
-  const imgSize = rawFile.size / 1024 / 1024 < props.fileSize
-  const imgType = props.fileType
-  if (!imgType.includes(rawFile.type as FileTypes))
+  console.log(rawFile)
+  const voiceSize = rawFile.size / 1024 / 1024 < props.fileSize
+  const fileType = props.fileType
+  if (!fileType.includes(rawFile.type as FileTypes))
     ElNotification({
       title: '温馨提示',
-      message: '上传图片不符合所需的格式！',
+      message: '上传文件不符合所需的格式！',
       type: 'warning'
     })
-  if (!imgSize)
+  if (!voiceSize)
     ElNotification({
       title: '温馨提示',
-      message: `上传图片大小不能超过 ${props.fileSize}M！`,
+      message: `上传文件大小不能超过 ${props.fileSize}M！`,
       type: 'warning'
     })
-  return imgType.includes(rawFile.type as FileTypes) && imgSize
+  return fileType.includes(rawFile.type as FileTypes) && voiceSize
 }
 
 // 图片上传成功提示
 const uploadSuccess = () => {
   ElNotification({
     title: '温馨提示',
-    message: '图片上传成功！',
+    message: '上传成功！',
     type: 'success'
   })
 }
@@ -168,12 +153,17 @@ const uploadSuccess = () => {
 const uploadError = () => {
   ElNotification({
     title: '温馨提示',
-    message: '图片上传失败，请您重新上传！',
+    message: '上传失败，请您重新上传！',
     type: 'error'
   })
 }
 </script>
 <style scoped lang="less">
+.audio-uplaod-bar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 .is-error {
   .upload {
     :deep(.el-upload),
@@ -250,7 +240,7 @@ const uploadError = () => {
         border: 2px dashed var(--el-color-primary) !important;
       }
 
-      .upload-image {
+      .upload-voice {
         width: 100%;
         height: 100%;
         object-fit: contain;

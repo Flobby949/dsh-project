@@ -3,6 +3,7 @@ package com.nh.dsh.admin.convert;
 import com.nh.dsh.admin.model.entity.SysRole;
 import com.nh.dsh.admin.model.vo.SysRoleVO;
 import org.mapstruct.Mapper;
+import org.mapstruct.ReportingPolicy;
 import org.mapstruct.factory.Mappers;
 
 import java.util.List;

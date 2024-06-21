@@ -227,3 +227,77 @@ export namespace Feedback {
     createTime: string
   }
 }
+
+export namespace Forum {
+  export interface ForumDTO {
+    id?: number
+    userId?: number
+    name?: string
+    courseLink?: string
+    bookId?: number
+    price?: number
+    writerIntroduction?: string
+    voiceIntroduction?: string
+    cover?: string
+    avatar?: string
+  }
+  export interface ForumVO {
+    id?: number
+    userId?: number
+    username?: string
+    name?: string
+    courseLink?: string
+    bookId?: number
+    bookName?: string
+    price?: number
+    userNumber?: number
+    writerIntroduction?: string
+    voiceIntroduction?: string
+    categoryName?: string
+    cover?: string
+    avatar?: string
+    createTime?: string
+  }
+  export interface ForumQuery extends ReqPage {
+    forumName?: string
+    forumAdmin?: string
+  }
+}
+
+export namespace Notice {
+  export interface NoticeQuery extends ReqPage {
+    keyword?: string
+    forumId?: number
+  }
+
+  export interface NoticeDTO {
+    id?: number
+    forumId?: number
+    title?: string
+    content?: string
+    validTime?: Date
+    isTop: number
+  }
+  export interface NoticeVO {
+    id?: number
+    forumId?: number
+    forumName?: string
+    adminId?: number
+    adminName?: string
+    title?: string
+    content?: string
+    validTime?: Date
+    isTop: number
+    createTime: string
+  }
+  export interface ForumNoticeVO {
+    id?: number
+    adminId?: number
+    adminName?: string
+    title?: string
+    content?: string
+    validTime?: Date
+    isTop: number
+    createTime: string
+  }
+}

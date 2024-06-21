@@ -3,6 +3,7 @@ package com.nh.dsh.admin.convert;
 import com.nh.dsh.admin.model.entity.FeedbackEntity;
 import com.nh.dsh.admin.model.vo.FeedbackVO;
 import org.mapstruct.Mapper;
+import org.mapstruct.ReportingPolicy;
 import org.mapstruct.factory.Mappers;
 
 /**
