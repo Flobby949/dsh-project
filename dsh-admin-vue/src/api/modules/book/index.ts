@@ -10,7 +10,9 @@ export const BookApi = {
   list: () => http.post<ResPage<Book.BookVO>>(_API + '/book/list'),
   add: (params: any) => http.post(_API + '/book/save', params),
   remove: (params: number[]) => http.post(_API + '/book/delete', params),
-  edit: (params: any) => http.post(_API + '/book/update', params)
+  edit: (params: any) => http.post(_API + '/book/update', params),
+  generateExchange: (bookId: number, num: number) => http.post(_API + `/book/exchange/generate?bookId=${bookId}&num=${num}`),
+  exchangePage: (params: Book.BookExchangeQuery) => http.post<ResPage<Book.BookExchange>>(_API + '/book/exchange/page', params)
 }
 
 export const BookResourceApi = {

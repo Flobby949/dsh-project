@@ -4,11 +4,14 @@ import com.nh.dsh.admin.common.result.PageResult;
 import com.nh.dsh.admin.common.result.Result;
 import com.nh.dsh.admin.model.dto.BookDTO;
 import com.nh.dsh.admin.model.dto.BookResourceDTO;
+import com.nh.dsh.admin.model.entity.BookExchangeEntity;
+import com.nh.dsh.admin.model.query.BookExchangeQuery;
 import com.nh.dsh.admin.model.query.BookQuery;
 import com.nh.dsh.admin.model.query.BookResourceQuery;
 import com.nh.dsh.admin.model.vo.BookResourceVO;
 import com.nh.dsh.admin.model.vo.BookVO;
 import com.nh.dsh.admin.security.cache.TokenStoreCache;
+import com.nh.dsh.admin.service.BookExchangeService;
 import com.nh.dsh.admin.service.BookResourceService;
 import com.nh.dsh.admin.service.BookService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -36,6 +39,7 @@ public class BookController {
     private final BookService bookService;
     private final BookResourceService bookResourceService;
     private final TokenStoreCache tokenStoreCache;
+    private final BookExchangeService bookExchangeService;
 
     @PostMapping("page")
     @PreAuthorize("hasAuthority('sys:book:view')")
@@ -109,5 +113,28 @@ public class BookController {
     @PreAuthorize("hasAuthority('sys:book:view')")
     public ResponseEntity<byte[]> downloadResourcesQrCode(@RequestParam(name = "bookId") Integer bookId) {
         return bookResourceService.downloadResourcesQrCode(bookId);
+    }
+
+    @PostMapping("exchange/generate")
+    @Operation(summary = "生成二维码")
+    @PreAuthorize("hasAuthority('sys:book:view')")
+    public Result<String> generate(@RequestParam(name = "bookId") Integer bookId, @RequestParam(name = "num") Integer num) {
+        bookExchangeService.generate(bookId, num);
+        return Result.ok();
+    }
+
+    @PostMapping("exchange/page")
+    @Operation(summary = "二维码列表")
+    @PreAuthorize("hasAuthority('sys:book:view')")
+    public Result<PageResult<BookExchangeEntity>> exchangePage(@RequestBody BookExchangeQuery query) {
+        PageResult<BookExchangeEntity> page = bookExchangeService.page(query);
+        return Result.ok(page);
+    }
+
+    @GetMapping("exchange/{id}")
+    @Operation(summary = "兑换")
+    public Result<String> exchange(@PathVariable(name = "id") Integer id) {
+        bookExchangeService.exchange(id);
+        return Result.ok();
     }
 }

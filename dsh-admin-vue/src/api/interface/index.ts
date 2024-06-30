@@ -189,6 +189,19 @@ export namespace Book {
     forumLink: string
     createTime: string
   }
+
+  export interface BookExchangeQuery extends ReqPage {
+    bookId: number
+  }
+
+  export interface BookExchange {
+    id: number
+    bookId: number
+    userId: number
+    status: number
+    exchangeTime: string
+    createTime: string
+  }
 }
 
 export namespace BookResource {
