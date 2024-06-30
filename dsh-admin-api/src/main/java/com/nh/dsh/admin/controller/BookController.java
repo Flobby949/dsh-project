@@ -39,8 +39,8 @@ public class BookController {
 
     @PostMapping("page")
     @PreAuthorize("hasAuthority('sys:book:view')")
-    public Result<PageResult<BookVO>> page(@RequestBody BookQuery query) {
-        return Result.ok(bookService.page(query));
+    public Result<PageResult<BookVO>> page(@RequestBody BookQuery query, @RequestHeader("Authorization")String authorization) {
+        return Result.ok(bookService.page(query, authorization));
     }
 
     @PostMapping("save")
@@ -67,8 +67,8 @@ public class BookController {
 
     @PostMapping("list")
     @PreAuthorize("hasAuthority('sys:book:view')")
-    public Result<List<BookVO>> page() {
-        return Result.ok(bookService.selectedList());
+    public Result<List<BookVO>> page(@RequestHeader("Authorization")String authorization) {
+        return Result.ok(bookService.selectedList(authorization));
     }
 
     @PostMapping("resource/save")

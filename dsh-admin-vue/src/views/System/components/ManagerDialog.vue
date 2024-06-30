@@ -33,6 +33,11 @@
             <el-option v-for="item in dialogProps.roleList" :key="item.pkId" :label="item.name" :value="item.pkId" class="isabel-option" />
           </el-select>
         </el-form-item>
+        <el-form-item v-if="dialogProps.title !== '重置' && dialogProps.row!.roleId === 2" label="出版社" prop="publisherIdList">
+          <el-select v-model="dialogProps.row!.publisherIdList" filterable placeholder="请选择出版社" class="w-full" multiple>
+            <el-option v-for="item in dialogProps.publisherList" :key="item.id" :label="item.name" :value="item.id" class="isabel-option" />
+          </el-select>
+        </el-form-item>
         <el-form-item v-if="dialogProps.title !== '重置'" label="状态" prop="status">
           <el-radio-group v-model="dialogProps.row!.status">
             <el-radio :label="1" border>正常</el-radio>
@@ -57,6 +62,7 @@ import { Dialog } from '@/components/Dialog'
 import { getRoleList } from '@/api/modules/role'
 import UploadImg from '@/components/Upload/Img.vue'
 import { getManagerInfoApi } from '@/api/modules/manager'
+import { PublisherApi } from '@/api/modules/publisher'
 import { useAppStoreWithOut } from '@/store/modules/app'
 const appStore = useAppStoreWithOut()
 interface DialogProps {
@@ -69,6 +75,7 @@ interface DialogProps {
   api?: (params: any) => Promise<any>
   getTableList?: () => Promise<any>
   roleList?: any
+  publisherList?: any
 }
 const dialogVisible = ref(false)
 const dialogProps = ref<DialogProps>({
@@ -97,6 +104,24 @@ const getFormRoleList = async () => {
   dialogProps.value.roleList = data
 }
 await getFormRoleList()
+// 获取出版社列表
+const getPublisherList = async () => {
+  const { data } = await PublisherApi.list()
+  dialogProps.value.publisherList = data
+}
+await getPublisherList()
+
+// 出版社选择校验
+const validPublisherAdmin = (rule, value, callback) => {
+  if (
+    dialogProps.value.row.roleId === 2 &&
+    (dialogProps.value.row.publisherIdList === null || dialogProps.value.row.publisherIdList === undefined || dialogProps.value.row.publisherIdList.length === 0)
+  ) {
+    callback(new Error('请选择对应出版社'))
+  } else {
+    callback()
+  }
+}
 
 const rules = reactive({
   username: [
@@ -114,6 +139,13 @@ const rules = reactive({
       //插入正则验证：大小写、数字、至少8位、不常用字符
       pattern: /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[._~!@#$^&*])[A-Za-z0-9._~!@#$^&*]{8,16}$/,
       message: '密码应当至少8位且含有数字、大小写字母及特殊字符'
+    }
+  ],
+  publisherIdList: [
+    {
+      required: true,
+      trigger: 'change',
+      validator: validPublisherAdmin
     }
   ],
   submitPassword: [
@@ -136,6 +168,7 @@ const rules = reactive({
 })
 const ruleFormRef = ref<FormInstance>()
 const handleSubmit = () => {
+  console.log(dialogProps.value.row)
   ruleFormRef.value!.validate(async (valid) => {
     if (!valid) return
     try {

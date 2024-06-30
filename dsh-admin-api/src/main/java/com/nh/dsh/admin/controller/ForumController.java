@@ -11,10 +11,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -34,8 +31,8 @@ public class ForumController {
 
     @PostMapping("page")
     @PreAuthorize("hasAuthority('sys:forum:view')")
-    public Result<PageResult<ForumVO>> page(@RequestBody ForumQuery query) {
-        return Result.ok(forumService.page(query));
+    public Result<PageResult<ForumVO>> page(@RequestBody ForumQuery query, @RequestHeader("Authorization") String authorization) {
+        return Result.ok(forumService.page(query, authorization));
     }
 
     @PostMapping("save")

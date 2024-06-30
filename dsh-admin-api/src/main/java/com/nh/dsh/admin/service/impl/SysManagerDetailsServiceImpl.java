@@ -1,5 +1,6 @@
 package com.nh.dsh.admin.service.impl;
 
+import com.nh.dsh.admin.service.ManagerPublisherService;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
@@ -16,6 +17,7 @@ import java.util.Set;
 @AllArgsConstructor
 public class SysManagerDetailsServiceImpl implements SysManagerDetailsService {
     private final SysMenuService sysMenuService;
+    private final ManagerPublisherService managerPublisherService;
 
     @Override
     public UserDetails getManagerDetails(SysManager sysManager) {
@@ -30,7 +32,8 @@ public class SysManagerDetailsServiceImpl implements SysManagerDetailsService {
         // 用户权限列表
         Set<String> authoritySet = sysMenuService.getManagerAuthority(managerDetail);
         managerDetail.setAuthoritySet(authoritySet);
-
+        // 出版社列表
+        managerDetail.setPublisherIdList(managerPublisherService.getPublisherIdList(sysManager.getPkId()));
         return managerDetail;
     }
 

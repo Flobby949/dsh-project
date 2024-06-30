@@ -20,7 +20,7 @@
         <if test="query.name != null and query.name != ''  ">
             and sr.name like concat('%',#{query.name},'%')
         </if>
-        order by sr.create_time desc
+        order by sr.create_time asc
     </select>
 
 </mapper>

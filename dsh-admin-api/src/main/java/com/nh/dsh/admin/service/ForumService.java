@@ -24,5 +24,5 @@ public interface ForumService extends IService<ForumEntity> {
 
     void deleteInBatch(List<Integer> ids);
 
-    PageResult<ForumVO> page(ForumQuery query);
+    PageResult<ForumVO> page(ForumQuery query, String authorization);
 }

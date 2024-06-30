@@ -22,7 +22,7 @@ public class CategoryVO {
     @Schema(description = "分类")
     private String name;
 
-    @Schema(description = "isbn")
+    @Schema(description = "描述")
     private String description;
 
     @Schema(description = "创建时间")

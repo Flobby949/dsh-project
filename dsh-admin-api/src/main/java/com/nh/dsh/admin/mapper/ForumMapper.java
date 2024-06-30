@@ -20,5 +20,5 @@ import java.util.List;
 @Mapper
 public interface ForumMapper extends BaseMapper<ForumEntity> {
 
-    List<ForumVO> getPage(Page<ForumEntity> page, @Param("query")ForumQuery query);
+    List<ForumVO> getPage(Page<ForumEntity> page, @Param("query")ForumQuery query, @Param("publisherList") List<Integer> publisherList);
 }

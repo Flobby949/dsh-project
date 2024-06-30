@@ -21,8 +21,10 @@
             <el-option v-for="item in classificationList" :key="item.id" :label="item.name" :value="item.id" />
           </el-select>
         </el-form-item>
-        <el-form-item label="出版社" prop="publishingHouse">
-          <el-input v-model="dialogProps.row!.publishingHouse" placeholder="" clearable></el-input>
+        <el-form-item label="出版社" prop="publisherId">
+          <el-select v-model="dialogProps.row!.publisherId" clearable placeholder="选择出版社" style="width: 240px">
+            <el-option v-for="item in publisherList" :key="item.id" :label="item.name" :value="item.id" />
+          </el-select>
         </el-form-item>
         <el-form-item label="译者" prop="translator">
           <el-input v-model="dialogProps.row!.translator" placeholder="" clearable></el-input>
@@ -77,6 +79,7 @@ import { ElMessage, FormInstance } from 'element-plus'
 import { Dialog } from '@/components/Dialog'
 import UploadImg from '@/components/Upload/Img.vue'
 import { CategoryApi } from '@/api/modules/category'
+import { PublisherApi } from '@/api/modules/Publisher'
 
 interface DialogProps {
   title: string
@@ -104,9 +107,16 @@ const getClassificationList = async () => {
   const res = await CategoryApi.list()
   classificationList.value = res.data
 }
+// 获取出版社列表
+const publisherList = ref()
+const getPublisherList = async () => {
+  const res = await PublisherApi.list()
+  publisherList.value = res.data
+}
 
 onMounted(() => {
   getClassificationList()
+  getPublisherList()
 })
 
 // 接收父组件传过来的参数

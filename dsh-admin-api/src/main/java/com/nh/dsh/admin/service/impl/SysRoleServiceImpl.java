@@ -2,6 +2,7 @@ package com.nh.dsh.admin.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.nh.dsh.admin.common.exception.ServerException;
 import com.nh.dsh.admin.common.model.BaseServiceImpl;
 import com.nh.dsh.admin.common.result.PageResult;
 import com.nh.dsh.admin.convert.SysRoleConvert;
@@ -63,6 +64,11 @@ public class SysRoleServiceImpl extends BaseServiceImpl<SysRoleMapper, SysRole> 
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void delete(List<Integer> idList) {
+        // idList包含小于3的数值返回异常
+        if (idList.stream().anyMatch(item -> item < 3)) {
+            throw new ServerException("存在不能删除的角色类型（超级管理员，出版社管理员）");
+        }
+
         // 删除角色
         removeByIds(idList);
 

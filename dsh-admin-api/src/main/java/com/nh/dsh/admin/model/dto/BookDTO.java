@@ -34,7 +34,7 @@ public class BookDTO {
 
     @Schema(description = "出版社")
     @NotBlank(message = "出版社不能为空")
-    private String publishingHouse;
+    private Integer publishingId;
 
     /**
      * 逗号分割

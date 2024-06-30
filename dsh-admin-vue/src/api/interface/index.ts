@@ -51,6 +51,8 @@ export namespace SysManager {
     avatar: string
     status: number
     createTime: string
+    publisherIdList?: number[]
+    publisherList?: string[]
   }
   export interface ReqEditManagerParams {
     pkId?: number
@@ -58,6 +60,7 @@ export namespace SysManager {
     avatar: string
     status: number
     roleId: number
+    publisherIdList?: number[]
     password?: string
   }
 
@@ -300,4 +303,19 @@ export namespace Notice {
     isTop: number
     createTime: string
   }
+}
+
+export namespace Publisher {
+  export interface PublisherDTO {
+    id: number
+    name: string
+    description: string
+  }
+  export interface PublisherVO {
+    id: number
+    name: string
+    description: string
+    createTime: string
+  }
+  export type PublisherQuery = ReqPage
 }

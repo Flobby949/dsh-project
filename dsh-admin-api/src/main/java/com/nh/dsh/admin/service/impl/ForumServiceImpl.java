@@ -9,6 +9,8 @@ import com.nh.dsh.admin.model.dto.ForumDTO;
 import com.nh.dsh.admin.model.entity.ForumEntity;
 import com.nh.dsh.admin.model.query.ForumQuery;
 import com.nh.dsh.admin.model.vo.ForumVO;
+import com.nh.dsh.admin.security.cache.TokenStoreCache;
+import com.nh.dsh.admin.security.user.ManagerDetail;
 import com.nh.dsh.admin.service.ForumService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -25,6 +27,13 @@ import java.util.List;
 @Slf4j
 @Service
 public class ForumServiceImpl extends BaseServiceImpl<ForumMapper, ForumEntity> implements ForumService {
+    private final TokenStoreCache tokenStoreCache;
+
+    public ForumServiceImpl(TokenStoreCache tokenStoreCache) {
+        super();
+        this.tokenStoreCache = tokenStoreCache;
+    }
+
     @Override
     public void save(ForumDTO dto) {
         ForumEntity entity = ForumConvert.INSTANCE.convert(dto);
@@ -43,9 +52,10 @@ public class ForumServiceImpl extends BaseServiceImpl<ForumMapper, ForumEntity> 
     }
 
     @Override
-    public PageResult<ForumVO> page(ForumQuery query) {
+    public PageResult<ForumVO> page(ForumQuery query, String authorization) {
+        ManagerDetail user = tokenStoreCache.getUser(authorization);
         Page<ForumEntity> page = getPage(query);
-        List<ForumVO> resultList = baseMapper.getPage(page, query);
+        List<ForumVO> resultList = baseMapper.getPage(page, query, user.getPublisherIdList());
         return new PageResult<>(resultList, page.getTotal());
     }
 }

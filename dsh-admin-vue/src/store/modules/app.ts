@@ -9,6 +9,7 @@ export const useAppStore = defineStore({
   state: (): AppState => ({
     token: '',
     userInfo: {}, // 登录信息存储字段-建议每个项目换一个字段，避免与其他项目冲突
+    publisherIdList: [],
     assemblySize: 'default', //"default", "large", "small"
     theme: {
       // 布局切换 ==>  纵向：vertical | 经典：classic | 横向：transverse | 分栏：columns
@@ -46,6 +47,7 @@ export const useAppStore = defineStore({
     },
     setUserinfo(userinfo: UserinfoType) {
       this.userInfo = userinfo
+      this.publisherIdList = userinfo.publisherIdList
     },
     setAssemblySizeSize(assemblySize: AssemblySizeType) {
       this.assemblySize = assemblySize

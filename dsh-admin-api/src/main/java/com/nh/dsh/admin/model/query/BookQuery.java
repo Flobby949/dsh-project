@@ -16,4 +16,5 @@ public class BookQuery extends Query {
     private String bookName;
     private String writer;
     private String isbn;
+    private Integer publisherId;
 }

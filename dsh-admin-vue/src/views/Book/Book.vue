@@ -91,7 +91,7 @@ const columns: ColumnProps[] = [
     label: '分类',
     width: 100
   },
-  { prop: 'publishingHouse', label: '出版社', width: 100 },
+  { prop: 'publishingHouse', label: '出版社', width: 180 },
   { prop: 'translator', label: '译者', width: 100 },
   { prop: 'writer', label: '作者', width: 100, search: { el: 'input' } },
   { prop: 'price', label: '价格', width: 70 },

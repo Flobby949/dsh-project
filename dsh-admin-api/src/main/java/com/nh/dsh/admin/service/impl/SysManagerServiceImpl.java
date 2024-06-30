@@ -5,15 +5,16 @@ import com.nh.dsh.admin.common.exception.ServerException;
 import com.nh.dsh.admin.common.model.BaseServiceImpl;
 import com.nh.dsh.admin.common.result.PageResult;
 import com.nh.dsh.admin.convert.SysManagerConvert;
-import com.nh.dsh.admin.model.entity.SysManager;
 import com.nh.dsh.admin.enums.SuperAdminEnum;
 import com.nh.dsh.admin.mapper.SysManagerMapper;
+import com.nh.dsh.admin.model.entity.SysManager;
 import com.nh.dsh.admin.model.query.ChangePasswordQuery;
 import com.nh.dsh.admin.model.query.SysManagerQuery;
+import com.nh.dsh.admin.model.vo.SysManagerVO;
 import com.nh.dsh.admin.security.user.ManagerDetail;
+import com.nh.dsh.admin.service.ManagerPublisherService;
 import com.nh.dsh.admin.service.SysManagerRoleService;
 import com.nh.dsh.admin.service.SysManagerService;
-import com.nh.dsh.admin.model.vo.SysManagerVO;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,11 +26,18 @@ import java.util.List;
 public class SysManagerServiceImpl extends BaseServiceImpl<SysManagerMapper, SysManager> implements SysManagerService {
 
     private SysManagerRoleService sysManagerRoleService;
+    private ManagerPublisherService managerPublisherService;
 
     @Override
     public PageResult<SysManagerVO> page(SysManagerQuery query) {
         Page<SysManagerVO> page = new Page<>(query.getPage(), query.getLimit());
         List<SysManagerVO> list = baseMapper.getManagerPage(page, query);
+        list.forEach(vo -> {
+            if (vo.getRoleId().equals(2)) {
+                vo.setPublisherIdList(managerPublisherService.getPublisherIdList(vo.getPkId()));
+                vo.setPublisherList(managerPublisherService.getPublisherList(vo.getPkId()));
+            }
+        });
         return new PageResult<>(list, page.getTotal());
     }
 
@@ -48,6 +56,10 @@ public class SysManagerServiceImpl extends BaseServiceImpl<SysManagerMapper, Sys
         baseMapper.insert(entity);
         // 保存用户角色关系
         sysManagerRoleService.saveOrUpdate(entity.getPkId(), vo.getRoleId());
+        // 保存用户出版社关系
+        if (vo.getRoleId().equals(2)) {
+            managerPublisherService.save(entity.getPkId(), vo.getPublisherIdList());
+        }
     }
 
     @Override
@@ -63,6 +75,8 @@ public class SysManagerServiceImpl extends BaseServiceImpl<SysManagerMapper, Sys
         updateById(entity);
         // 更新用户角色关系
         sysManagerRoleService.saveOrUpdate(entity.getPkId(), vo.getRoleId());
+        // 保存用户出版社关系
+        managerPublisherService.update(entity.getPkId(), vo.getPublisherIdList());
     }
 
     @Override
@@ -72,6 +86,8 @@ public class SysManagerServiceImpl extends BaseServiceImpl<SysManagerMapper, Sys
         removeByIds(idList);
         // 删除用户角色关系
         sysManagerRoleService.removeByManagerId(idList);
+        // 删除用户出版社关系
+        idList.forEach(id -> managerPublisherService.delete(id));
     }
 
     @Override
@@ -88,6 +104,8 @@ public class SysManagerServiceImpl extends BaseServiceImpl<SysManagerMapper, Sys
         sysManagerVO.setStatus(sysManager.getStatus());
         sysManagerVO.setRoleId(sysManagerRoleService.getByManagerId(manage.getPkId()).getRoleId());
         sysManagerVO.setCreateTime(sysManager.getCreateTime());
+        sysManagerVO.setPublisherIdList(managerPublisherService.getPublisherIdList(manage.getPkId()));
+        sysManagerVO.setPublisherList(managerPublisherService.getPublisherList(manage.getPkId()));
         return sysManagerVO;
     }
 

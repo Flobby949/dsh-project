@@ -41,6 +41,7 @@ export interface TabsState {
 export interface AppState {
   token: string
   userInfo: any
+  publisherIdList: number[]
   assemblySize: AssemblySizeType
   theme: ThemeProps
 }
@@ -71,4 +72,6 @@ export interface UserinfoType {
   roleId: number
   status: number
   username: string
+  publisherIdList: number[]
+  publisherList: string[]
 }

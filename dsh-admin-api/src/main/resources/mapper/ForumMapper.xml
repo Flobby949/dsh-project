@@ -29,6 +29,12 @@
         <if test="query.username != null and query.username != ''  ">
             and wu.wx_name like concat('%',#{query.username},'%')
         </if>
+        <if test="publisherList != null and !publisherList.isEmpty() ">
+            and b.publisher_id in
+            <foreach collection="publisherList" item="item" index="index" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+        </if>
         order by f.create_time desc
     </select>
 

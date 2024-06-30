@@ -10,6 +10,7 @@ import org.hibernate.validator.constraints.Range;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 @Data
 @Schema(description = "管理员")
@@ -33,6 +34,12 @@ public class SysManagerVO implements Serializable {
 
     @Schema(description = "角色id")
     private Integer roleId;
+
+    @Schema(description = "出版社id")
+    private List<Integer> publisherIdList;
+
+    @Schema(description = "出版社")
+    private List<String> publisherList;
 
     @Schema(description = "状态 0：停用    1：正常", required = true)
     @Range(min = 0, max = 1, message = "用户状态不正确")
