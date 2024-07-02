@@ -55,4 +55,4 @@ auth:
   valid_urls:
     - /auth/logout
     - /user/**
-    - /resource/publish
+    - /forum/**

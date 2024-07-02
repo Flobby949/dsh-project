@@ -33,7 +33,7 @@ public class BookEntity {
     private Integer classificationId;
 
     @Schema(description = "出版社")
-    private String publishingHouse;
+    private Integer publisherId;
 
     /**
      * 逗号分割

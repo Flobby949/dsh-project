@@ -10,26 +10,43 @@ import java.util.Date;
 /**
  * @author : Flobby
  * @program : dsh-client-api
- * @description : 用户
- * @create : 2024-06-18 15:05
+ * @description :
+ * @create : 2024-07-02 10:25
  **/
 
 @Data
-@TableName("wuser")
-@Schema(description = "用户")
-public class UserEntity {
-
+@TableName("comment")
+@Schema(description = "评论对象")
+public class CommentEntity {
     @Schema(description = "主键")
     @TableId(value = "id", type = IdType.AUTO)
     private Integer id;
 
-    @Schema(description = "微信昵称")
-    private String wxName;
+    @Schema(description = "论坛id")
+    private Integer forumId;
+
+    @Schema(description = "用户id")
+    private Integer userId;
+
+    @Schema(description = "父评论")
+    private Integer parentId;
+
+    /**
+     *  0： 'question' 或1 ： 'answer'
+     */
+    @Schema(description = "类型")
+    private Integer type;
+
+    @Schema(description = "标题")
+    private String title;
+
+    @Schema(description = "内容")
+    private String content;
 
     @Schema(description = "0:未删除  1:已删除")
+    @TableField(value = "delete_flag", fill = FieldFill.INSERT)
     @TableLogic
     @JsonIgnore
-    @TableField(value = "delete_flag", fill = FieldFill.INSERT)
     private Integer deleteFlag;
 
     @Schema(description = "创建时间")

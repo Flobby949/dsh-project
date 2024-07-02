@@ -1,6 +1,9 @@
 package com.nh.dsh.client.model.entity;
 
-import com.baomidou.mybatisplus.annotation.*;
+import com.baomidou.mybatisplus.annotation.FieldFill;
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableLogic;
+import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
@@ -10,21 +13,21 @@ import java.util.Date;
 /**
  * @author : Flobby
  * @program : dsh-client-api
- * @description : 用户
- * @create : 2024-06-18 15:05
+ * @description :
+ * @create : 2024-07-02 14:26
  **/
 
 @Data
-@TableName("wuser")
-@Schema(description = "用户")
-public class UserEntity {
+@TableName("user_action")
+@Schema(description = "用户行为对象")
+public class UserActionEntity {
 
-    @Schema(description = "主键")
-    @TableId(value = "id", type = IdType.AUTO)
-    private Integer id;
-
-    @Schema(description = "微信昵称")
-    private String wxName;
+    private Integer userId;
+    /**
+     * @see com.nh.dsh.client.enums.UserActionEnum
+     */
+    private Integer actionType;
+    private Integer sourceId;
 
     @Schema(description = "0:未删除  1:已删除")
     @TableLogic
