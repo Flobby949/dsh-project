@@ -1,7 +1,243 @@
 <template>
-  <view>profile</view>
+  <view class="my">
+    <CustomNavbar />
+    <!-- 用户信息 -->
+    <view class="userInfo">
+      <view class="left">
+        <image
+          :src="
+            userInfo?.avatar ||
+            'https://img.ixintu.com/download/jpg/20201130/a5a797801c5e0abd58d80d2182081608_512_512.jpg!ys'
+          "
+          style="width: 100%; height: 100%"
+        />
+      </view>
+      <view class="center">
+        <view class="name" v-if="userInfo?.nickname || userInfo?.wxOpenId">{{
+          userInfo.nickname
+        }}</view>
+        <view class="noLogin" v-else>暂未登录</view>
+      </view>
+    </view>
+
+    <uni-grid class="item-bar" v-if="userInfo" :column="3" :highlight="true" @change="change" :showBorder="false" :square="false">
+				<uni-grid-item v-for="(item, index) in itemBarList" :index="index" :key="index">
+					<view class="grid-item-box">
+						<uni-icons :type="item.icon" :size="30" color="#777" />
+						<text class="text">{{ item.title }}</text>
+					</view>
+				</uni-grid-item>
+			</uni-grid>
+
+    <!-- 操作 -->
+    <view class="action-info">
+      <view class="row">
+        <view class="left">
+          <uni-icons
+            class="icon"
+            type="notification"
+            size="26"
+            color="#1296db"
+          ></uni-icons>
+          <text class="txt">问答</text>
+        </view>
+        <view class="right">
+          <uni-icons
+            class="icon"
+            type="right"
+            size="20"
+            color="#b9b9b9"
+          ></uni-icons>
+        </view>
+      </view>
+      <view class="row">
+        <view class="left">
+          <uni-icons
+            class="icon"
+            type="info"
+            size="26"
+            color="#1296db"
+          ></uni-icons>
+          <text class="txt">联系我们</text>
+        </view>
+        <view class="right">
+          <uni-icons
+            class="icon"
+            type="right"
+            size="20"
+            color="#b9b9b9"
+          ></uni-icons>
+        </view>
+      </view>
+    </view>
+    <!-- 登录 -->
+    <view class="action">
+      <view class="button" @click="handleClickLogin">前往登录</view>
+    </view>
+  </view>
 </template>
 
-<script setup></script>
+<script setup>
+import { ref } from 'vue'
+const userInfo = ref(
+  // {
+  //   nickname: 'flobby'
+  // }
+)
 
-<style lang="scss" scoped></style>
+// item-bar数据
+const itemBarList = [
+  {
+    icon: 'compose',
+    url: '',
+    title: '发布'
+  },
+  {
+    icon: 'chat',
+    url: '',
+    title: '回复'
+  },
+    {
+    icon: 'star',
+    url: '',
+    title: '收藏'
+  }
+]
+
+
+// 前往登录
+const handleClickLogin = () => {
+  uni.reLaunch({
+    url: '/pages/login/login',
+  })
+}
+</script>
+
+<style lang="scss" scoped>
+page {
+  background: #f5f5f5;
+}
+
+.my {
+  padding: 40rpx;
+
+  .userInfo {
+    display: flex;
+    align-items: center;
+    background: linear-gradient(to right, #1296db, #1296db);
+    padding: 30rpx;
+    border-radius: 20rpx;
+    box-shadow: 0 0 20rpx rgba(0, 0, 0, 0.1);
+    color: #fff;
+    .left {
+      width: 100rpx;
+      height: 100rpx;
+      border-radius: 50%;
+      overflow: hidden;
+      margin-right: 30rpx;
+    }
+    .center {
+      flex: 1;
+      .name {
+        font-size: 36rpx;
+        margin-bottom: 10rpx;
+      }
+      .phone {
+        font-size: 28rpx;
+      }
+    }
+  }
+
+  .score {
+    padding: 30rpx;
+    background: #f9e5cb;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom-left-radius: 20rpx;
+    border-bottom-right-radius: 20rpx;
+
+    .left {
+      display: flex;
+      align-items: center;
+      color: #946c37;
+      .text {
+        margin-left: 18rpx;
+      }
+    }
+    .right {
+      border: 1px solid #946c37;
+      border-radius: 20rpx;
+      padding: 6rpx 10rpx;
+      font-size: 24rpx;
+      color: #946c37;
+    }
+  }
+
+  .row {
+    display: flex;
+    align-items: center;
+    padding: 20rpx 30rpx;
+    justify-content: space-between;
+    border-bottom: 1px solid #ccc;
+    .left {
+      display: flex;
+      align-items: center;
+      flex: 1;
+      .txt {
+        font-size: 28rpx;
+        margin-left: 20rpx;
+      }
+    }
+    .right {
+    }
+    // 最后一个子元素没有下边框
+    &:last-child {
+      border-bottom: none;
+    }
+  }
+
+  .action-info {
+    margin-top: 30rpx;
+    background: #fff;
+    border-radius: 20rpx;
+  }
+
+  .action {
+    text-align: center;
+    line-height: 90rpx;
+    margin-top: 40rpx;
+    font-size: 32rpx;
+    color: #fff;
+    .button {
+      background-color: #1296db;
+      margin-bottom: 20rpx;
+      border-radius: 50rpx;
+    }
+  }
+}
+
+.item-bar {
+  margin-top: 20rpx;
+  padding: 10px 0;
+  background-color: #fff;
+  border-radius: 10rpx;
+
+.grid-item-box {
+		flex: 1;
+		// position: relative;
+		/* #ifndef APP-NVUE */
+		display: flex;
+		/* #endif */
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		padding: 5rpx 0;
+
+  .text {
+		font-size: 24rpx;
+		margin-top: 20rpx;
+	}
+	}
+}
+</style>

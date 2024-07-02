@@ -1,64 +1,125 @@
 <template>
-  <view class="content">
-    <image class="logo" src="/static/logo.png"></image>
-    <view class="text-area">
-      <button class="title" @click="wxLogin">{{ title }}</button>
-    </view>
+<view class="index">
+    <CustomNavbar />
+    <Notice :noticeList="indexData.notice" />
+    <Swiper :swiperList="indexData.swiper" />
+    <uni-section class="mb-10" title="人文社科"  type="line">
+      <scroll-view scroll-x="true">
+        <view class="scroll-container">
+          <ForumItem v-for="(item, index) in indexData.forumList" :key="index" :forumInfo="item" />
+          <ForumItem v-for="(item, index) in indexData.forumList" :key="index" :forumInfo="item" />
+          <navigator
+            :url="'/pages/forum/allForum'"
+          >
+            <view class="more">查看更多</view>
+          </navigator>
+        </view>
+      </scroll-view>
+    </uni-section>
   </view>
 </template>
 
 <script setup>
 import { ref } from 'vue'
-import wx from "weixin-js-sdk";
-
-const title = ref('首页')
-
-wx.config({
-  debug: true, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
-  appId: 'wx731630b450248376', // 必填，公众号的唯一标识
-  timestamp: 1719545221062, // 必填，生成签名的时间戳
-  nonceStr: 'dsh', // 必填，生成签名的随机串
-  signature: 'jsapi_ticket',// 必填，签名
-  jsApiList: ['chooseImage'] // 必填，需要使用的JS接口列表
-});
-
-const wxLogin = () => {
-
-  const appid = 'wx731630b450248376'
-  const redirect_uri = encodeURIComponent('http://www.flobby.top')
-  console.log(redirect_uri);
-  const scope = 'snsapi_userinfo'
-  const url = ref(`https://open.weixin.qq.com/connect/oauth2/authorize?appid=${appid}&redirect_uri=${redirect_uri}&response_type=code&scope=${scope}&state=STATE#wechat_redirect`)
-  console.log(url.value);
-  // window.location.href = url.value
-}
+import Swiper from './components/Swiper.vue'
+import Notice from './components/Notice.vue'
+import CustomNavbar from './components/CustomNavbar.vue'
+import ForumItem from '../../components/ForumItem/ForumItem.vue'
+/**
+* 定义首页数据对象，包含了公告数组和轮播图数组
+*/
+const indexData = ref({
+  notice: [
+    {
+      id: 1,
+      title: '通知通知通知通知通知通知通知通知通知通知通知通知通知通知通知通知通知通知通知通知通知'
+    },
+    {
+      id: 2,
+      title: '内容内容内容内容内容'
+    }
+  ],
+  swiper: [
+    {
+      id: 1,
+      cover: 'https://img1.baidu.com/it/u=1465900350,3687781509&fm=253&app=138&size=w931&n=0&f=JPEG&fmt=auto?sec=1719939600&t=f545745ff0440f907c20149eccebc1ad'
+    },
+    {
+      id: 2,
+      cover: 'https://img0.baidu.com/it/u=111322774,1061492612&fm=253&fmt=auto&app=138&f=JPEG?w=753&h=500'
+    }
+  ],
+  forumList: [
+    {
+      id: 1,
+      cover: 'https://img2.baidu.com/it/u=3830664050,3289120979&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=500',
+      bookName: '读书汇读书汇读书汇读书汇读书汇1',
+      numCount: 10
+    },
+    {
+      id: 2,
+      cover: 'https://img2.baidu.com/it/u=3830664050,3289120979&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=500',
+      bookName: '读书汇2',
+      numCount: 15
+    },
+        {
+      id: 1,
+      cover: 'https://img2.baidu.com/it/u=3830664050,3289120979&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=500',
+      bookName: '读书汇1',
+      numCount: 10
+    },
+    {
+      id: 2,
+      cover: 'https://img2.baidu.com/it/u=3830664050,3289120979&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=500',
+      bookName: '读书汇2',
+      numCount: 15
+    },
+        {
+      id: 1,
+      cover: 'https://img2.baidu.com/it/u=3830664050,3289120979&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=500',
+      bookName: '读书汇1',
+      numCount: 10
+    },
+    {
+      id: 2,
+      cover: 'https://img2.baidu.com/it/u=3830664050,3289120979&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=500',
+      bookName: '读书汇2',
+      numCount: 15
+    }
+  ]
+})
 
 </script>
 
-<style>
-.content {
+<style lang="scss" scoped>
+page {
+  background-color: #f7f7f7;
+  height: 100%;
+  overflow: hidden;
+}
+.index {
+  height: 100%;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
 }
 
-.logo {
-  height: 200rpx;
-  width: 200rpx;
-  margin-top: 200rpx;
-  margin-left: auto;
-  margin-right: auto;
-  margin-bottom: 50rpx;
-}
-
-.text-area {
+.scroll-container {
   display: flex;
-  justify-content: center;
-}
+  padding: 10rpx;
 
-.title {
-  font-size: 36rpx;
-  color: #8f8f94;
+  .more {
+    display: flex;
+    padding: 5rpx ;
+    margin: 0 10rpx;
+    background-color: #b0b0b0;
+    align-items: center;
+    justify-content: center;
+    width: 200rpx;
+    height: 300rpx;
+		font-size: 36rpx;
+    box-shadow:  2rpx 2rpx 6rpx #d9d9d9,
+                -2rpx -2rpx 6rpx #ffffff;
+    border-radius: 10rpx;
+  }
 }
 </style>
