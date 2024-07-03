@@ -80,6 +80,7 @@ import { Dialog } from '@/components/Dialog'
 import UploadImg from '@/components/Upload/Img.vue'
 import { CategoryApi } from '@/api/modules/category'
 import { PublisherApi } from '@/api/modules/Publisher'
+import { useAppStoreWithOut } from '@/store/modules/app'
 
 interface DialogProps {
   title: string
@@ -109,9 +110,11 @@ const getClassificationList = async () => {
 }
 // 获取出版社列表
 const publisherList = ref()
+const appStore = useAppStoreWithOut()
 const getPublisherList = async () => {
   const res = await PublisherApi.list()
-  publisherList.value = res.data
+  publisherList.value = res.data.filter((item) => (appStore.userInfo.roleId === 1 ? true : appStore.publisherIdList.includes(item.id)))
+  console.log(publisherList.value)
 }
 
 onMounted(() => {

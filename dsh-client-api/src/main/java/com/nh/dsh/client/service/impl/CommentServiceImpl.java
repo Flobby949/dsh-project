@@ -11,17 +11,17 @@ import com.nh.dsh.client.model.BaseServiceImpl;
 import com.nh.dsh.client.model.dto.CommentActionDTO;
 import com.nh.dsh.client.model.dto.CommentDTO;
 import com.nh.dsh.client.model.entity.CommentEntity;
+import com.nh.dsh.client.model.entity.ForumEntity;
+import com.nh.dsh.client.model.entity.UserEntity;
 import com.nh.dsh.client.model.vo.CommentItemVO;
 import com.nh.dsh.client.service.CommentService;
+import com.nh.dsh.client.service.ForumService;
 import com.nh.dsh.client.service.UserActionService;
 import com.nh.dsh.client.utils.DateUtil;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Queue;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -36,6 +36,7 @@ import java.util.stream.Collectors;
 public class CommentServiceImpl extends BaseServiceImpl<CommentMapper, CommentEntity> implements CommentService {
     private final UserActionService userActionService;
     private final UserMapper userMapper;
+    private final ForumService forumService;
 
     @Override
     public void addComment(CommentDTO comment) {
@@ -47,57 +48,81 @@ public class CommentServiceImpl extends BaseServiceImpl<CommentMapper, CommentEn
     @Override
     public List<CommentItemVO> queryForumCommentList(Integer forumId) {
         Integer userId = RequestContext.getUserId();
+
+        // 一次性加载所有评论
         LambdaQueryWrapper<CommentEntity> commentQueryWrapper = new LambdaQueryWrapper<>();
         commentQueryWrapper.eq(CommentEntity::getForumId, forumId)
-                .isNull(CommentEntity::getParentId)
-                .orderByDesc(CommentEntity::getCreateTime);
+                .orderByAsc(CommentEntity::getCreateTime);
 
-        List<CommentEntity> topLevelComments = baseMapper.selectList(commentQueryWrapper);
+        List<CommentEntity> allComments = baseMapper.selectList(commentQueryWrapper);
 
-        return topLevelComments.stream().map(item -> {
-            CommentItemVO vo = convertToCommentItemVO(item, userId);
-            vo.setReplyList(getAllReplies(item.getId(), userId)); // 获取所有回复并平铺
-            return vo;
-        }).collect(Collectors.toList());
-    }
+        // 获取所有涉及到的用户ID
+        Set<Integer> userIds = allComments.stream()
+                .map(CommentEntity::getUserId)
+                .collect(Collectors.toSet());
 
-    // 获取所有直接或间接回复并平铺
-    private List<CommentItemVO> getAllReplies(Integer parentId, Integer userId) {
-        List<CommentItemVO> allReplies = new ArrayList<>();
-        Queue<Integer> queue = new LinkedList<>();
-        queue.add(parentId);
+        // 批量查询用户信息
+        List<UserEntity> users = userMapper.selectBatchIds(userIds);
+        Map<Integer, UserEntity> userMap = users.stream()
+                .collect(Collectors.toMap(UserEntity::getId, user -> user));
 
-        while (!queue.isEmpty()) {
-            Integer currentParentId = queue.poll();
-            LambdaQueryWrapper<CommentEntity> replyQueryWrapper = new LambdaQueryWrapper<>();
-            replyQueryWrapper.eq(CommentEntity::getParentId, currentParentId)
-                    .orderByDesc(CommentEntity::getCreateTime);
+        // 构建 ID 到 CommentItemVO 的映射
+        Map<Integer, CommentItemVO> commentMap = new HashMap<>();
+        for (CommentEntity comment : allComments) {
+            CommentItemVO vo = convertToCommentItemVO(comment, userId, userMap, commentMap);
+            commentMap.put(comment.getId(), vo);
+        }
 
-            List<CommentEntity> replies = baseMapper.selectList(replyQueryWrapper);
-
-            for (CommentEntity reply : replies) {
-                CommentItemVO replyVO = convertToCommentItemVO(reply, userId);
-                allReplies.add(replyVO);
-                queue.add(reply.getId()); // 将当前回复的ID加入队列，以便获取其子回复
+        // 构建顶级评论列表
+        List<CommentItemVO> topLevelComments = new ArrayList<>();
+        for (CommentEntity comment : allComments) {
+            if (comment.getParentId() == null) {
+                topLevelComments.add(commentMap.get(comment.getId()));
+            } else {
+                // 追溯到顶级评论
+                CommentEntity parent = comment;
+                while (parent.getParentId() != null) {
+                    CommentEntity finalParent = parent;
+                    parent = allComments.stream().filter(c -> c.getId().equals(finalParent.getParentId())).findFirst().orElse(null);
+                }
+                CommentItemVO topLevelCommentVO = commentMap.get(parent.getId());
+                if (topLevelCommentVO != null) {
+                    topLevelCommentVO.getReplyList().add(commentMap.get(comment.getId()));
+                }
             }
         }
 
-        return allReplies;
+        return topLevelComments;
     }
 
     // 转换 CommentEntity 为 CommentItemVO
-    private CommentItemVO convertToCommentItemVO(CommentEntity entity, Integer userId) {
+    private CommentItemVO convertToCommentItemVO(CommentEntity entity, Integer userId, Map<Integer, UserEntity> userMap, Map<Integer, CommentItemVO> commentMap) {
         CommentItemVO vo = new CommentItemVO();
         vo.setId(entity.getId());
         vo.setParentId(entity.getParentId());
+
+        if (entity.getParentId() != null) {
+            CommentItemVO parentVO = commentMap.get(entity.getParentId());
+            if (parentVO != null) {
+                vo.setParentUsername(parentVO.getUsername());
+            }
+        }
+
+        ForumEntity forum = forumService.getById(entity.getForumId());
+        vo.setForumName(forum.getName());
         vo.setType(entity.getType());
         vo.setContent(entity.getContent());
         vo.setUserId(entity.getUserId());
-        vo.setUsername(userMapper.selectById(entity.getUserId()).getWxName());
+        UserEntity user = userMap.get(entity.getUserId());
+        if (user != null) {
+            vo.setUsername(user.getWxName());
+            vo.setAvatar(user.getAvatar());
+        }
         vo.setCreateTime(DateUtil.formatTimeAgo(DateUtil.format(entity.getCreateTime())));
         vo.setLikeNum(userActionService.getActionCount(entity.getId(), UserActionEnum.LIKE_COMMENT));
         vo.setLike(userActionService.checkUserAction(userId, entity.getId(), UserActionEnum.LIKE_COMMENT));
         vo.setStar(userActionService.checkUserAction(userId, entity.getId(), UserActionEnum.STAR_COMMENT));
+        vo.setReplyList(new ArrayList<>()); // 初始化回复列表
         return vo;
     }
 

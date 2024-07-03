@@ -53,6 +53,9 @@ knife4j:
 
 auth:
   valid_urls:
-    - /auth/logout
-    - /user/**
-    - /forum/**
+#    - /auth/logout
+#    - /user/**
+#    - /forum/followedPage
+#    - /forum/followed
+#    - /forum/detail
+#    - /forum/comment/**

@@ -6,8 +6,8 @@
     >
   <view class="card-item">
       <image :src="forumInfo.cover" class="cover-img"></image>
-      <view class="title">{{ forumInfo.bookName }}</view>
-      <view class="info">{{ forumInfo.numCount }} 等人参与</view>
+      <view class="title">{{ forumInfo.name }}</view>
+      <view class="info">{{ forumInfo.followCount }} 人参与</view>
   </view>
     </navigator>
 </template>
@@ -39,8 +39,8 @@ defineProps({
 
   .cover-img {
     margin: 5rpx;
-    height: 180rpx;
-    width: 200rpx;
+    height: 220rpx;
+    width: 180rpx;
   }
 
 

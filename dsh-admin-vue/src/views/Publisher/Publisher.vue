@@ -22,7 +22,6 @@ import PublisherDialog from './components/PublisherDialog.vue'
 import { Edit, CirclePlus } from '@element-plus/icons-vue'
 import { PublisherApi } from '@/api/modules/publisher'
 import { useAppStoreWithOut } from '@/store/modules/app'
-// import { storeToRefs } from 'pinia'
 
 // 获取 ProTable 元素，调用其获取刷新数据方法（还能获取到当前查询参数，方便导出携带参数）
 const proTable = ref()

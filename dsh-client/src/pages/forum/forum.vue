@@ -5,12 +5,13 @@
         <image class="cover" :src="forumDetailInfo.cover"></image>
         <view class="info">
           <view class="bookName">{{ forumDetailInfo.bookName }}</view>
-          <view class="count">{{ forumDetailInfo.numCount }} 等人参与</view>
+          <view class="count">{{ forumDetailInfo.followCount }} 人参与</view>
+
         </view>
       </view>
       <uni-section title="书本简介" type="line">
         <text-expand>
-          <view class="desc">{{ forumDetailInfo.bookDesc }}</view>
+          <view class="desc">{{ forumDetailInfo.bookIntroduction }}</view>
         </text-expand>
       </uni-section>
     </view>
@@ -19,11 +20,12 @@
         <view v-for="(item, index) in displayedComments" :key="index">
           <comment-card :comment="item"></comment-card>
         </view>
-        <view v-if="commentList.length > 3" class="more" @click="showMore">
+        <view v-if="commentLists.length > 3" class="more" @click="showMore">
           {{ showMoreFlag ? '查看全部' : '收起' }}
         </view>
       </uni-section>
     </view>
+    <view class="follow-btn" @click="followAction">{{ forumDetailInfo.follow ? '取消关注' : '点我关注' }}</view>
   </view>
 </template>
 
@@ -31,8 +33,8 @@
 import { ref, computed } from 'vue'
 import TextExpand from '../../components/TextExpand/TextExpand.vue'
 import CommentCard from '../../components/CommentCard/CommentCard.vue'
-
-// 接收页面参数
+import { forumDetail, commentList, forumFollowed } from '@/service/forum.js'
+import { onLoad } from '@dcloudio/uni-app'
 const props = defineProps({
   id: {
     type: Number,
@@ -40,78 +42,17 @@ const props = defineProps({
   },
 })
 
-const forumDetailInfo = ref({
-  id: 1,
-  name: '读书汇',
-  bookName: '书本名称书本名称书本名称书本名称书本名称书本名称书本名称书本名称书本名称书本名称书本名称书本名称书本名称书本名称书本名称书本名称书本名称',
-  numCount: 15,
-  author: '作者',
-  bookDesc: '书本描述书本描述书本描述书本描述书本描述书本描述书本描述书本描述书本描述书本描述书本描述书本描述书本描述书本描述书本描述书本描述书本描述书本描述书本描述书本描述书本描述书本描述书本描述书本描述书本描述书本描述书本描述书本描述书本描述书本描述书本描述书本描述书本描述书本描述书本描述书本描述书本描述书本描述书本描述书本描述书本描述书本描述书本描述书本描述书本描述书本描述书本描述书本描述书本描述书本描述书本描述书本描述书本描述书本描述书本描述书本描述书本描述书本描述书本描述书本描述',
-  cover: 'https://img2.baidu.com/it/u=3830664050,3289120979&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=500'
+onLoad(() => {
+  getDetailInfo()
+  getCommentList()
 })
 
-const commentList = ref([
-  {
-    id: 1,
-    user: 'Flobby',
-    avatar: 'https://qiniu-web-assets.dcloud.net.cn/unidoc/zh/unicloudlogo.png',
-    bookName: '读书汇',
-    content: '评论内容评论内容评论内容评论内容评论内容',
-    createTime: '2024-07-01 16:27',
-    likeNum: 1,
-    reCommentList: [],
-    favourite: true,
-    isLike: false
-  },
-  {
-    id: 2,
-    user: 'Flobby',
-    avatar: 'https://qiniu-web-assets.dcloud.net.cn/unidoc/zh/unicloudlogo.png',
-    bookName: '读书汇',
-    content: '评论内容评论内容评论内容评论内容评论内容',
-    createTime: '2024-07-01 16:27',
-    likeNum: 21,
-    reCommentList: [],
-    favourite: true,
-    isLike: false
-  },
-  {
-    id: 3,
-    user: 'Flobby',
-    avatar: 'https://qiniu-web-assets.dcloud.net.cn/unidoc/zh/unicloudlogo.png',
-    bookName: '读书汇',
-    content: '评论内容评论内容评论内容评论内容评论内容',
-    createTime: '2024-07-01 16:27',
-    likeNum: 3,
-    reCommentList: [],
-    favourite: true,
-    isLike: false
-  },
-  {
-    id: 4,
-    user: 'Flobby',
-    avatar: 'https://qiniu-web-assets.dcloud.net.cn/unidoc/zh/unicloudlogo.png',
-    bookName: '读书汇',
-    content: '评论内容评论内容评论内容评论内容评论内容',
-    createTime: '2024-07-01 16:27',
-    likeNum: 4,
-    reCommentList: [],
-    favourite: true,
-    isLike: false
-  },
-  {
-    id: 5,
-    user: 'Flobby',
-    avatar: 'https://qiniu-web-assets.dcloud.net.cn/unidoc/zh/unicloudlogo.png',
-    bookName: '读书汇',
-    content: '评论内容评论内容评论内容评论内容评论内容',
-    createTime: '2024-07-01 16:27',
-    likeNum: 5,
-    reCommentList: [],
-    favourite: true,
-    isLike: false
-  }
-])
+const forumDetailInfo = ref()
+
+const getDetailInfo = async() => {
+  const { data } = await forumDetail(props.id)
+  forumDetailInfo.value = data
+}
 
 const toForumDetail = () => {
   uni.navigateTo({
@@ -119,13 +60,28 @@ const toForumDetail = () => {
   })
 }
 
+const commentLists = ref([])
+const getCommentList = async () => {
+  const { data } = await commentList(props.id)
+  commentLists.value = data
+}
 const showMoreFlag = ref(true)
 // 计算属性，默认显示前3条评论，点击查看更多时显示全部评论
 const displayedComments = computed(() => {
-  return showMoreFlag.value ? commentList.value.slice(0, 3) : commentList.value;
+  return showMoreFlag.value ? commentLists.value.slice(0, 3) : commentLists.value;
 });
 const showMore = () => {
   showMoreFlag.value = !showMoreFlag.value
+}
+
+const followAction = async () => {
+  const { code } = await forumFollowed(props.id)
+  if (code === 0) {
+    getDetailInfo()
+    uni.showToast({duration: 300})
+  } else {
+    uni.showToast({icon: 'error', duration: 300})
+  }
 }
 </script>
 
@@ -147,12 +103,14 @@ page {
     border-bottom: 1rpx solid #ddd;
 
     .cover {
-      width: 300rpx;
-      height: 300rpx;
+      width: 250rpx;
+      height: 350rpx;
+      margin: 10rpx;
     }
 
     .info {
       flex: 1;
+      padding: 0 10rpx;
 
       .bookName {
         font-size: 36rpx;
@@ -188,5 +146,19 @@ page {
     line-height: 100rpx;
     text-align: center;
   }
+}
+
+.follow-btn {
+  position: absolute;
+  top: 100rpx;
+  z-index: 100;
+  right: 0;
+  border-radius: 10rpx;
+  line-height: 100rpx;
+  height: 100rpx;
+  width: 120rpx;
+  background-color: rgba(48, 225, 195, 0.615);
+  color: #fff;
+  text-align: center;
 }
 </style>

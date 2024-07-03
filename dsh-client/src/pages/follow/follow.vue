@@ -21,33 +21,22 @@
 <script setup>
 import { ref } from 'vue'
 import ForumItem from '../../components/ForumItem/ForumItem.vue';
+import { followedPage } from '@/service/forum'
+import { onShow } from '@dcloudio/uni-app'
 
-const followForumList = ref([
-  // {
-  //     id: 1,
-  //     cover: 'https://img2.baidu.com/it/u=3830664050,3289120979&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=500',
-  //     bookName: '读书汇读书汇读书汇读书汇读书汇1',
-  //     numCount: 10
-  //   },
-  //   {
-  //     id: 2,
-  //     cover: 'https://img2.baidu.com/it/u=3830664050,3289120979&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=500',
-  //     bookName: '读书汇2',
-  //     numCount: 15
-  //   },
-  //   {
-  //     id: 2,
-  //     cover: 'https://img2.baidu.com/it/u=3830664050,3289120979&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=500',
-  //     bookName: '读书汇2',
-  //     numCount: 15
-  //   },
-  //   {
-  //     id: 2,
-  //     cover: 'https://img2.baidu.com/it/u=3830664050,3289120979&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=500',
-  //     bookName: '读书汇2',
-  //     numCount: 15
-  //   }
-])
+const followForumList = ref([])
+
+const getFollowList = async () => {
+  const { data } = await followedPage({
+    page: 1,
+    limit: 9
+  })
+  followForumList.value = data.list
+}
+
+onShow(() => {
+  getFollowList()
+})
 </script>
 
 <style lang="scss" scoped>

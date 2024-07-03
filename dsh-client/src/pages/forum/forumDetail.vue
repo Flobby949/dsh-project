@@ -12,7 +12,6 @@ const props = defineProps({
   },
 })
 
-console.log(props.id);
 </script>
 
 <style scoped>

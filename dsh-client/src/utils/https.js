@@ -1,6 +1,6 @@
 import { useUserStore } from '@/stores/user'
 
-const baseURL = 'http://localhost:8080/share-app-api/'
+const baseURL = 'http://localhost:8080/dsh-client-api/'
 
 export const http = (options) => {
   // 1. 返回 Promise 对象

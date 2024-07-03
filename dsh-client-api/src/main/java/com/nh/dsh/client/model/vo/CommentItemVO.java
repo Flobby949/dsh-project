@@ -15,10 +15,13 @@ import java.util.List;
 public class CommentItemVO {
     private Integer id;
     private Integer parentId;
+    private String parentUsername;
+    private String forumName;
     private Integer type;
     private String content;
     private Integer userId;
     private String username;
+    private String avatar;
     private String createTime;
     private long likeNum;
     private boolean isLike;

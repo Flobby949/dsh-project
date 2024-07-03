@@ -26,6 +26,9 @@ public class UserEntity {
     @Schema(description = "微信昵称")
     private String wxName;
 
+    @Schema(description = "头像")
+    private String avatar;
+
     @Schema(description = "0:未删除  1:已删除")
     @TableLogic
     @JsonIgnore

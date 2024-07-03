@@ -1,7 +1,6 @@
 <template>
 <view class="index">
     <CustomNavbar />
-    <Notice :noticeList="indexData.notice" />
     <Swiper :swiperList="indexData.swiper" />
     <uni-section class="mb-10" title="人文社科"  type="line">
       <scroll-view scroll-x="true">
@@ -22,23 +21,15 @@
 <script setup>
 import { ref } from 'vue'
 import Swiper from './components/Swiper.vue'
-import Notice from './components/Notice.vue'
 import CustomNavbar from './components/CustomNavbar.vue'
 import ForumItem from '../../components/ForumItem/ForumItem.vue'
+import { onShow } from '@dcloudio/uni-app'
+import { forumPage } from '@/service/forum.js'
+
 /**
 * 定义首页数据对象，包含了公告数组和轮播图数组
 */
 const indexData = ref({
-  notice: [
-    {
-      id: 1,
-      title: '通知通知通知通知通知通知通知通知通知通知通知通知通知通知通知通知通知通知通知通知通知'
-    },
-    {
-      id: 2,
-      title: '内容内容内容内容内容'
-    }
-  ],
   swiper: [
     {
       id: 1,
@@ -49,44 +40,20 @@ const indexData = ref({
       cover: 'https://img0.baidu.com/it/u=111322774,1061492612&fm=253&fmt=auto&app=138&f=JPEG?w=753&h=500'
     }
   ],
-  forumList: [
-    {
-      id: 1,
-      cover: 'https://img2.baidu.com/it/u=3830664050,3289120979&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=500',
-      bookName: '读书汇读书汇读书汇读书汇读书汇1',
-      numCount: 10
-    },
-    {
-      id: 2,
-      cover: 'https://img2.baidu.com/it/u=3830664050,3289120979&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=500',
-      bookName: '读书汇2',
-      numCount: 15
-    },
-        {
-      id: 1,
-      cover: 'https://img2.baidu.com/it/u=3830664050,3289120979&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=500',
-      bookName: '读书汇1',
-      numCount: 10
-    },
-    {
-      id: 2,
-      cover: 'https://img2.baidu.com/it/u=3830664050,3289120979&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=500',
-      bookName: '读书汇2',
-      numCount: 15
-    },
-        {
-      id: 1,
-      cover: 'https://img2.baidu.com/it/u=3830664050,3289120979&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=500',
-      bookName: '读书汇1',
-      numCount: 10
-    },
-    {
-      id: 2,
-      cover: 'https://img2.baidu.com/it/u=3830664050,3289120979&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=500',
-      bookName: '读书汇2',
-      numCount: 15
-    }
-  ]
+  forumList: []
+})
+
+const queryForumList = async () => {
+  const params = {
+    page: 1,
+    limit: 5
+  }
+  const { data } = await forumPage(params)
+  indexData.value.forumList = data.list
+}
+
+onShow(() => {
+  queryForumList()
 })
 
 </script>

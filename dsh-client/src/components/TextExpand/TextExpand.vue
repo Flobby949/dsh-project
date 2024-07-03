@@ -13,7 +13,7 @@
 	</view>
 </template>
 <script setup>
-import { ref, onMounted, nextTick } from 'vue';
+import { ref } from 'vue';
 
 // Props
 const props = defineProps({
@@ -53,19 +53,17 @@ const emit = defineEmits(['change'])
 
 const changeShowDisplay = () => {
   if (!props.canShow) return;
+  bindWindowHeight()
   showDisplay.value = !showDisplay.value;
   emit('change', showDisplay.value);
 };
 
-// Lifecycle
-onMounted(() => {
-  nextTick(() => {
-    const view = uni.createSelectorQuery().select('#centerBox');
-    view.boundingClientRect((res) => {
-      centerHeight.value = res ? px2rpx(res.height) + 'rpx' : '';
-    }).exec();
-  });
-});
+const bindWindowHeight = () => {
+  const view = uni.createSelectorQuery().select('#centerBox');
+  view.boundingClientRect((res) => {
+    centerHeight.value = res ? px2rpx(res.height) + 'rpx' : '';
+  }).exec();
+}
 </script>
 
 <style lang="scss" scoped>
