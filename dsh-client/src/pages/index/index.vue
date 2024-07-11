@@ -6,7 +6,6 @@
       <scroll-view scroll-x="true">
         <view class="scroll-container">
           <ForumItem v-for="(item, index) in indexData.forumList" :key="index" :forumInfo="item" />
-          <ForumItem v-for="(item, index) in indexData.forumList" :key="index" :forumInfo="item" />
           <navigator
             :url="'/pages/forum/allForum'"
           >

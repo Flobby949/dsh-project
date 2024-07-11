@@ -16,48 +16,63 @@
 		{
 			"path": "pages/follow/follow",
 			"style": {
+        "navigationStyle": "custom",
 				"navigationBarTitleText": "读书汇"
 			}
 		},
 		{
 			"path": "pages/forum/forum",
 			"style": {
+        "navigationStyle": "custom",
 				"navigationBarTitleText": "读书汇"
 			}
 		},
 		{
 			"path": "pages/profile/profile",
 			"style": {
+        "navigationStyle": "custom",
 				"navigationBarTitleText": "读书汇"
 			}
 		},
 		{
 			"path": "pages/login/login",
 			"style": {
+        "navigationStyle": "custom",
 				"navigationBarTitleText": "登录"
+			}
+		},
+		{
+			"path": "pages/login/login-temp",
+			"style": {
+        "navigationStyle": "custom",
+				"navigationBarTitleText": "微信登录"
 			}
 		},
     {
       "path": "pages/search/search",
       "style": {
+        "navigationStyle": "custom",
         "navigationBarTitleText": "搜索"
       }
     },
     {
       "path": "pages/forum/forumDetail",
       "style": {
+        "navigationStyle": "custom",
         "navigationBarTitleText": "书籍详情"
       }
     },
     {
       "path": "pages/forum/allForum",
       "style": {
+        "navigationStyle": "custom",
         "navigationBarTitleText": "全部书籍"
       }
     },
     {
       "path": "pages/forum/CommentDetail",
       "style": {
+        "navigationStyle": "custom",
         "navigationBarTitleText": "评论详情"
       }
     }

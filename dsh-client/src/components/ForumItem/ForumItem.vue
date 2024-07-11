@@ -4,11 +4,11 @@
       class="scroll-item"
       :key="forumInfo.id"
     >
-  <view class="card-item">
-      <image :src="forumInfo.cover" class="cover-img"></image>
-      <view class="title">{{ forumInfo.name }}</view>
-      <view class="info">{{ forumInfo.followCount }} 人参与</view>
-  </view>
+      <view class="card-item">
+          <image :src="forumInfo.cover" class="cover-img"></image>
+          <view class="title">{{ forumInfo.name }}</view>
+          <view class="info">{{ forumInfo.followCount }} 人参与</view>
+      </view>
     </navigator>
 </template>
 
@@ -26,7 +26,7 @@ defineProps({
   display: flex;
   flex-direction: column;
   padding: 5rpx;
-  margin: 0 10rpx;
+  margin: 10rpx;
   align-items: center;
   justify-content: center;
   width: 200rpx;

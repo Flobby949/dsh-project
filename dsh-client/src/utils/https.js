@@ -1,6 +1,6 @@
 import { useUserStore } from '@/stores/user'
 
-const baseURL = 'http://localhost:8080/dsh-client-api/'
+const baseURL = 'http://106.15.104.19:8080/dsh-client-api'
 
 export const http = (options) => {
   // 1. 返回 Promise 对象
@@ -17,6 +17,12 @@ export const http = (options) => {
               icon: 'error',
               title: res.data.msg || '请求错误',
             })
+          } else if (res.data.code === 401) {
+            // 401错误  -> 清理用户信息，跳转到登录页
+            const userStore = useUserStore()
+            userStore.clearUserInfo()
+            uni.reLaunch({ url: '/pages/login/login' })
+            reject(res)
           } else {
             // 提取核心数据 res.data
             resolve(res.data)

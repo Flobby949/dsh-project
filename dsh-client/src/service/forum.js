@@ -90,6 +90,18 @@ export const commentList = (forumId) => {
   })
 }
 
+/**
+ * 评论详情
+ * @param commentId id
+ * @returns
+ */
+export const commentDetail = (commentId) => {
+  return http({
+    method: 'POST',
+    url: FORUM_API + '/comment?commentId=' + commentId,
+  })
+}
+
 
 /**
  * 评论行为

@@ -11,11 +11,13 @@ export const useUserStore = defineStore(
     // 保存登录用户信息
     const setUserInfo = (val) => {
       userInfo.value = val
+      uni.setStorageSync('token', val.accessToken)
     }
 
     // 清除登录用户信息
     const clearUserInfo = () => {
       userInfo.value = undefined
+      uni.clearStorageSync()
     }
 
     // 记得 return

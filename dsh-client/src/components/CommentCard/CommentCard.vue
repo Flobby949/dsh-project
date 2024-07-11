@@ -1,6 +1,9 @@
 <template>
   <uni-card :title="comment.username" :isFull="true" :sub-title="comment.createTime" :extra="`[ ${comment.forumName} ]`" :thumbnail="comment.avatar" @click="commentDetail">
     <view class="content">{{ comment.content }}</view>
+    <view class="img" v-if="comment.fileType === 0">
+      <image v-for="(item, index) in comment.files" :key="index" :src="item" class="comment-img" @click="previewCommentImage(index)" />
+    </view>
     <view slot="actions" class="card-actions">
       <view class="action-bar">
         <view class="card-actions-item" @click.stop="actionsClick(1)">
@@ -14,7 +17,7 @@
           <text class="card-actions-item-text">收藏</text>
         </view>
       </view>
-      <view class="reply" v-if="comment.replyList.length > 0">
+      <view class="reply" v-if="comment.replyList.length > 0 && showReply">
         <view v-for="(item, index) in comment.replyList" :key="index">
           <view class="reply-item" v-if="item.parentId === comment.id" >
             <text style="color: rgb(33, 116, 212);">{{ item.username }}</text>
@@ -41,10 +44,19 @@ const props = defineProps({
   comment: {
     type: Object,
     required: true,
+  },
+  showReply: {
+    type: Boolean,
+    default: true
+  },
+  clickable: {
+    type: Boolean,
+    default: true
   }
 })
 
 const commentDetail = () => {
+  if (!props.clickable) return
   uni.navigateTo({
      url: '/pages/forum/CommentDetail?id=' + props.comment.id
   });
@@ -71,6 +83,14 @@ const actionsClick = async (params) => {
     props.comment.star = !props.comment.star
   }
   uni.showToast({duration: 300})
+}
+
+const previewCommentImage = (index) => {
+  uni.previewImage({
+                urls: props.comment.files,
+                current: index, // 当前显示图片的索引
+                indicator: 'default' // 图片指示器样式，默认为圆点
+            })
 }
 </script>
 
@@ -109,5 +129,11 @@ const actionsClick = async (params) => {
       line-height: 1.5;
     }
   }
+}
+.comment-img {
+  height: 100rpx;
+  width: 100rpx;
+  border: 1rpx solid #bcbcbc;
+  margin: 10rpx;
 }
 </style>

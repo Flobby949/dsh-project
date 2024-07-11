@@ -6,21 +6,21 @@
       <view class="left">
         <image
           :src="
-            userInfo?.avatar ||
+            wuser?.avatar ||
             'https://img.ixintu.com/download/jpg/20201130/a5a797801c5e0abd58d80d2182081608_512_512.jpg!ys'
           "
           style="width: 100%; height: 100%"
         />
       </view>
       <view class="center">
-        <view class="name" v-if="userInfo?.nickname || userInfo?.wxOpenId">{{
-          userInfo.nickname
+        <view class="name" v-if="wuser?.nickname || wuser?.wxOpenId">{{
+          wuser.nickname
         }}</view>
         <view class="noLogin" v-else>暂未登录</view>
       </view>
     </view>
 
-    <uni-grid class="item-bar" v-if="userInfo" :column="3" :highlight="true" @change="change" :showBorder="false" :square="false">
+    <uni-grid class="item-bar" v-if="wuser" :column="3" :highlight="true" @change="change" :showBorder="false" :square="false">
 				<uni-grid-item v-for="(item, index) in itemBarList" :index="index" :key="index">
 					<view class="grid-item-box">
 						<uni-icons :type="item.icon" :size="30" color="#777" />
@@ -72,18 +72,19 @@
     </view>
     <!-- 登录 -->
     <view class="action">
-      <view class="button" @click="handleClickLogin">前往登录</view>
+      <view class="button" v-if="!wuser" @click="handleClickLogin">前往登录</view>
+      <view class="button" v-else @click="logoutAction">退出登录</view>
     </view>
   </view>
 </template>
 
 <script setup>
 import { ref } from 'vue'
-const userInfo = ref(
-  // {
-  //   nickname: 'flobby'
-  // }
-)
+import { useUserStore } from '@/stores/user'
+const userStore = useUserStore()
+import { onLoad } from '@dcloudio/uni-app'
+import { queryUserInfo } from '@/service/user'
+import { logout } from '@/service/auth'
 
 // item-bar数据
 const itemBarList = [
@@ -104,12 +105,35 @@ const itemBarList = [
   }
 ]
 
+onLoad(() => {
+  getUserInfo()
+})
+const wuser = ref()
+const getUserInfo = async () => {
+  const res = await queryUserInfo()
+  if (res.code !== 0) {
+    uni.showToast({
+      icon: 'none',
+      title: res.msg
+    })
+  }
+  wuser.value = res.data
+}
 
 // 前往登录
 const handleClickLogin = () => {
   uni.reLaunch({
     url: '/pages/login/login',
   })
+}
+
+const logoutAction = async () => {
+  const res = await logout()
+  if (res.code === 0) {
+    uni.showToast({icon: 'none',title: '退出成功'})
+    wuser.value = null
+    userStore.clearUserInfo()
+  }
 }
 </script>
 

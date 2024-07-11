@@ -6,7 +6,6 @@
         <view class="info">
           <view class="bookName">{{ forumDetailInfo.bookName }}</view>
           <view class="count">{{ forumDetailInfo.followCount }} 人参与</view>
-
         </view>
       </view>
       <uni-section title="书本简介" type="line">
@@ -26,6 +25,19 @@
       </uni-section>
     </view>
     <view class="follow-btn" @click="followAction">{{ forumDetailInfo.follow ? '取消关注' : '点我关注' }}</view>
+    <uni-fab ref="fab" :pattern="fabPattern" horizontal="right" @click="showComment" />
+    <uni-popup ref="commentPop" type="bottom" background-color="#fff">
+      <view class="commentPop">
+        <uni-easyinput type="textarea" placeholder="请输入评论" v-model="commentContent" />
+          <view class="flex justify-start items-center bg-red-50 h-5">
+            <image v-for="(item, index) in commentImgList" :key="index" :src="item" class="comment-img" />
+          </view>
+        <view style="display: flex; justify-content: space-between; padding: 10rpx">
+          <uni-icons type="image" size="30" @click="onCommentImg"></uni-icons>
+          <uni-icons type="paperplane-filled" size="30" @click="sendComment"></uni-icons>
+        </view>
+      </view>
+    </uni-popup>
   </view>
 </template>
 
@@ -33,7 +45,7 @@
 import { ref, computed } from 'vue'
 import TextExpand from '../../components/TextExpand/TextExpand.vue'
 import CommentCard from '../../components/CommentCard/CommentCard.vue'
-import { forumDetail, commentList, forumFollowed } from '@/service/forum.js'
+import { forumDetail, commentList, forumFollowed, forumCommentAdd } from '@/service/forum.js'
 import { onLoad } from '@dcloudio/uni-app'
 const props = defineProps({
   id: {
@@ -41,6 +53,10 @@ const props = defineProps({
     required: true,
   },
 })
+
+const fabPattern = {
+  icon: 'chat-filled'
+}
 
 onLoad(() => {
   getDetailInfo()
@@ -83,6 +99,71 @@ const followAction = async () => {
     uni.showToast({icon: 'error', duration: 300})
   }
 }
+
+const commentPop = ref()
+const showComment = () => {
+  commentPop.value.open('bottom')
+}
+const commentContent = ref()
+const sendComment = async () => {
+  const commentDto = {
+    forumId: props.id,
+    content: commentContent.value,
+    type: 1,
+    fileType: 0,
+    files: commentImgList.value
+  }
+  const res = await forumCommentAdd(commentDto)
+  console.log(res);
+if (res.code === 0) {
+    uni.showToast()
+    uni.showLoading()
+    await getCommentList()
+    commentContent.value = ''
+    uni.hideLoading()
+  } else {
+    uni.showToast({
+      'icon': 'error',
+      'title': res.msg
+    })
+  }
+  commentPop.value.close()
+}
+
+const commentImgList = ref([])
+const onCommentImg = async () => {
+  uni.chooseImage({
+    count: 1,
+    success: (res) => {
+      console.log(res);
+      // 文件路径
+      const tempFiles = res.tempFilePaths
+      // 上传
+      uploadFile(tempFiles[0]).then((fileRes) => {
+        console.log(fileRes);
+      })
+    },
+  })
+}
+
+const uploadFile = (file) => {
+  // 文件上传
+  uni.uploadFile({
+    url: '/common/upload/img',
+    name: 'file', // 后端数据字段名
+    filePath: file,
+    success: (res) => {
+      // 判断状态码是否上传成功
+      if (res.statusCode === 200) {
+        commentImgList.value = commentImgList.value.concat(JSON.parse(res.data).data.urlList)
+        uni.showToast({ icon: 'success', title: '上传' })
+      } else {
+        uni.showToast({ icon: 'error', title: '出现错误' })
+      }
+    },
+  })
+}
+
 </script>
 
 <style lang="scss" scoped>
@@ -151,7 +232,7 @@ page {
 .follow-btn {
   position: absolute;
   top: 100rpx;
-  z-index: 100;
+  z-index: 10;
   right: 0;
   border-radius: 10rpx;
   line-height: 100rpx;
@@ -160,5 +241,16 @@ page {
   background-color: rgba(48, 225, 195, 0.615);
   color: #fff;
   text-align: center;
+}
+
+.commentPop {
+  padding: 20rpx;
+}
+
+.comment-img {
+  height: 100rpx;
+  width: 100rpx;
+  border: 1rpx solid #bcbcbc;
+  margin: 10rpx;
 }
 </style>
