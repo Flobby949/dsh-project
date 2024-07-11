@@ -21,6 +21,8 @@ public interface CommentService extends IService<CommentEntity> {
 
     List<CommentItemVO> queryForumCommentList(Integer forumId);
 
+    CommentItemVO getCommentDetail(Integer commentId);
+
     void doCommentAction(CommentActionDTO dto);
 
     void modifyComment(CommentDTO dto);

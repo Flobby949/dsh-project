@@ -1,13 +1,12 @@
 package com.nh.dsh.client.controller;
 
 import com.nh.dsh.client.common.result.Result;
+import com.nh.dsh.client.model.vo.UserLoginVO;
 import com.nh.dsh.client.service.AuthService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @author : Flobby
@@ -24,9 +23,14 @@ import org.springframework.web.bind.annotation.RestController;
 public class AuthController {
     private final AuthService authService;
 
-    @PostMapping("login")
-    public Result<String> login() {
-        authService.login();
+    @PostMapping("wxLogin")
+    public Result<UserLoginVO> login(@RequestParam String code) {
+        return Result.ok(authService.login(code));
+    }
+
+    @PostMapping("logout")
+    public Result<String> logout(@RequestHeader("Authorization") String token) {
+        authService.logout(token);
         return Result.ok();
     }
 }

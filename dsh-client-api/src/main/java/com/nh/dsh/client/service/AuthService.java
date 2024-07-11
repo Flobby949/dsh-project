@@ -7,5 +7,7 @@ public interface AuthService {
 
     boolean checkUserEnabled(Integer pkId);
 
-    UserLoginVO login();
+    UserLoginVO login(String code);
+
+    void logout(String token);
 }

@@ -4,6 +4,8 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
+import java.util.List;
+
 /**
  * @author : Flobby
  * @program : dsh-client-api
@@ -21,4 +23,6 @@ public class CommentDTO {
     private Integer parentId;
     @NotNull
     private Integer type;
+    private Integer fileType;
+    private List<String> files;
 }

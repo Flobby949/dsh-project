@@ -11,5 +11,6 @@ import lombok.Data;
 
 @Data
 public class ForumQuery extends Query{
-
+    private Integer categoryId;
+    private String keyword;
 }

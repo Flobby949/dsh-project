@@ -2,6 +2,7 @@ server:
   port: 8080
   servlet:
     context-path: /dsh-client-api
+  max-http-request-header-size: 10485760
 
 spring:
   application:
@@ -11,6 +12,10 @@ spring:
   mvc:
     path-match:
       matching-strategy: ant_path_matcher #??
+  servlet:
+    multipart:
+      max-file-size: 10485760 # 上传文件大小限定为10M
+      max-request-size: 10485760
 
 mybatis-plus:
   mapper-locations: classpath:/mapper/*Mapper.xml
@@ -18,7 +23,7 @@ mybatis-plus:
   configuration:
     map-underscore-to-camel-case: true
     cache-enabled: false
-    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+#    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
   global-config:
     db-config:
       logic-delete-field: true # ????????????(since 3.3.0,????????????2)
@@ -50,12 +55,17 @@ knife4j:
     username: admin   #???
     password: 123456  #??
 
+minio:
+  host: http://106.15.104.19:9000/
+  access-key: admin123
+  secret-key: flobby529
+  bucket: dsh
 
 auth:
   valid_urls:
-#    - /auth/logout
-#    - /user/**
-#    - /forum/followedPage
-#    - /forum/followed
-#    - /forum/detail
-#    - /forum/comment/**
+    - /auth/logout
+    - /user/**
+    - /forum/followedPage
+    - /forum/followed
+    - /forum/detail
+    - /forum/comment/**

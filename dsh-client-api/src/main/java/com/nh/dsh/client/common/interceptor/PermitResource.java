@@ -1,7 +1,5 @@
 package com.nh.dsh.client.common.interceptor;
 
-import com.nh.dsh.client.common.cache.RequestContext;
-import com.nh.dsh.client.common.constant.Constant;
 import lombok.SneakyThrows;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.config.YamlPropertiesFactoryBean;
@@ -22,7 +20,6 @@ public class PermitResource {
      */
     @SneakyThrows
     public List<String> getValidList() {
-        RequestContext.put(Constant.USER_ID, 1);
         ResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
         Resource[] resources = resolver.getResources("classpath*:application.yml");
         String key = "auth.valid_urls";

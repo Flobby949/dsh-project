@@ -14,11 +14,14 @@ import java.util.List;
 @Data
 public class CommentItemVO {
     private Integer id;
+    private Integer forumId;
     private Integer parentId;
     private String parentUsername;
     private String forumName;
     private Integer type;
     private String content;
+    private Integer fileType;
+    private List<String> files;
     private Integer userId;
     private String username;
     private String avatar;

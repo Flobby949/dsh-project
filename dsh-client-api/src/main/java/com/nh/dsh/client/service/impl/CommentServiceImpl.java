@@ -19,6 +19,7 @@ import com.nh.dsh.client.service.ForumService;
 import com.nh.dsh.client.service.UserActionService;
 import com.nh.dsh.client.utils.DateUtil;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -31,6 +32,7 @@ import java.util.stream.Collectors;
  * @create : 2024-07-02 10:33
  **/
 
+@Slf4j
 @Service
 @AllArgsConstructor
 public class CommentServiceImpl extends BaseServiceImpl<CommentMapper, CommentEntity> implements CommentService {
@@ -40,6 +42,7 @@ public class CommentServiceImpl extends BaseServiceImpl<CommentMapper, CommentEn
 
     @Override
     public void addComment(CommentDTO comment) {
+        log.info("添加评论: {}", comment);
         CommentEntity entity = CommentConvert.INSTANCE.convert(comment);
         entity.setUserId(RequestContext.getUserId());
         baseMapper.insert(entity);
@@ -95,12 +98,120 @@ public class CommentServiceImpl extends BaseServiceImpl<CommentMapper, CommentEn
         return topLevelComments;
     }
 
+    @Override
+    public CommentItemVO getCommentDetail(Integer commentId) {
+        Integer userId = RequestContext.getUserId();
+
+        // 查询指定评论
+        CommentEntity targetComment = baseMapper.selectById(commentId);
+        if (targetComment == null) {
+            throw new ServerException("Comment not found");
+        }
+
+        // 获取目标评论的顶级评论
+        CommentEntity topLevelComment = targetComment;
+        while (topLevelComment.getParentId() != null) {
+            topLevelComment = baseMapper.selectById(topLevelComment.getParentId());
+            if (topLevelComment == null) {
+                throw new ServerException("Parent comment not found");
+            }
+        }
+
+        // 递归查询所有子评论
+        List<CommentEntity> allComments = new ArrayList<>();
+        allComments.add(topLevelComment);
+        getAllChildComments(topLevelComment.getId(), allComments);
+
+        // 获取所有涉及到的用户ID
+        Set<Integer> userIds = allComments.stream()
+                .map(CommentEntity::getUserId)
+                .collect(Collectors.toSet());
+
+        // 批量查询用户信息
+        List<UserEntity> users = userMapper.selectBatchIds(userIds);
+        Map<Integer, UserEntity> userMap = users.stream()
+                .collect(Collectors.toMap(UserEntity::getId, user -> user));
+
+        // 构建 ID 到 CommentItemVO 的映射
+        Map<Integer, CommentItemVO> commentMap = new HashMap<>();
+        for (CommentEntity comment : allComments) {
+            CommentItemVO vo = convertToCommentItemVO(comment, userId, userMap);
+            commentMap.put(comment.getId(), vo);
+        }
+
+        // 构建评论树
+        for (CommentEntity comment : allComments) {
+            if (comment.getParentId() != null) {
+                CommentEntity parent = comment;
+                while (parent.getParentId() != null) {
+                    CommentEntity finalParent = parent;
+                    parent = allComments.stream().filter(c -> c.getId().equals(finalParent.getParentId())).findFirst().orElse(null);
+                }
+                CommentItemVO topLevelCommentVO = commentMap.get(parent.getId());
+                if (topLevelCommentVO != null) {
+                    topLevelCommentVO.getReplyList().add(commentMap.get(comment.getId()));
+                }
+            }
+        }
+
+        return commentMap.get(topLevelComment.getId());
+    }
+
+    // 递归查询所有子评论
+    private void getAllChildComments(Integer parentId, List<CommentEntity> allComments) {
+        LambdaQueryWrapper<CommentEntity> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(CommentEntity::getParentId, parentId);
+        List<CommentEntity> childComments = baseMapper.selectList(queryWrapper);
+
+        for (CommentEntity child : childComments) {
+            allComments.add(child);
+            getAllChildComments(child.getId(), allComments);
+        }
+    }
+
+    // 转换 CommentEntity 为 CommentItemVO
+    private CommentItemVO convertToCommentItemVO(CommentEntity entity, Integer userId, Map<Integer, UserEntity> userMap) {
+        CommentItemVO vo = new CommentItemVO();
+        vo.setId(entity.getId());
+        vo.setParentId(entity.getParentId());
+        vo.setFileType(entity.getFileType());
+        vo.setFiles(entity.getFiles());
+
+        if (entity.getParentId() != null) {
+            CommentEntity parentEntity = baseMapper.selectById(entity.getParentId());
+            if (parentEntity != null) {
+                UserEntity parentUser = userMap.get(parentEntity.getUserId());
+                vo.setParentUsername(parentUser != null ? parentUser.getWxName() : null);
+            }
+        }
+
+        ForumEntity forum = forumService.getById(entity.getForumId());
+        vo.setForumName(forum.getName());
+        vo.setType(entity.getType());
+        vo.setContent(entity.getContent());
+        vo.setUserId(entity.getUserId());
+        vo.setForumId(entity.getForumId());
+        UserEntity user = userMap.get(entity.getUserId());
+        if (user != null) {
+            vo.setUsername(user.getWxName());
+            vo.setAvatar(user.getAvatar());
+        }
+        vo.setCreateTime(DateUtil.formatTimeAgo(DateUtil.format(entity.getCreateTime())));
+        vo.setLikeNum(userActionService.getActionCount(entity.getId(), UserActionEnum.LIKE_COMMENT));
+        vo.setLike(userActionService.checkUserAction(userId, entity.getId(), UserActionEnum.LIKE_COMMENT));
+        vo.setStar(userActionService.checkUserAction(userId, entity.getId(), UserActionEnum.STAR_COMMENT));
+        vo.setReplyList(new ArrayList<>()); // 初始化回复列表
+        return vo;
+    }
+
+
     // 转换 CommentEntity 为 CommentItemVO
     private CommentItemVO convertToCommentItemVO(CommentEntity entity, Integer userId, Map<Integer, UserEntity> userMap, Map<Integer, CommentItemVO> commentMap) {
         CommentItemVO vo = new CommentItemVO();
         vo.setId(entity.getId());
         vo.setParentId(entity.getParentId());
-
+        vo.setFileType(entity.getFileType());
+        vo.setFiles(entity.getFiles());
         if (entity.getParentId() != null) {
             CommentItemVO parentVO = commentMap.get(entity.getParentId());
             if (parentVO != null) {
@@ -113,6 +224,7 @@ public class CommentServiceImpl extends BaseServiceImpl<CommentMapper, CommentEn
         vo.setType(entity.getType());
         vo.setContent(entity.getContent());
         vo.setUserId(entity.getUserId());
+        vo.setForumId(entity.getForumId());
         UserEntity user = userMap.get(entity.getUserId());
         if (user != null) {
             vo.setUsername(user.getWxName());

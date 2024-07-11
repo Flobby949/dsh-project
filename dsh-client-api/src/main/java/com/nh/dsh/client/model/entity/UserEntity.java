@@ -26,6 +26,9 @@ public class UserEntity {
     @Schema(description = "微信昵称")
     private String wxName;
 
+    @Schema(description = "openid")
+    private String wxId;
+
     @Schema(description = "头像")
     private String avatar;
 

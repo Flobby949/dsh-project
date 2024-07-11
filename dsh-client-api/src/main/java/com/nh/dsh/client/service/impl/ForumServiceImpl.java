@@ -7,10 +7,12 @@ import com.nh.dsh.client.common.result.PageResult;
 import com.nh.dsh.client.convert.ForumConvert;
 import com.nh.dsh.client.enums.UserActionEnum;
 import com.nh.dsh.client.mapper.BookMapper;
+import com.nh.dsh.client.mapper.CategoryMapper;
 import com.nh.dsh.client.mapper.ForumMapper;
 import com.nh.dsh.client.mapper.UserMapper;
 import com.nh.dsh.client.model.BaseServiceImpl;
 import com.nh.dsh.client.model.entity.BookEntity;
+import com.nh.dsh.client.model.entity.CategoryEntity;
 import com.nh.dsh.client.model.entity.ForumEntity;
 import com.nh.dsh.client.model.entity.UserEntity;
 import com.nh.dsh.client.model.query.ForumQuery;
@@ -38,20 +40,18 @@ import java.util.List;
 public class ForumServiceImpl extends BaseServiceImpl<ForumMapper, ForumEntity> implements ForumService {
     private final UserMapper userMapper;
     private final BookMapper bookMapper;
+    private final CategoryMapper categoryMapper;
     private final UserActionService userActionService;
 
     @Override
     public PageResult<ForumListItemVO> forumList(ForumQuery query) {
         Page<ForumEntity> page = getPage(query);
-        LambdaQueryWrapper<ForumEntity> queryWrapper = new LambdaQueryWrapper<>();
-        queryWrapper.orderByDesc(ForumEntity::getCreateTime);
-        Page<ForumEntity> pageResult = baseMapper.selectPage(page, queryWrapper);
-        List<ForumListItemVO> resultList = pageResult.getRecords().stream().map(item -> {
+        List<ForumListItemVO> resultList = baseMapper.selectByPage(page, query).stream().map(item -> {
             ForumListItemVO vo = ForumConvert.INSTANCE.convert(item);
             vo.setFollowCount(userActionService.getActionCount(item.getId(), UserActionEnum.FOLLOW_FORUM));
             return vo;
         }).sorted(Comparator.comparing(ForumListItemVO::getFollowCount)).toList();
-        return new PageResult<>(resultList, pageResult.getTotal());
+        return new PageResult<>(resultList, page.getTotal());
     }
 
     @Override
@@ -63,6 +63,10 @@ public class ForumServiceImpl extends BaseServiceImpl<ForumMapper, ForumEntity> 
         BookEntity bookEntity = bookMapper.selectById(entity.getBookId());
         forumDetailVO.setBookName(bookEntity.getBookName());
         forumDetailVO.setBookIntroduction(bookEntity.getBookIntroduction());
+        forumDetailVO.setWriter(bookEntity.getWriter());
+        CategoryEntity category = categoryMapper.selectById(bookEntity.getClassificationId());
+        forumDetailVO.setCategory(category.getName());
+        forumDetailVO.setWriterIntroduction(bookEntity.getAuthorIntroduction());
         forumDetailVO.setFollowCount(userActionService.getActionCount(entity.getId(), UserActionEnum.FOLLOW_FORUM));
         forumDetailVO.setFollow(userActionService.checkUserAction(RequestContext.getUserId(), entity.getId(), UserActionEnum.FOLLOW_FORUM));
         return forumDetailVO;

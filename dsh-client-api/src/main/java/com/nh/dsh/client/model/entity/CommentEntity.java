@@ -1,12 +1,14 @@
 package com.nh.dsh.client.model.entity;
 
 import com.baomidou.mybatisplus.annotation.*;
+import com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author : Flobby
@@ -16,7 +18,7 @@ import java.util.Date;
  **/
 
 @Data
-@TableName("comment")
+@TableName(value = "comment", autoResultMap = true)
 @Schema(description = "评论对象")
 public class CommentEntity {
     @Schema(description = "主键")
@@ -38,8 +40,15 @@ public class CommentEntity {
     @Schema(description = "类型")
     private Integer type;
 
-    @Schema(description = "标题")
-    private String title;
+    /**
+     *  0： '图片' 或1 ： '语音'
+     */
+    @Schema(description = "文件类型")
+    private Integer fileType;
+
+    @Schema(description = "文件")
+    @TableField(typeHandler = JacksonTypeHandler.class)
+    private List<String> files;
 
     @Schema(description = "内容")
     private String content;

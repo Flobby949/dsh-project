@@ -1,10 +1,12 @@
 package com.nh.dsh.client.service;
 
+import com.alibaba.fastjson2.JSONObject;
+
 /**
  * @author Flobby
  */
 public interface CommonService {
 
-    String wxLogin(String code);
+    JSONObject wxLogin(String code);
 
 }

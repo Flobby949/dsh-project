@@ -11,6 +11,7 @@ import com.nh.dsh.client.model.vo.ForumListItemVO;
 import com.nh.dsh.client.service.CommentService;
 import com.nh.dsh.client.service.ForumService;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
@@ -55,7 +56,7 @@ public class ForumController {
     }
 
     @PostMapping("comment/add")
-    public Result<String> forumCommentAdd(@RequestBody CommentDTO dto) {
+    public Result<String> forumCommentAdd(@RequestBody @Valid CommentDTO dto) {
         commentService.addComment(dto);
         return Result.ok();
     }
@@ -69,6 +70,11 @@ public class ForumController {
     @PostMapping("comment/list")
     public Result<List<CommentItemVO>> commentList(@RequestParam("forumId") Integer forumId) {
         return Result.ok(commentService.queryForumCommentList(forumId));
+    }
+
+    @PostMapping("comment")
+    public Result<CommentItemVO> commentDetail(@RequestParam("commentId") Integer commentId) {
+        return Result.ok(commentService.getCommentDetail(commentId));
     }
 
     @PostMapping("comment/action")

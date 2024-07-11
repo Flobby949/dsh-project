@@ -1,8 +1,13 @@
 package com.nh.dsh.client.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.nh.dsh.client.model.entity.ForumEntity;
+import com.nh.dsh.client.model.query.ForumQuery;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 /**
  * @author : Flobby
@@ -14,4 +19,5 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface ForumMapper extends BaseMapper<ForumEntity> {
 
+    List<ForumEntity> selectByPage(Page<ForumEntity> page, @Param("params") ForumQuery query);
 }

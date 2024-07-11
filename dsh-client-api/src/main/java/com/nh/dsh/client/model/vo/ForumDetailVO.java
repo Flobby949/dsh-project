@@ -36,6 +36,15 @@ public class ForumDetailVO {
     @Schema(description = "书本简介")
     private String bookIntroduction;
 
+    @Schema(description = "作者")
+    private String writer;
+
+    @Schema(description = "分类")
+    private String category;
+
+    @Schema(description = "作者简介")
+    private String writerIntroduction;
+
     @Schema(description = "封面")
     private String cover;
 
