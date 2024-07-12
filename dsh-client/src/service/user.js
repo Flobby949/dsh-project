@@ -8,3 +8,24 @@ export const queryUserInfo = () => {
     url: USER_API + '/userInfo'
   })
 }
+export const starCommentList = (query) => {
+  return http({
+    method: 'POST',
+    url: USER_API + '/starCommentList',
+    data: query
+  })
+}
+export const myCommentList = (query) => {
+  return http({
+    method: 'POST',
+    url: USER_API + '/myCommentList',
+    data: query
+  })
+}
+export const reviewCommentList = (query) => {
+  return http({
+    method: 'POST',
+    url: USER_API + '/reviewCommentList',
+    data: query
+  })
+}

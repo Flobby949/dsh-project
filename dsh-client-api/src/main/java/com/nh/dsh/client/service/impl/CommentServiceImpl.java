@@ -1,8 +1,10 @@
 package com.nh.dsh.client.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.nh.dsh.client.common.cache.RequestContext;
 import com.nh.dsh.client.common.exception.ServerException;
+import com.nh.dsh.client.common.result.PageResult;
 import com.nh.dsh.client.convert.CommentConvert;
 import com.nh.dsh.client.enums.UserActionEnum;
 import com.nh.dsh.client.mapper.CommentMapper;
@@ -13,11 +15,13 @@ import com.nh.dsh.client.model.dto.CommentDTO;
 import com.nh.dsh.client.model.entity.CommentEntity;
 import com.nh.dsh.client.model.entity.ForumEntity;
 import com.nh.dsh.client.model.entity.UserEntity;
+import com.nh.dsh.client.model.query.Query;
 import com.nh.dsh.client.model.vo.CommentItemVO;
 import com.nh.dsh.client.service.CommentService;
 import com.nh.dsh.client.service.ForumService;
 import com.nh.dsh.client.service.UserActionService;
 import com.nh.dsh.client.utils.DateUtil;
+import com.nh.dsh.client.utils.PageUtil;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -251,6 +255,80 @@ public class CommentServiceImpl extends BaseServiceImpl<CommentMapper, CommentEn
         CommentEntity commentEntity = baseMapper.selectById(dto.getId());
         commentEntity.setContent(dto.getContent());
         baseMapper.updateById(commentEntity);
+    }
+
+    @Override
+    public PageResult<CommentItemVO> queryStarCommentList(Query query) {
+        Page<CommentEntity> page = new Page<>(query.getPage(), query.getLimit());
+        List<Integer> actionIdList = userActionService.getActionList(RequestContext.getUserId(), UserActionEnum.STAR_COMMENT);
+        LambdaQueryWrapper<CommentEntity> wrapper = new LambdaQueryWrapper<>();
+        wrapper.in(!actionIdList.isEmpty(), CommentEntity::getId, actionIdList);
+        baseMapper.selectPage(page, wrapper);
+        return new PageResult<>(convertToCommentList(page.getRecords()), page.getTotal());
+    }
+
+    @Override
+    public PageResult<CommentItemVO> queryMyCommentList(Query query) {
+        Page<CommentEntity> page = new Page<>(query.getPage(), query.getLimit());
+        LambdaQueryWrapper<CommentEntity> wrapper = new LambdaQueryWrapper<>();
+        wrapper.eq(CommentEntity::getUserId, RequestContext.getUserId());
+        baseMapper.selectPage(page, wrapper);
+        return new PageResult<>(convertToCommentList(page.getRecords()), page.getTotal());
+    }
+
+    @Override
+    public PageResult<CommentItemVO> queryReviewCommentList(Query query) {
+        LambdaQueryWrapper<CommentEntity> wrapper = new LambdaQueryWrapper<>();
+        wrapper.eq(CommentEntity::getUserId, RequestContext.getUserId());
+        wrapper.isNotNull(CommentEntity::getParentId);
+        // 获取我评论的所有id
+        Set<Integer> idList = baseMapper.selectList(wrapper).stream().map(comment -> {
+            Integer id = comment.getId();
+            // 获取我评论的id的最顶层id
+            return getTopCommentId(id);
+        }).collect(Collectors.toSet());
+        log.info("idList: {}", idList);
+        // 将顶层id分页
+        Page<CommentItemVO> pageResult = PageUtil.getPages(query.getPage(), query.getLimit(), convertToCommentList(baseMapper.selectBatchIds(idList)));
+        return new PageResult<>(pageResult.getRecords(), pageResult.getTotal());
+    }
+
+    private Integer getTopCommentId(Integer commentId) {
+        CommentEntity comment = baseMapper.selectById(commentId);
+        if (comment == null) {
+            throw new ServerException("评论不存在");
+        }
+        Integer parentId = comment.getParentId();
+        while (parentId != null && parentId > 0) {
+            comment = baseMapper.selectById(parentId);
+            if (comment == null || comment.getParentId() == null) {
+                break;
+            }
+            parentId = comment.getParentId();
+        }
+        return parentId;
+    }
+
+    private List<CommentItemVO> convertToCommentList(List<CommentEntity> entityList) {
+        return entityList.stream().map(entity -> {
+            CommentItemVO vo = new CommentItemVO();
+            vo.setId(entity.getId());
+            vo.setFileType(entity.getFileType());
+            vo.setFiles(entity.getFiles());
+            ForumEntity forum = forumService.getById(entity.getForumId());
+            vo.setForumName(forum.getName());
+            vo.setType(entity.getType());
+            vo.setContent(entity.getContent());
+            vo.setUserId(entity.getUserId());
+            vo.setForumId(entity.getForumId());
+            UserEntity user = userMapper.selectById(entity.getUserId());
+            if (user != null) {
+                vo.setUsername(user.getWxName());
+                vo.setAvatar(user.getAvatar());
+            }
+            vo.setCreateTime(DateUtil.format(entity.getCreateTime()));
+            return vo;
+        }).toList();
     }
 
 }

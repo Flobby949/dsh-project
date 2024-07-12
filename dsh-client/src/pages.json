@@ -75,6 +75,13 @@
         "navigationStyle": "custom",
         "navigationBarTitleText": "评论详情"
       }
+    },
+    {
+      "path": "pages/profile/userComment",
+      "style": {
+        "navigationStyle": "custom",
+        "navigationBarTitleText": "评论列表"
+      }
     }
 	],
 	"globalStyle": {

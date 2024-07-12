@@ -1,9 +1,11 @@
 package com.nh.dsh.client.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.nh.dsh.client.common.result.PageResult;
 import com.nh.dsh.client.model.dto.CommentActionDTO;
 import com.nh.dsh.client.model.dto.CommentDTO;
 import com.nh.dsh.client.model.entity.CommentEntity;
+import com.nh.dsh.client.model.query.Query;
 import com.nh.dsh.client.model.vo.CommentItemVO;
 
 import java.util.List;
@@ -26,4 +28,10 @@ public interface CommentService extends IService<CommentEntity> {
     void doCommentAction(CommentActionDTO dto);
 
     void modifyComment(CommentDTO dto);
+
+    PageResult<CommentItemVO> queryStarCommentList(Query query);
+
+    PageResult<CommentItemVO> queryMyCommentList(Query query);
+
+    PageResult<CommentItemVO> queryReviewCommentList(Query query);
 }

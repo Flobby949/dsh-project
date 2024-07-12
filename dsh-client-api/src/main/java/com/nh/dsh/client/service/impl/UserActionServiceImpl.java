@@ -46,7 +46,9 @@ public class UserActionServiceImpl extends BaseServiceImpl<UserActionMapper, Use
     public List<Integer> getActionList(Integer userId, UserActionEnum actionEnum) {
         LambdaQueryWrapper<UserActionEntity> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.eq(UserActionEntity::getUserId, userId).eq(UserActionEntity::getActionType, actionEnum.getType());
-        return baseMapper.selectList(queryWrapper).stream().map(UserActionEntity::getSourceId).collect(java.util.stream.Collectors.toList());
+        return baseMapper.selectList(queryWrapper).stream()
+                .map(UserActionEntity::getSourceId)
+                .toList();
     }
 
     @Override

@@ -21,7 +21,7 @@
     </view>
 
     <uni-grid class="item-bar" v-if="wuser" :column="3" :highlight="true" @change="change" :showBorder="false" :square="false">
-				<uni-grid-item v-for="(item, index) in itemBarList" :index="index" :key="index">
+				<uni-grid-item v-for="(item, index) in itemBarList" :index="index" :key="index" @click="jumpToPage(item.type)">
 					<view class="grid-item-box">
 						<uni-icons :type="item.icon" :size="30" color="#777" />
 						<text class="text">{{ item.title }}</text>
@@ -90,17 +90,17 @@ import { logout } from '@/service/auth'
 const itemBarList = [
   {
     icon: 'compose',
-    url: '',
+    type: 1,
     title: '发布'
   },
   {
     icon: 'chat',
-    url: '',
+    type: 2,
     title: '回复'
   },
     {
     icon: 'star',
-    url: '',
+    type: 3,
     title: '收藏'
   }
 ]
@@ -108,7 +108,9 @@ const itemBarList = [
 onLoad(() => {
   getUserInfo()
 })
-const wuser = ref()
+const wuser = ref({
+  nickname: 'flobby'
+})
 const getUserInfo = async () => {
   const res = await queryUserInfo()
   if (res.code !== 0) {
@@ -134,6 +136,12 @@ const logoutAction = async () => {
     wuser.value = null
     userStore.clearUserInfo()
   }
+}
+
+const jumpToPage = (type) => {
+  uni.navigateTo({
+     url: '/pages/profile/userComment?commentType=' + type
+  });
 }
 </script>
 

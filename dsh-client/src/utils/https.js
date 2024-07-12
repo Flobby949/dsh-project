@@ -1,5 +1,6 @@
 import { useUserStore } from '@/stores/user'
 
+// const baseURL = 'http://127.0.0.1:8080/dsh-client-api'
 const baseURL = 'http://106.15.104.19:8080/dsh-client-api'
 
 export const http = (options) => {
@@ -64,6 +65,7 @@ const httpInterceptor = {
       ...options.header,
     }
     const token = uni.getStorageSync('token') || 'no-token'
+    // const token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJuYmYiOjE3MjA3NjcxODQsImV4cCI6MTcyMDkzOTk4NCwiaWF0IjoxNzIwNzY3MTg0LCJ1c2VySWQiOjF9.OOFe8tu8A8VyHUPqqGodWjTfIWFmKefANQHCvTUIQM8'
     if (token) {
       options.header.Authorization = token
     }
