@@ -16,6 +16,10 @@ import lombok.Data;
 public class UserVO {
     @Schema(description = "主键")
     private Integer id;
+    @Schema(description = "openId")
+    private String wxId;
+    @Schema(description = "头像")
+    private String avatar;
     @Schema(description = "微信昵称")
     private String wxName;
     @Schema(description = "创建时间")

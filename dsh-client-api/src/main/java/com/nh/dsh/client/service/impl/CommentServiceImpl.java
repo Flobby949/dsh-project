@@ -261,8 +261,11 @@ public class CommentServiceImpl extends BaseServiceImpl<CommentMapper, CommentEn
     public PageResult<CommentItemVO> queryStarCommentList(Query query) {
         Page<CommentEntity> page = new Page<>(query.getPage(), query.getLimit());
         List<Integer> actionIdList = userActionService.getActionList(RequestContext.getUserId(), UserActionEnum.STAR_COMMENT);
+        if (actionIdList.isEmpty()) {
+            return new PageResult<>(new ArrayList<>(), 0);
+        }
         LambdaQueryWrapper<CommentEntity> wrapper = new LambdaQueryWrapper<>();
-        wrapper.in(!actionIdList.isEmpty(), CommentEntity::getId, actionIdList);
+        wrapper.in(CommentEntity::getId, actionIdList);
         baseMapper.selectPage(page, wrapper);
         return new PageResult<>(convertToCommentList(page.getRecords()), page.getTotal());
     }

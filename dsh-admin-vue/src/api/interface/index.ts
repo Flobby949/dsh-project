@@ -332,3 +332,14 @@ export namespace Publisher {
   }
   export type PublisherQuery = ReqPage
 }
+
+export namespace User {
+  export type UserQuery = ReqPage
+  export interface UserVO {
+    id: number
+    wxId: string
+    avatar: string
+    wxName: string
+    createTime: string
+  }
+}

@@ -31,12 +31,8 @@ import { forumPage } from '@/service/forum.js'
 const indexData = ref({
   swiper: [
     {
-      id: 1,
-      cover: 'https://img1.baidu.com/it/u=1465900350,3687781509&fm=253&app=138&size=w931&n=0&f=JPEG&fmt=auto?sec=1719939600&t=f545745ff0440f907c20149eccebc1ad'
-    },
-    {
       id: 2,
-      cover: 'https://img0.baidu.com/it/u=111322774,1061492612&fm=253&fmt=auto&app=138&f=JPEG?w=753&h=500'
+      cover: 'http://106.15.104.19:9000/dsh/swiper.png'
     }
   ],
   forumList: []

@@ -1,9 +1,11 @@
 package com.nh.dsh.admin.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.nh.dsh.admin.common.model.BaseServiceImpl;
 import com.nh.dsh.admin.common.result.PageResult;
+import com.nh.dsh.admin.convert.UserConvert;
 import com.nh.dsh.admin.mapper.UserMapper;
-import com.nh.dsh.admin.model.dto.UserDTO;
 import com.nh.dsh.admin.model.entity.UserEntity;
 import com.nh.dsh.admin.model.query.UserQuery;
 import com.nh.dsh.admin.model.vo.UserVO;
@@ -25,23 +27,12 @@ import java.util.Map;
 public class UserServiceImpl extends BaseServiceImpl<UserMapper, UserEntity> implements UserService {
 
     @Override
-    public void save(UserDTO dto) {
-
-    }
-
-    @Override
-    public void update(UserDTO dto) {
-
-    }
-
-    @Override
-    public void deleteInBatch(List<Integer> ids) {
-
-    }
-
-    @Override
     public PageResult<UserVO> page(UserQuery query) {
-        return null;
+        Page<UserEntity> page = getPage(query);
+        LambdaQueryWrapper<UserEntity> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.orderByDesc(UserEntity::getCreateTime);
+        baseMapper.selectPage(page, queryWrapper);
+        return new PageResult<>(UserConvert.INSTANCE.convertList(page.getRecords()), page.getTotal());
     }
 
     @Override
@@ -52,5 +43,10 @@ public class UserServiceImpl extends BaseServiceImpl<UserMapper, UserEntity> imp
             itemMap.put("value", item.getId());
             return itemMap;
         }).toList();
+    }
+
+    @Override
+    public Integer delete(List<Integer> ids) {
+        return baseMapper.deleteBatchIds(ids);
     }
 }

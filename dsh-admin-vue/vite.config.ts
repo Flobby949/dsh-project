@@ -95,14 +95,13 @@ export default defineConfig(({ command, mode }: ConfigEnv): UserConfig => {
       // },
       cors: true,
       // 跨域代理配置
-      proxy: {
-        "/dev": {
-          // target: "http://106.15.104.19:8081",
-          target: "http://127.0.0.1:8081",
-          changeOrigin: true,
-          rewrite: path => path.replace(/^\/dev/, "")
-        }
-      }
+      // proxy: {
+      //   "/dev": {
+      //     target: "http://127.0.0.1:10001",
+      //     changeOrigin: true,
+      //     rewrite: path => path.replace(/^\/dev/, "")
+      //   }
+      // }
     }
   }
 })

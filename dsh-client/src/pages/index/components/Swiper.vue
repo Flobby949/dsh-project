@@ -4,7 +4,7 @@
       <swiper-item v-for="item in swiperList" :key="item.id">
         <navigator :url="'/pages/notice/detail?id=' + item.id"
                    hover-class="none" class="navigator">
-          <image mode="aspectFill" class="image" :src="item.cover"></image>
+          <image mode="scaleToFill" class="image" :src="item.cover"></image>
         </navigator>
       </swiper-item>
     </swiper>
@@ -40,7 +40,7 @@ const onChange = (ev) => {
 
 <style lang="scss" scoped>
 .carousel {
-  height: 280rpx;
+  height: 300rpx;
   position: relative;
   overflow: hidden;
   transform: translateY(0);

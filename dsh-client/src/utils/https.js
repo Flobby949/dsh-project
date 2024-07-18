@@ -1,7 +1,7 @@
 import { useUserStore } from '@/stores/user'
 
 // const baseURL = 'http://127.0.0.1:8080/dsh-client-api'
-const baseURL = 'http://106.15.104.19:8080/dsh-client-api'
+const baseURL = 'http://106.15.104.19/dsh-client/dsh-client-api'
 
 export const http = (options) => {
   // 1. 返回 Promise 对象
@@ -12,18 +12,20 @@ export const http = (options) => {
       success(res) {
         // 状态码 2xx，参考 axios 的设计
         if (res.statusCode >= 200 && res.statusCode < 300) {
-          if (res.data.code !== 0) {
-            // 根据后端错误信息轻提示
-            uni.showToast({
-              icon: 'error',
-              title: res.data.msg || '请求错误',
-            })
-          } else if (res.data.code === 401) {
+          console.log('响应成功');
+           if (res.data.code === 401) {
+            console.log('登录失败');
             // 401错误  -> 清理用户信息，跳转到登录页
             const userStore = useUserStore()
             userStore.clearUserInfo()
             uni.reLaunch({ url: '/pages/login/login' })
             reject(res)
+          } else if (res.data.code !== 0) {
+            // 根据后端错误信息轻提示
+            uni.showToast({
+              icon: 'error',
+              title: res.data.msg || '请求错误',
+            })
           } else {
             // 提取核心数据 res.data
             resolve(res.data)

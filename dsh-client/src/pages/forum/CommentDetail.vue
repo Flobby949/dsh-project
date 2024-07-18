@@ -5,7 +5,8 @@
       <comment-reply-item :reply="item" :parentId="commentDetailInfo.id"  @click="reply(item)" />
     </view>
     <view class="reply-bar">
-      <uni-icons type="mic-filled" size="30" color="#bbbbbb" @click="showMic"></uni-icons>
+      <!-- <uni-icons type="mic-filled" size="30" color="#bbbbbb" @click="showMic"></uni-icons> -->
+      <uni-icons type="mic-filled" size="30" color="#bbbbbb"></uni-icons>
       <uni-easyinput class="input" v-model="commentReplyParams.content" :placeholder="placeholder"></uni-easyinput>
       <uni-icons type="paperplane-filled" size="30" color="#bbbbbb" @click="sendComment"></uni-icons>
     </view>

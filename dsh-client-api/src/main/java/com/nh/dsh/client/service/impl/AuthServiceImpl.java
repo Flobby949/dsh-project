@@ -39,8 +39,10 @@ public class AuthServiceImpl implements AuthService {
     private final UserMapper userMapper;
     private final TokenStoreCache tokenStoreCache;
 
-    final static String APP_ID = "wx731630b450248376";
-    final static String APP_SECRET = "65f6d70befb283d461486a63922652e6";
+    // final static String APP_ID = "wx731630b450248376";
+    // final static String APP_SECRET = "65f6d70befb283d461486a63922652e6";
+    final static String APP_ID = "wx0055deef26d951ff";
+    final static String APP_SECRET = "02cc1aef64542aba6e45e8c2753c4ba4";
 
     @Override
     public boolean checkUserEnabled(Integer pkId) {

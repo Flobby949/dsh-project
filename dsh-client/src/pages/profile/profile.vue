@@ -108,9 +108,7 @@ const itemBarList = [
 onLoad(() => {
   getUserInfo()
 })
-const wuser = ref({
-  nickname: 'flobby'
-})
+const wuser = ref()
 const getUserInfo = async () => {
   const res = await queryUserInfo()
   if (res.code !== 0) {

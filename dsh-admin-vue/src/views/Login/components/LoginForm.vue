@@ -52,7 +52,7 @@ const loginRules = reactive({
 const loading = ref(false)
 // const captchaUrl = ref('')
 // const loginForm = reactive<Login.ReqLoginForm>({ username: '', password: '', key: '', captcha: '' })
-const loginForm = reactive<Login.ReqLoginForm>({ username: 'admin', password: 'admin' })
+const loginForm = reactive<Login.ReqLoginForm>({ username: '', password: '' })
 const login = (formEl: FormInstance | undefined) => {
   if (!formEl) return
   formEl.validate(async (valid) => {

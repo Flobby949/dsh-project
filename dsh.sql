@@ -11,7 +11,7 @@
  Target Server Version : 80027
  File Encoding         : 65001
 
- Date: 02/07/2024 17:35:39
+ Date: 17/07/2024 10:48:10
 */
 
 SET NAMES utf8mb4;
@@ -172,22 +172,37 @@ CREATE TABLE `comment`  (
   `parent_id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '父级id',
   `user_id` int NULL DEFAULT NULL,
   `type` int NULL DEFAULT NULL COMMENT '帖子类型，取值 0： \'question\' 或1 ： \'answer\'',
-  `title` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+  `file_type` int NULL DEFAULT NULL COMMENT '0-图片，1-语音',
+  `files` json NULL,
   `content` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `delete_flag` tinyint NOT NULL DEFAULT 0 COMMENT '逻辑删除(0-未删除，1-删除)',
   `create_time` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '创建时间',
   `update_time` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0) ON UPDATE CURRENT_TIMESTAMP(0) COMMENT '更新时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 20 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of comment
 -- ----------------------------
-INSERT INTO `comment` VALUES (1, 1, NULL, 1, 0, NULL, '这是第一条评论', 0, '2024-07-02 16:11:15', '2024-07-02 16:11:15');
-INSERT INTO `comment` VALUES (2, 1, NULL, 1, 0, NULL, '这是第二条评论', 0, '2024-07-02 16:11:27', '2024-07-02 16:11:27');
-INSERT INTO `comment` VALUES (3, 1, '1', 1, 0, NULL, '这是第一条评论的第一条回复', 0, '2024-07-02 16:12:58', '2024-07-02 16:12:58');
-INSERT INTO `comment` VALUES (4, 1, '3', 1, 0, NULL, '这是第一条评论第一条回复的回复', 0, '2024-07-02 16:13:23', '2024-07-02 16:13:23');
-INSERT INTO `comment` VALUES (5, 1, '4', 1, 0, NULL, '这是第一条评论第一条回复的回复的回复', 0, '2024-07-02 16:37:57', '2024-07-02 16:37:57');
+INSERT INTO `comment` VALUES (1, 1, NULL, 1, 0, NULL, NULL, '这是第一条评论', 0, '2024-07-02 16:11:15', '2024-07-02 16:11:15');
+INSERT INTO `comment` VALUES (2, 1, NULL, 1, 0, NULL, NULL, '这是第二条评论', 0, '2024-07-02 16:11:27', '2024-07-02 16:11:27');
+INSERT INTO `comment` VALUES (3, 1, '1', 1, 0, NULL, NULL, '这是第一条评论的第一条回复', 0, '2024-07-02 16:12:58', '2024-07-02 16:12:58');
+INSERT INTO `comment` VALUES (4, 1, '3', 1, 0, NULL, NULL, '这是第一条评论第一条回复的回复', 0, '2024-07-02 16:13:23', '2024-07-02 16:13:23');
+INSERT INTO `comment` VALUES (5, 1, '4', 1, 0, NULL, NULL, '这是第一条评论第一条回复的回复的回复', 0, '2024-07-02 16:37:57', '2024-07-02 16:37:57');
+INSERT INTO `comment` VALUES (6, 1, NULL, 1, 0, NULL, NULL, '第三条评论', 0, '2024-07-03 07:41:04', '2024-07-03 07:41:04');
+INSERT INTO `comment` VALUES (7, 1, NULL, 1, 0, NULL, NULL, '第四条评论', 0, '2024-07-03 07:41:21', '2024-07-03 07:41:21');
+INSERT INTO `comment` VALUES (8, 1, '1', 1, 1, NULL, NULL, 'hei', 0, '2024-07-04 18:00:57', '2024-07-04 18:00:57');
+INSERT INTO `comment` VALUES (9, 1, '1', 1, 1, NULL, NULL, 'ballo', 0, '2024-07-04 18:02:29', '2024-07-04 18:02:29');
+INSERT INTO `comment` VALUES (10, 1, '9', 1, 1, NULL, NULL, 'okok', 0, '2024-07-04 18:03:09', '2024-07-04 18:03:09');
+INSERT INTO `comment` VALUES (11, 1, '4', 1, 1, NULL, NULL, '嵌套回复', 0, '2024-07-04 18:04:38', '2024-07-04 18:04:38');
+INSERT INTO `comment` VALUES (12, 1, '7', 1, 1, NULL, NULL, '评论一下', 0, '2024-07-04 18:05:35', '2024-07-04 18:05:35');
+INSERT INTO `comment` VALUES (13, 1, NULL, 1, 1, NULL, NULL, NULL, 0, '2024-07-04 22:43:52', '2024-07-04 22:43:52');
+INSERT INTO `comment` VALUES (14, 1, NULL, 1, 1, NULL, NULL, '评论评论', 0, '2024-07-04 22:45:37', '2024-07-04 22:45:38');
+INSERT INTO `comment` VALUES (15, 1, NULL, 1, 1, NULL, NULL, 'gogogo', 0, '2024-07-04 22:46:30', '2024-07-04 22:46:30');
+INSERT INTO `comment` VALUES (16, 1, NULL, 1, 1, 0, '[\"http://106.15.104.19:9000/dsh/ca9f18f3d99e4352877d71b33a807217.jpg\", \"http://106.15.104.19:9000/dsh/0d542ba91e624902931c614495635f5d.jpg\"]', '图片评论', 0, '2024-07-05 10:39:41', '2024-07-05 10:39:41');
+INSERT INTO `comment` VALUES (17, 1, '1', 2, 1, NULL, NULL, '哈哈哈', 0, '2024-07-07 16:49:30', '2024-07-07 16:49:30');
+INSERT INTO `comment` VALUES (18, 1, NULL, 3, 1, 0, '[]', '第四条评论', 0, '2024-07-07 17:21:37', '2024-07-07 17:21:37');
+INSERT INTO `comment` VALUES (19, 1, NULL, 3, 1, 0, '[]', '阿巴巴', 0, '2024-07-07 17:22:10', '2024-07-07 17:22:10');
 
 -- ----------------------------
 -- Table structure for feedback
@@ -229,13 +244,21 @@ CREATE TABLE `forum`  (
   `create_time` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '创建时间',
   `update_time` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0) ON UPDATE CURRENT_TIMESTAMP(0) COMMENT '更新时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 11 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of forum
 -- ----------------------------
 INSERT INTO `forum` VALUES (1, 1, '论坛', '课程链接', 1, 1.01, '作者简介', 'http://106.15.104.19:9000/dsh/f734978f5e8645e1b6555a9b3e217266.mp3', 'http://106.15.104.19:9000/dsh/b7d20d5d268b43629438d09b7a1a9851.jpg', 'http://106.15.104.19:9000/dsh/9db84c088d7a441cb1aee743c0d0358f.jpg', 0, '2024-06-20 02:18:19', '2024-06-20 16:09:42');
 INSERT INTO `forum` VALUES (2, 1, '新的论坛', NULL, 3, NULL, NULL, NULL, NULL, NULL, 0, '2024-06-20 15:09:54', '2024-06-20 15:09:54');
+INSERT INTO `forum` VALUES (3, 1, '论坛一', NULL, 2, NULL, NULL, NULL, NULL, NULL, 0, '2024-07-04 09:45:50', '2024-07-04 09:45:50');
+INSERT INTO `forum` VALUES (4, 1, '论坛二论坛二论坛二论坛二论坛二论坛二论坛二论坛二论坛二论坛二论坛二论坛二论坛二论坛二论坛二', NULL, 2, NULL, NULL, NULL, NULL, NULL, 0, '2024-07-04 09:46:03', '2024-07-04 09:46:03');
+INSERT INTO `forum` VALUES (5, 1, '论坛三论坛三论坛三论坛三论坛三论坛三论坛三论坛三论坛三论坛三论坛三论坛三论坛三论坛三论坛三论坛三论坛三论坛三论坛三论坛三论坛三论坛三论坛三论坛三论坛三论坛三论坛三论坛三论坛三', NULL, 1, NULL, NULL, NULL, NULL, NULL, 0, '2024-07-04 09:46:16', '2024-07-04 09:46:16');
+INSERT INTO `forum` VALUES (6, 1, '论坛四', NULL, 3, NULL, NULL, NULL, NULL, NULL, 0, '2024-07-04 09:46:27', '2024-07-04 09:46:27');
+INSERT INTO `forum` VALUES (7, 1, '论坛五', NULL, 2, NULL, NULL, NULL, NULL, NULL, 0, '2024-07-04 09:46:36', '2024-07-04 09:46:36');
+INSERT INTO `forum` VALUES (8, 1, '论坛六', NULL, 1, NULL, NULL, NULL, NULL, NULL, 0, '2024-07-04 09:46:47', '2024-07-04 09:46:47');
+INSERT INTO `forum` VALUES (9, 1, '论坛七', NULL, 1, NULL, NULL, NULL, NULL, NULL, 0, '2024-07-04 09:47:00', '2024-07-04 09:47:00');
+INSERT INTO `forum` VALUES (10, 1, '伦塔吧', NULL, 2, NULL, NULL, NULL, NULL, NULL, 0, '2024-07-04 09:47:17', '2024-07-04 09:47:17');
 
 -- ----------------------------
 -- Table structure for notice
@@ -671,9 +694,41 @@ CREATE TABLE `user_action`  (
 INSERT INTO `user_action` VALUES (1, 0, 1, '2024-07-02 16:05:10', 1, '2024-07-02 16:05:10');
 INSERT INTO `user_action` VALUES (1, 0, 1, '2024-07-02 16:29:39', 1, '2024-07-02 16:29:39');
 INSERT INTO `user_action` VALUES (1, 0, 1, '2024-07-02 16:29:59', 1, '2024-07-02 16:29:59');
-INSERT INTO `user_action` VALUES (1, 1, 1, '2024-07-02 16:30:05', 0, '2024-07-02 16:30:05');
+INSERT INTO `user_action` VALUES (1, 1, 1, '2024-07-02 16:30:05', 1, '2024-07-02 16:30:05');
 INSERT INTO `user_action` VALUES (1, 1, 3, '2024-07-02 16:30:12', 0, '2024-07-02 16:30:12');
-INSERT INTO `user_action` VALUES (1, 2, 3, '2024-07-02 16:32:26', 0, '2024-07-02 16:32:26');
+INSERT INTO `user_action` VALUES (1, 2, 7, '2024-07-02 16:32:26', 0, '2024-07-02 16:32:26');
+INSERT INTO `user_action` VALUES (1, 1, 2, '2024-07-03 17:25:04', 1, '2024-07-03 17:25:04');
+INSERT INTO `user_action` VALUES (1, 1, 1, '2024-07-03 17:27:31', 1, '2024-07-03 17:27:31');
+INSERT INTO `user_action` VALUES (1, 2, 2, '2024-07-03 17:27:32', 1, '2024-07-03 17:27:32');
+INSERT INTO `user_action` VALUES (1, 2, 2, '2024-07-03 17:27:57', 1, '2024-07-03 17:27:57');
+INSERT INTO `user_action` VALUES (1, 2, 1, '2024-07-03 17:27:58', 1, '2024-07-03 17:27:58');
+INSERT INTO `user_action` VALUES (1, 2, 6, '2024-07-03 17:28:10', 1, '2024-07-03 17:28:10');
+INSERT INTO `user_action` VALUES (1, 0, 1, '2024-07-03 17:41:14', 1, '2024-07-03 17:41:14');
+INSERT INTO `user_action` VALUES (1, 0, 1, '2024-07-03 17:41:46', 1, '2024-07-03 17:41:46');
+INSERT INTO `user_action` VALUES (1, 0, 1, '2024-07-03 17:41:50', 1, '2024-07-03 17:41:50');
+INSERT INTO `user_action` VALUES (1, 2, 1, '2024-07-03 17:42:49', 1, '2024-07-03 17:42:49');
+INSERT INTO `user_action` VALUES (1, 2, 1, '2024-07-03 17:43:25', 1, '2024-07-03 17:43:25');
+INSERT INTO `user_action` VALUES (1, 2, 1, '2024-07-03 17:43:49', 1, '2024-07-03 17:43:49');
+INSERT INTO `user_action` VALUES (1, 2, 2, '2024-07-03 17:45:21', 1, '2024-07-03 17:45:21');
+INSERT INTO `user_action` VALUES (1, 2, 6, '2024-07-03 17:45:21', 0, '2024-07-03 17:45:21');
+INSERT INTO `user_action` VALUES (1, 1, 6, '2024-07-03 17:45:22', 1, '2024-07-03 17:45:22');
+INSERT INTO `user_action` VALUES (1, 2, 1, '2024-07-03 17:45:23', 1, '2024-07-03 17:45:23');
+INSERT INTO `user_action` VALUES (1, 1, 2, '2024-07-03 17:45:25', 0, '2024-07-03 17:45:25');
+INSERT INTO `user_action` VALUES (1, 0, 1, '2024-07-03 17:45:49', 1, '2024-07-03 17:45:49');
+INSERT INTO `user_action` VALUES (1, 0, 1, '2024-07-03 17:46:40', 1, '2024-07-03 17:46:40');
+INSERT INTO `user_action` VALUES (1, 0, 1, '2024-07-03 17:47:46', 1, '2024-07-03 17:47:46');
+INSERT INTO `user_action` VALUES (1, 0, 1, '2024-07-03 17:47:48', 1, '2024-07-03 17:47:48');
+INSERT INTO `user_action` VALUES (1, 0, 1, '2024-07-03 17:48:41', 1, '2024-07-03 17:48:41');
+INSERT INTO `user_action` VALUES (1, 0, 1, '2024-07-04 15:00:18', 1, '2024-07-04 15:00:18');
+INSERT INTO `user_action` VALUES (1, 0, 1, '2024-07-04 15:00:47', 1, '2024-07-04 15:00:47');
+INSERT INTO `user_action` VALUES (1, 2, 5, '2024-07-04 16:20:01', 1, '2024-07-04 16:20:01');
+INSERT INTO `user_action` VALUES (1, 1, 4, '2024-07-04 16:20:04', 0, '2024-07-04 16:20:04');
+INSERT INTO `user_action` VALUES (1, 1, 11, '2024-07-04 18:05:00', 0, '2024-07-04 18:05:00');
+INSERT INTO `user_action` VALUES (1, 2, 1, '2024-07-04 22:14:14', 1, '2024-07-04 22:14:14');
+INSERT INTO `user_action` VALUES (1, 0, 1, '2024-07-04 22:46:40', 0, '2024-07-04 22:46:40');
+INSERT INTO `user_action` VALUES (2, 0, 1, '2024-07-07 16:49:23', 0, '2024-07-07 16:49:23');
+INSERT INTO `user_action` VALUES (2, 1, 1, '2024-07-07 16:49:26', 0, '2024-07-07 16:49:26');
+INSERT INTO `user_action` VALUES (2, 2, 3, '2024-07-12 16:58:45', 0, '2024-07-12 16:58:45');
 
 -- ----------------------------
 -- Table structure for wuser
@@ -682,16 +737,22 @@ DROP TABLE IF EXISTS `wuser`;
 CREATE TABLE `wuser`  (
   `id` int NOT NULL AUTO_INCREMENT COMMENT '用户id',
   `wx_id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '微信id',
+  `avatar` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `wx_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '微信昵称',
   `delete_flag` tinyint NOT NULL DEFAULT 0 COMMENT '逻辑删除(0-未删除，1-删除)',
   `create_time` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '创建时间',
   `update_time` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0) ON UPDATE CURRENT_TIMESTAMP(0) COMMENT '更新时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 11 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of wuser
 -- ----------------------------
-INSERT INTO `wuser` VALUES (1, 'wxwxwx', 'nickname', 0, '2024-06-19 02:11:51', '2024-06-19 02:11:51');
+INSERT INTO `wuser` VALUES (1, 'wxwxwx', 'https://pica.zhimg.com/v2-9ef139b3a1f11a59f6a768334b06a813_l.jpg?source=32738c0c', 'nickname', 0, '2024-06-19 02:11:51', '2024-07-03 07:36:01');
+INSERT INTO `wuser` VALUES (2, 'ohi8-69oedLZ1YPywFitl2uX7YLw', 'https://thirdwx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTKYqaSBaoxlXLP9OwB0bNvpVX3drRjHiav5jDJvzVwt817fTBc4QIsvITqsedADTZgFdLW6M4tYYhg/132', 'FlobbYð', 0, '2024-07-07 16:05:15', '2024-07-07 16:05:15');
+INSERT INTO `wuser` VALUES (3, 'ohi8-65EgQzgeKn-OzFWOI5Fq1Zc', 'https://thirdwx.qlogo.cn/mmopen/vi_32/0MBuP1Zkbt6v4YI5AibzMprTzD1doUUyWthJbJOicnYqkcEJ9PpAP82HGn0U63Yy3VbwjY7XLZ5nY6dlswt1M1UggmttM1Gas4NNTb0l5R7Lc/132', 'æ¥æ ä¸', 1, '2024-07-07 17:21:22', '2024-07-08 01:51:49');
+INSERT INTO `wuser` VALUES (7, 'ohi8-65EgQzgeKn-OzFWOI5Fq1Zc', 'https://thirdwx.qlogo.cn/mmopen/vi_32/0MBuP1Zkbt6v4YI5AibzMprTzD1doUUyWthJbJOicnYqkcEJ9PpAP82HGn0U63Yy3VbwjY7XLZ5nY6dlswt1M1UggmttM1Gas4NNTb0l5R7Lc/132', 'æ¥æ ä¸', 1, '2024-07-08 12:11:42', '2024-07-08 04:13:40');
+INSERT INTO `wuser` VALUES (9, 'ohi8-65EgQzgeKn-OzFWOI5Fq1Zc', 'https://thirdwx.qlogo.cn/mmopen/vi_32/0MBuP1Zkbt6v4YI5AibzMprTzD1doUUyWthJbJOicnYqkcEJ9PpAP82HGn0U63Yy3VbwjY7XLZ5nY6dlswt1M1UggmttM1Gas4NNTb0l5R7Lc/132', 'æ¥æ ä¸', 1, '2024-07-08 12:23:03', '2024-07-09 14:58:49');
+INSERT INTO `wuser` VALUES (10, 'ohi8-65EgQzgeKn-OzFWOI5Fq1Zc', 'https://thirdwx.qlogo.cn/mmopen/vi_32/0MBuP1Zkbt6v4YI5AibzMprTzD1doUUyWthJbJOicnYqkcEJ9PpAP82HGn0U63Yy3VbwjY7XLZ5nY6dlswt1M1UggmttM1Gas4NNTb0l5R7Lc/132', '来树下', 0, '2024-07-09 23:04:45', '2024-07-09 23:04:45');
 
 SET FOREIGN_KEY_CHECKS = 1;

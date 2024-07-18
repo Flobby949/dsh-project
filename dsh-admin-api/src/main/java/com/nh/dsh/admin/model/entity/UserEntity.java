@@ -19,6 +19,9 @@ public class UserEntity extends BaseEntity {
     @Schema(description = "openid")
     private String wxId;
 
+    @Schema(description = "头像")
+    private String avatar;
+
     @Schema(description = "微信昵称")
     private String wxName;
 }
