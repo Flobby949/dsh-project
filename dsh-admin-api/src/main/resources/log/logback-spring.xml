@@ -70,7 +70,7 @@
     </springProfile>
 
     <!-- 生产环境 -->
-    <springProfile name="pro">
+    <springProfile name="prod">
         <root level="INFO">
             <appender-ref ref="INFO_FILE" />
             <appender-ref ref="WARN_FILE" />

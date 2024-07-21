@@ -62,7 +62,9 @@ public class CommentServiceImpl extends BaseServiceImpl<CommentMapper, CommentEn
                 .orderByAsc(CommentEntity::getCreateTime);
 
         List<CommentEntity> allComments = baseMapper.selectList(commentQueryWrapper);
-
+        if (allComments.isEmpty()) {
+            return Collections.emptyList();
+        }
         // 获取所有涉及到的用户ID
         Set<Integer> userIds = allComments.stream()
                 .map(CommentEntity::getUserId)
@@ -291,6 +293,9 @@ public class CommentServiceImpl extends BaseServiceImpl<CommentMapper, CommentEn
             return getTopCommentId(id);
         }).collect(Collectors.toSet());
         log.info("idList: {}", idList);
+        if (idList.isEmpty()) {
+            return new PageResult<>(new ArrayList<>(), 0);
+        }
         // 将顶层id分页
         Page<CommentItemVO> pageResult = PageUtil.getPages(query.getPage(), query.getLimit(), convertToCommentList(baseMapper.selectBatchIds(idList)));
         return new PageResult<>(pageResult.getRecords(), pageResult.getTotal());

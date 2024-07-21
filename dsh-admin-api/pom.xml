@@ -173,7 +173,11 @@
             <version>${zxing.version}</version>
         </dependency>
 
-
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>easyexcel</artifactId>
+            <version>3.3.3</version>
+        </dependency>
     </dependencies>
 
     <build>

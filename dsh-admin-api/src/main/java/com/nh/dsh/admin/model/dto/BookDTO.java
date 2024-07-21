@@ -33,8 +33,8 @@ public class BookDTO {
     private Integer classificationId;
 
     @Schema(description = "出版社")
-    @NotBlank(message = "出版社不能为空")
-    private Integer publishingId;
+    @NotNull(message = "出版社不能为空")
+    private Integer publisherId;
 
     /**
      * 逗号分割

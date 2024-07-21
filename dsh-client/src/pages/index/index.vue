@@ -22,7 +22,7 @@ import { ref } from 'vue'
 import Swiper from './components/Swiper.vue'
 import CustomNavbar from './components/CustomNavbar.vue'
 import ForumItem from '../../components/ForumItem/ForumItem.vue'
-import { onShow } from '@dcloudio/uni-app'
+import { onShow, onLoad } from '@dcloudio/uni-app'
 import { forumPage } from '@/service/forum.js'
 
 /**
@@ -50,6 +50,11 @@ const queryForumList = async () => {
 onShow(() => {
   queryForumList()
 })
+
+onLoad(() => {
+
+})
+
 
 </script>
 

@@ -23,7 +23,7 @@
       </template>
     </ProTable>
     <BookDialog ref="dialogRef" />
-    <Dialog :model-value="showQrCodeFlag" title="书籍二维码" :cancel-dialog="cancelDialog">
+    <Dialog :model-value="showQrCodeFlag" :width="400" :maxHeight="200" title="书籍二维码" :cancel-dialog="cancelDialog">
       <el-image :src="qrcode" width="500"></el-image>
       <template #footer>
         <slot name="footer">

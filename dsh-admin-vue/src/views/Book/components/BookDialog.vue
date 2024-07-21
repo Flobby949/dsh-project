@@ -11,47 +11,55 @@
         :hide-required-asterisk="dialogProps.isView"
       >
         <el-form-item label="书名" prop="bookName">
-          <el-input v-model="dialogProps.row!.bookName" placeholder="" clearable></el-input>
+          <el-input v-model="dialogProps.row!.bookName" placeholder="" clearable style="width: 400px"></el-input>
         </el-form-item>
         <el-form-item label="ISBN" prop="isbn">
-          <el-input v-model="dialogProps.row!.isbn" placeholder="" clearable></el-input>
+          <el-input v-model="dialogProps.row!.isbn" placeholder="" clearable style="width: 400px"></el-input>
         </el-form-item>
         <el-form-item label="分类" prop="classificationId">
-          <el-select v-model="dialogProps.row!.classificationId" clearable placeholder="选择书籍分类" style="width: 240px">
+          <el-select v-model="dialogProps.row!.classificationId" clearable placeholder="选择书籍分类" style="width: 400px">
             <el-option v-for="item in classificationList" :key="item.id" :label="item.name" :value="item.id" />
           </el-select>
         </el-form-item>
         <el-form-item label="出版社" prop="publisherId">
-          <el-select v-model="dialogProps.row!.publisherId" clearable placeholder="选择出版社" style="width: 240px">
+          <el-select v-model="dialogProps.row!.publisherId" clearable placeholder="选择出版社" style="width: 400px">
             <el-option v-for="item in publisherList" :key="item.id" :label="item.name" :value="item.id" />
           </el-select>
         </el-form-item>
         <el-form-item label="译者" prop="translator">
-          <el-input v-model="dialogProps.row!.translator" placeholder="" clearable></el-input>
+          <el-input v-model="dialogProps.row!.translator" placeholder="" clearable style="width: 400px"></el-input>
         </el-form-item>
         <el-form-item label="作者" prop="writer">
-          <el-input v-model="dialogProps.row!.writer" placeholder="" clearable></el-input>
+          <el-input v-model="dialogProps.row!.writer" placeholder="" clearable style="width: 400px"></el-input>
         </el-form-item>
         <el-form-item label="售价" prop="price">
-          <el-input-number v-model="dialogProps.row!.price" :precision="2" :step="0.1" :min="0" />
+          <el-input-number v-model="dialogProps.row!.price" :precision="2" :step="0.1" :min="0" style="width: 400px" />
         </el-form-item>
         <el-form-item label="页数" prop="pageNumber">
-          <el-input-number v-model="dialogProps.row!.pageNumber" :step="1" />
+          <el-input-number v-model="dialogProps.row!.pageNumber" :step="1" style="width: 400px" />
         </el-form-item>
         <el-form-item label="装帧" prop="bookStyle">
-          <el-input v-model="dialogProps.row!.bookStyle" placeholder="" clearable></el-input>
+          <el-input v-model="dialogProps.row!.bookStyle" placeholder="" clearable style="width: 400px"></el-input>
         </el-form-item>
         <el-form-item label="出版时间" prop="publishDate">
-          <el-date-picker v-model="dialogProps.row!.publishDate" type="date" placeholder="选择出版时间" format="YYYY-MM-DD" value-format="YYYY-MM-DD" clearable />
+          <el-date-picker
+            v-model="dialogProps.row!.publishDate"
+            style="width: 400px"
+            type="date"
+            placeholder="选择出版时间"
+            format="YYYY-MM-DD"
+            value-format="YYYY-MM-DD"
+            clearable
+          />
         </el-form-item>
         <el-form-item label="作者简介" prop="authorIntroduction">
-          <el-input v-model="dialogProps.row!.authorIntroduction" style="width: 240px" :autosize="{ minRows: 2 }" type="textarea" placeholder="请输入作者简介" clearable />
+          <el-input v-model="dialogProps.row!.authorIntroduction" style="width: 400px" :autosize="{ minRows: 2 }" type="textarea" placeholder="请输入作者简介" clearable />
         </el-form-item>
         <el-form-item label="书本简介" prop="bookIntroduction">
-          <el-input v-model="dialogProps.row!.bookIntroduction" style="width: 240px" :autosize="{ minRows: 2 }" type="textarea" placeholder="请输入书本简介" clearable />
+          <el-input v-model="dialogProps.row!.bookIntroduction" style="width: 400px" :autosize="{ minRows: 2 }" type="textarea" placeholder="请输入书本简介" clearable />
         </el-form-item>
-        <el-form-item label="论坛链接" prop="forumLink">
-          <el-input v-model="dialogProps.row!.forumLink" placeholder="" clearable></el-input>
+        <el-form-item label="论坛链接" prop="forumLink" v-show="dialogProps.isView">
+          <el-input v-model="dialogProps.row!.forumLink" style="width: 400px" placeholder="请创建对应书籍论坛后查看！" clearable disabled></el-input>
         </el-form-item>
         <el-form-item label="书籍封面" prop="bookCover">
           <UploadImg v-model:image-url="dialogProps.row!.bookCover" width="135px" height="135px" :file-size="5">

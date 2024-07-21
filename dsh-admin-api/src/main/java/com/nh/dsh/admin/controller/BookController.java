@@ -21,6 +21,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -113,6 +114,15 @@ public class BookController {
     @PreAuthorize("hasAuthority('sys:book:view')")
     public ResponseEntity<byte[]> downloadResourcesQrCode(@RequestParam(name = "bookId") Integer bookId) {
         return bookResourceService.downloadResourcesQrCode(bookId);
+    }
+
+    @PostMapping("resource/import")
+    @Operation(summary = "导入资源")
+    @PreAuthorize("hasAuthority('sys:book:add')")
+    public Result<String> importResource(@RequestParam(name = "bookId") String bookId, @RequestParam("file") MultipartFile file) {
+        System.out.println(bookId);
+        bookResourceService.importResources(Integer.parseInt(bookId), file);
+        return Result.ok();
     }
 
     @PostMapping("exchange/generate")

@@ -2,10 +2,12 @@ package com.nh.dsh.client.controller;
 
 import com.nh.dsh.client.common.result.PageResult;
 import com.nh.dsh.client.common.result.Result;
+import com.nh.dsh.client.model.dto.FeedbackDTO;
 import com.nh.dsh.client.model.query.Query;
 import com.nh.dsh.client.model.vo.CommentItemVO;
 import com.nh.dsh.client.model.vo.UserInfoVO;
 import com.nh.dsh.client.service.CommentService;
+import com.nh.dsh.client.service.FeedbackService;
 import com.nh.dsh.client.service.UserService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
@@ -30,6 +32,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class UserController {
     private final UserService userService;
     private final CommentService commentService;
+    private final FeedbackService feedbackService;
 
     @PostMapping("userInfo")
     public Result<UserInfoVO> queryUserInfo() {
@@ -49,6 +52,12 @@ public class UserController {
     @PostMapping("reviewCommentList")
     public Result<PageResult<CommentItemVO>> queryReviewCommentList(@RequestBody Query query) {
         return Result.ok(commentService.queryReviewCommentList(query));
+    }
+
+    @PostMapping("feedback")
+    public Result<Object> queryFeedback(@RequestBody FeedbackDTO dto) {
+        feedbackService.feedback(dto);
+        return Result.ok();
     }
 
 }

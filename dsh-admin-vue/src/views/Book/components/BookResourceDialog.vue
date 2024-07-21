@@ -1,11 +1,17 @@
 <template>
-  <Dialog :model-value="dialogVisible" :title="dialogProps.title" :fullscreen="dialogProps.fullscreen" :cancel-dialog="cancelDialog">
+  <Dialog :model-value="dialogVisible" :maxHeight="400" :title="dialogProps.title" :fullscreen="dialogProps.fullscreen" :cancel-dialog="cancelDialog">
     <div class="el-dialog__body">
       <ProTable rowKey="id" ref="proTable" title="书籍资源列表" :columns="columns" :requestApi="getTableList" :dataCallback="dataCallback">
         <!-- 表格 header 按钮 -->
         <template #tableHeader>
           <el-button type="primary" :icon="CirclePlus" @click="openDrawer('新增')" v-hasPermi="['sys:book:add']">新增资源</el-button>
-          <el-button type="primary" :icon="Download" @click="downloadFile" v-hasPermi="['sys:book:view']">下载资源</el-button>
+          <el-button type="primary" :icon="DocumentCopy" @click="uploadTemplate" v-hasPermi="['sys:book:add']">下载上传模板</el-button>
+          <el-button type="primary" :icon="Download" @click="downloadFile" v-hasPermi="['sys:book:view']">下载资源码</el-button>
+          <ImportResource v-model:code="importRes" :file-size="1" @check-validate="afterUpload" :bookId="dialogProps.row.id">
+            <template #empty>
+              <el-button type="primary" :icon="UploadFilled">导入资源码</el-button>
+            </template>
+          </ImportResource>
         </template>
         <!-- 表格操作 -->
         <template #operation="scope">
@@ -16,15 +22,15 @@
       </ProTable>
     </div>
   </Dialog>
-  <Dialog :model-value="showQrCodeFlag" title="资源二维码" :cancel-dialog="cancelResourceDialog">
-    <el-image :src="qrcode"></el-image>
+  <Dialog :model-value="showQrCodeFlag" :maxHeight="350" :width="500" title="资源二维码" :cancel-dialog="cancelResourceDialog">
+    <el-image :src="qrcode" style="height: 300px; width: 300px"></el-image>
     <template #footer>
       <slot name="footer">
         <el-button type="primary" v-loading.fullscreen.lock="fullscreenLoading" @click="downloadQrCode">下载</el-button>
       </slot>
     </template>
   </Dialog>
-  <BookResourceEditDialog ref="dialogRef" />
+  <BookResourceEditDialog :maxHeight="100" ref="dialogRef" />
 </template>
 
 <script setup lang="tsx">
@@ -32,12 +38,13 @@ import { Dialog } from '@/components/Dialog'
 import { ref } from 'vue'
 import { BookResourceApi } from '@/api/modules/book'
 import { ColumnProps } from '@/components/ProTable/interface'
-import { Edit, CirclePlus, Grid, Download } from '@element-plus/icons-vue'
+import { Edit, CirclePlus, Grid, Download, DocumentCopy, UploadFilled } from '@element-plus/icons-vue'
 import ProTable from '@/components/ProTable/index.vue'
 import BookResourceEditDialog from './BookResourceEditDialog.vue'
 import { useQRCode } from '@vueuse/integrations/useQRCode'
 import { useDownload } from '@/hooks/useDownload'
 import { ElMessageBox } from 'element-plus'
+import ImportResource from '@/components/Upload/ImportResource.vue'
 
 // 定义弹出框类型
 interface DialogProps {
@@ -149,6 +156,18 @@ const cancelResourceDialog = () => {
 
 const downloadFile = async () => {
   ElMessageBox.confirm('确认下载全部资源?', '温馨提示', { type: 'warning' }).then(() => useDownload(BookResourceApi.download, '资源二维码', dialogProps.value.row.id, true, '.zip'))
+}
+
+const uploadTemplate = () => {
+  window.location.href = 'http://106.15.104.19:9000/dsh/%E5%A4%9A%E4%BA%8C%E7%BB%B4%E7%A0%81%E6%A8%A1%E6%9D%BF.xlsx'
+}
+
+const importRes = ref()
+const afterUpload = () => {
+  console.log(importRes)
+  if (importRes.value == 0) {
+    proTable.value.getTableList()
+  }
 }
 </script>
 

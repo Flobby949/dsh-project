@@ -29,3 +29,17 @@ export const reviewCommentList = (query) => {
     data: query
   })
 }
+export const feedback = (params) => {
+  return http({
+    method: 'POST',
+    url: USER_API + '/feedback',
+    data: params
+  })
+}
+export const questionList = (query) => {
+  return http({
+    method: 'POST',
+    url: USER_API + '/questionList',
+    data: query
+  })
+}

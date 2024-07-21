@@ -10,11 +10,20 @@
         :disabled="dialogProps.isView"
         :hide-required-asterisk="dialogProps.isView"
       >
+        <el-form-item label="论坛封面" prop="cover">
+          <UploadImg v-model:image-url="dialogProps.row!.cover" width="135px" height="135px" :file-size="5">
+            <template #empty>
+              <el-icon><Avatar /></el-icon>
+              <span>请上传封面</span>
+            </template>
+            <template #tip> 图片大小不能超过 5M </template>
+          </UploadImg>
+        </el-form-item>
         <el-form-item label="论坛名" prop="name">
-          <el-input v-model="dialogProps.row!.name" placeholder="" clearable></el-input>
+          <el-input v-model="dialogProps.row!.name" style="width: 300px" placeholder="" clearable></el-input>
         </el-form-item>
         <el-form-item label="绑定书籍" prop="bookId">
-          <el-select v-model="dialogProps.row!.bookId" clearable placeholder="绑定书籍" style="width: 400px" filterable>
+          <el-select v-model="dialogProps.row!.bookId" clearable placeholder="绑定书籍" style="width: 300px" filterable :disabled="isEditStatus">
             <el-option v-for="item in bookList" :key="item.id" :label="item.bookName" :value="item.id">
               <el-tooltip placement="top" :hide-after="0">
                 <template #content> {{ item.bookName }} </template>
@@ -30,35 +39,26 @@
           </el-select>
         </el-form-item>
         <el-form-item label="绑定圈主" prop="userId">
-          <el-select v-model="dialogProps.row!.userId" clearable placeholder="绑定圈主" style="width: 240px">
+          <el-select v-model="dialogProps.row!.userId" clearable placeholder="绑定圈主" style="width: 300px">
             <el-option v-for="item in userList" :key="item.value" :label="item.label" :value="item.value" />
           </el-select>
         </el-form-item>
         <el-form-item label="作者答缺省价" prop="price">
-          <el-input-number v-model="dialogProps.row!.price" :precision="2" :step="0.1" :min="0" />
+          <el-input-number v-model="dialogProps.row!.price" style="width: 300px" :precision="2" :step="0.1" :min="0" />
         </el-form-item>
-        <el-form-item label="论坛链接" prop="courseLink">
-          <el-input v-model="dialogProps.row!.courseLink" placeholder="" clearable></el-input>
+        <el-form-item label="课程链接" prop="courseLink">
+          <el-input v-model="dialogProps.row!.courseLink" style="width: 300px" placeholder="" clearable></el-input>
         </el-form-item>
         <el-form-item label="作者简介" prop="writerIntroduction">
-          <el-input v-model="dialogProps.row!.writerIntroduction" style="width: 240px" :autosize="{ minRows: 2 }" type="textarea" placeholder="请输入作者简介" clearable />
+          <el-input v-model="dialogProps.row!.writerIntroduction" style="width: 300px" :autosize="{ minRows: 2 }" type="textarea" placeholder="请输入作者简介" clearable />
         </el-form-item>
         <el-form-item label="语音介绍" prop="voiceIntroduction">
-          <UploadVoice v-model:voice-url="dialogProps.row!.voiceIntroduction" width="400px" height="50px" :file-size="10">
+          <UploadVoice v-model:voice-url="dialogProps.row!.voiceIntroduction" width="300px" height="60px" :file-size="10">
             <template #empty>
               <el-icon><Upload /></el-icon>
               <span>上传语音介绍</span>
             </template>
           </UploadVoice>
-        </el-form-item>
-        <el-form-item label="论坛封面" prop="cover">
-          <UploadImg v-model:image-url="dialogProps.row!.cover" width="135px" height="135px" :file-size="5">
-            <template #empty>
-              <el-icon><Avatar /></el-icon>
-              <span>请上传封面</span>
-            </template>
-            <template #tip> 图片大小不能超过 5M </template>
-          </UploadImg>
         </el-form-item>
         <el-form-item label="头像" prop="avatar">
           <UploadImg v-model:image-url="dialogProps.row!.avatar" width="135px" height="135px" :file-size="5">
@@ -81,7 +81,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, reactive, onMounted } from 'vue'
+import { ref, reactive, onMounted, computed } from 'vue'
 import { ElMessage, FormInstance } from 'element-plus'
 import { Dialog } from '@/components/Dialog'
 import UploadImg from '@/components/Upload/Img.vue'
@@ -107,6 +107,10 @@ const dialogProps = ref<DialogProps>({
   labelWidth: 160,
   fullscreen: true,
   maxHeight: '500px'
+})
+
+const isEditStatus = computed(() => {
+  return dialogProps.value.row.id !== null && dialogProps.value.row.id !== undefined && dialogProps.value.row.id > 0
 })
 
 // 获取用户列表

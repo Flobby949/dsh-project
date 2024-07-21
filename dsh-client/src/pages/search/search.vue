@@ -63,7 +63,7 @@ const addHistory = value => {
 }
 
 // 搜索历史
-const historySearch = ref(uni.getStorageSync('historySearch') || ['abc', 'cba'])
+const historySearch = ref(uni.getStorageSync('historySearch') || [])
 
 //点击清空搜索记录
 const removeHistory = () => {

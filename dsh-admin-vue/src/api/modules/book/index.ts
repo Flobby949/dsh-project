@@ -27,5 +27,9 @@ export const BookResourceApi = {
       {
         responseType: 'blob'
       }
-    )
+    ),
+  importResource: (params) =>
+    http.post(_API + '/book/resource/import', params, {
+      headers: { 'Content-Type': 'multipart/form-data' }
+    })
 }

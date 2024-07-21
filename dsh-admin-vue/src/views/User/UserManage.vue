@@ -57,13 +57,13 @@ const columns: ColumnProps<UserType>[] = [
   {
     prop: 'wxName',
     label: '用户名',
-    width: 100
+    width: 250
   },
   { prop: 'wxId', label: 'openId', width: 300 },
   {
     prop: 'createTime',
     label: '创建时间',
-    width: 200
+    width: 250
   },
   { prop: 'operation', label: '操作', fixed: 'right', width: 330 }
 ]

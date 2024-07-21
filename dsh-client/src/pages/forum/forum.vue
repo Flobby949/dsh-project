@@ -149,14 +149,14 @@ const onCommentImg = async () => {
 const uploadFile = (file) => {
   // 文件上传
   uni.uploadFile({
-    url: '/common/upload/img',
+    url: 'http://106.15.104.19/dsh-client/dsh-client-api/common/upload/img',
     name: 'file', // 后端数据字段名
     filePath: file,
     success: (res) => {
       // 判断状态码是否上传成功
       if (res.statusCode === 200) {
         commentImgList.value = commentImgList.value.concat(JSON.parse(res.data).data.urlList)
-        uni.showToast({ icon: 'success', title: '上传' })
+        uni.showToast({ icon: 'success', title: '上传成功' })
       } else {
         uni.showToast({ icon: 'error', title: '出现错误' })
       }

@@ -45,7 +45,7 @@ const props = defineProps({
   fullscreen: VueTypes.bool.def(true),
   maxHeight: VueTypes.oneOfType([String, Number]).def('500px'),
   cancelDialog: VueTypes.func.def(),
-  marginTop: VueTypes.string.def('15vh')
+  marginTop: VueTypes.string.def('5vh')
 })
 
 const slots = useSlots()

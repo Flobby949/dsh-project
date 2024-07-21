@@ -1,17 +1,23 @@
 package com.nh.dsh.admin.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.nh.dsh.admin.common.exception.ServerException;
 import com.nh.dsh.admin.common.model.BaseServiceImpl;
 import com.nh.dsh.admin.common.result.PageResult;
 import com.nh.dsh.admin.convert.ForumConvert;
+import com.nh.dsh.admin.mapper.BookMapper;
 import com.nh.dsh.admin.mapper.ForumMapper;
 import com.nh.dsh.admin.model.dto.ForumDTO;
+import com.nh.dsh.admin.model.entity.BookEntity;
 import com.nh.dsh.admin.model.entity.ForumEntity;
 import com.nh.dsh.admin.model.query.ForumQuery;
 import com.nh.dsh.admin.model.vo.ForumVO;
 import com.nh.dsh.admin.security.cache.TokenStoreCache;
 import com.nh.dsh.admin.security.user.ManagerDetail;
 import com.nh.dsh.admin.service.ForumService;
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
@@ -26,18 +32,28 @@ import java.util.List;
 
 @Slf4j
 @Service
+@AllArgsConstructor
 public class ForumServiceImpl extends BaseServiceImpl<ForumMapper, ForumEntity> implements ForumService {
     private final TokenStoreCache tokenStoreCache;
-
-    public ForumServiceImpl(TokenStoreCache tokenStoreCache) {
-        super();
-        this.tokenStoreCache = tokenStoreCache;
-    }
+    private final BookMapper bookMapper;
 
     @Override
     public void save(ForumDTO dto) {
         ForumEntity entity = ForumConvert.INSTANCE.convert(dto);
+        // 判断是否存在这个书籍的论坛
+        LambdaQueryWrapper<ForumEntity> query = new LambdaQueryWrapper<>();
+        query.eq(ForumEntity::getBookId, entity.getBookId());
+        Long count = baseMapper.selectCount(query);
+        if (count > 0) {
+            log.error("该书籍已经存在论坛");
+            throw new ServerException("该书籍已经存在论坛");
+        }
         baseMapper.insert(entity);
+        // 更新书籍论坛链接到书籍表
+        LambdaUpdateWrapper<BookEntity> update = new LambdaUpdateWrapper<>();
+        update.eq(BookEntity::getId, entity.getBookId());
+        String forumLink = String.format("http://www.flobby.top/dsh-client-uniapp/#/pages/forum/forum?id=%d", entity.getId());
+        update.set(BookEntity::getForumLink, forumLink);
     }
 
     @Override

@@ -82,6 +82,20 @@
         "navigationStyle": "custom",
         "navigationBarTitleText": "评论列表"
       }
+    },
+    {
+      "path": "pages/profile/feedback",
+      "style": {
+        "navigationStyle": "custom",
+        "navigationBarTitleText": "意见反馈"
+      }
+    },
+    {
+      "path": "pages/profile/question",
+      "style": {
+        "navigationStyle": "custom",
+        "navigationBarTitleText": "问答"
+      }
     }
 	],
 	"globalStyle": {
