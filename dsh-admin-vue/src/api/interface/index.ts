@@ -215,6 +215,15 @@ export namespace BookResource {
   export interface BookResourceQuery extends ReqPage {
     bookId: number
   }
+  export interface AuditResourceBO {
+    id: number
+    bookId: number
+    bookName: string
+    bookCover: string
+    resourceName: string
+    link: string
+    isChanged: number
+  }
 }
 
 export namespace Category {

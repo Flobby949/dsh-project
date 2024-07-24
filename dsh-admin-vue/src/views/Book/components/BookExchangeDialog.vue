@@ -16,6 +16,7 @@
         <!-- 表格操作 -->
         <template #operation="scope">
           <el-button type="primary" link :icon="Grid" @click="showQrCode(scope.row)">二维码</el-button>
+          <el-button type="danger" link :icon="Delete" @click="deleteData(scope.row.id)">删除</el-button>
         </template>
       </ProTable>
     </div>
@@ -45,10 +46,11 @@ import { Dialog } from '@/components/Dialog'
 import { ref } from 'vue'
 import { BookApi } from '@/api/modules/book'
 import { ColumnProps } from '@/components/ProTable/interface'
-import { Grid, CirclePlus } from '@element-plus/icons-vue'
+import { Grid, CirclePlus, Delete } from '@element-plus/icons-vue'
 import ProTable from '@/components/ProTable/index.vue'
 import { useQRCode } from '@vueuse/integrations/useQRCode'
 import { ElMessage } from 'element-plus'
+import { useHandleData } from '@/hooks/useHandleData'
 
 // 定义弹出框类型
 interface DialogProps {
@@ -165,6 +167,11 @@ const generateTask = async () => {
   ElMessage.success({ message: `二维码生成成功！` })
   proTable.value.getTableList()
   cancelGenerateDialog()
+}
+
+const deleteData = async (id: number) => {
+  await useHandleData(BookApi.removeExchange, [id], `删除书籍兑换`)
+  proTable.value.getTableList()
 }
 </script>
 

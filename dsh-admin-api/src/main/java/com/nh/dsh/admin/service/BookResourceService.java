@@ -5,6 +5,7 @@ import com.nh.dsh.admin.common.result.PageResult;
 import com.nh.dsh.admin.model.dto.BookResourceDTO;
 import com.nh.dsh.admin.model.entity.BookResourceEntity;
 import com.nh.dsh.admin.model.query.BookResourceQuery;
+import com.nh.dsh.admin.model.vo.AuditResourceVO;
 import com.nh.dsh.admin.model.vo.BookResourceVO;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.multipart.MultipartFile;
@@ -31,4 +32,6 @@ public interface BookResourceService extends IService<BookResourceEntity> {
     ResponseEntity<byte[]> downloadResourcesQrCode(int bookId);
 
     void importResources(Integer bookId, MultipartFile file);
+
+    PageResult<AuditResourceVO> auditResourcePage(BookResourceQuery query);
 }

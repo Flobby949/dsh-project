@@ -1,14 +1,17 @@
 package com.nh.dsh.admin.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.nh.dsh.admin.common.model.BaseServiceImpl;
 import com.nh.dsh.admin.common.result.PageResult;
 import com.nh.dsh.admin.convert.BookConvert;
 import com.nh.dsh.admin.mapper.BookMapper;
+import com.nh.dsh.admin.mapper.ForumMapper;
 import com.nh.dsh.admin.model.dto.BookDTO;
 import com.nh.dsh.admin.model.entity.BookEntity;
 import com.nh.dsh.admin.model.entity.CategoryEntity;
+import com.nh.dsh.admin.model.entity.ForumEntity;
 import com.nh.dsh.admin.model.entity.PublisherEntity;
 import com.nh.dsh.admin.model.query.BookQuery;
 import com.nh.dsh.admin.model.vo.BookVO;
@@ -21,6 +24,7 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -39,6 +43,7 @@ public class BookServiceImpl extends BaseServiceImpl<BookMapper, BookEntity> imp
     private final CategoryService categoryService;
     private final PublisherService publisherService;
     private final TokenStoreCache tokenStoreCache;
+    private final ForumMapper forumMapper;
 
     @Override
     public void saveBook(BookDTO dto) {
@@ -53,7 +58,14 @@ public class BookServiceImpl extends BaseServiceImpl<BookMapper, BookEntity> imp
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void deleteBookInBatch(List<Integer> ids) {
+        if (ids.isEmpty()) {
+            return;
+        }
+        LambdaUpdateWrapper<ForumEntity> wrapper = new LambdaUpdateWrapper<>();
+        wrapper.in(ForumEntity::getBookId, ids);
+        forumMapper.delete(wrapper);
         baseMapper.deleteBatchIds(ids);
     }
 

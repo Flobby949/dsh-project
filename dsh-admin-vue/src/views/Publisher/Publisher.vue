@@ -8,6 +8,7 @@
       <!-- 表格操作 -->
       <template #operation="scope">
         <el-button v-if="checkEdit(scope.row.id)" type="primary" link :icon="Edit" @click="openDrawer('编辑', scope.row)">编辑</el-button>
+        <el-button type="danger" link :icon="Delete" @click="deleteData(scope.row.id)">删除</el-button>
       </template>
     </ProTable>
     <PublisherDialog ref="dialogRef" />
@@ -19,9 +20,10 @@ import { ref, reactive } from 'vue'
 import { ColumnProps } from '@/components/ProTable/interface'
 import ProTable from '@/components/ProTable/index.vue'
 import PublisherDialog from './components/PublisherDialog.vue'
-import { Edit, CirclePlus } from '@element-plus/icons-vue'
+import { Edit, CirclePlus, Delete } from '@element-plus/icons-vue'
 import { PublisherApi } from '@/api/modules/publisher'
 import { useAppStoreWithOut } from '@/store/modules/app'
+import { useHandleData } from '@/hooks/useHandleData'
 
 // 获取 ProTable 元素，调用其获取刷新数据方法（还能获取到当前查询参数，方便导出携带参数）
 const proTable = ref()
@@ -73,5 +75,10 @@ const openDrawer = (title: string, row = {}) => {
     maxHeight: '500px'
   }
   dialogRef.value.acceptParams(params)
+}
+
+const deleteData = async (id: number) => {
+  await useHandleData(PublisherApi.remove, [id], `删除出版社`)
+  proTable.value.getTableList()
 }
 </script>

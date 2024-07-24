@@ -20,6 +20,7 @@
         <el-button type="primary" link :icon="List" @click="openBookResourceDialog(scope.row)">资源码</el-button>
         <el-button type="primary" link :icon="Grid" @click="showQrCode(scope.row)">二维码</el-button>
         <el-button type="primary" link :icon="Edit" @click="openDrawer('编辑', scope.row)">编辑</el-button>
+        <el-button type="danger" link :icon="Delete" @click="deleteData(scope.row.id)">删除</el-button>
       </template>
     </ProTable>
     <BookDialog ref="dialogRef" />
@@ -41,13 +42,14 @@ import { ref, reactive } from 'vue'
 import { ColumnProps } from '@/components/ProTable/interface'
 import ProTable from '@/components/ProTable/index.vue'
 import BookDialog from './components/BookDialog.vue'
-import { Edit, CirclePlus, Grid, List, Crop } from '@element-plus/icons-vue'
+import { Edit, CirclePlus, Grid, List, Crop, Delete } from '@element-plus/icons-vue'
 import { BookApi } from '@/api/modules/book'
 import { useQRCode } from '@vueuse/integrations/useQRCode'
 import { Dialog } from '@/components/Dialog'
 import { Book } from '@/api/interface'
 import BookResourceDialog from './components/BookResourceDialog.vue'
 import BookExchangeDialog from './components/BookExchangeDialog.vue'
+import { useHandleData } from '@/hooks/useHandleData'
 
 // 获取 ProTable 元素，调用其获取刷新数据方法（还能获取到当前查询参数，方便导出携带参数）
 const proTable = ref()
@@ -179,5 +181,10 @@ const openBookExchangeDialog = (row: Book.BookVO) => {
   }
   // 打开弹框
   bookExchangeDialog.value.acceptParams(params)
+}
+
+const deleteData = async (id: number) => {
+  await useHandleData(BookApi.remove, [id], `删除书籍`)
+  proTable.value.getTableList()
 }
 </script>

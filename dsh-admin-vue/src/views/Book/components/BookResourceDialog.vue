@@ -18,6 +18,7 @@
           <!-- <el-button type="primary" link :icon="List">资源码</el-button> -->
           <el-button type="primary" link :icon="Grid" @click="showQrCode(scope.row)">二维码</el-button>
           <el-button type="primary" link :icon="Edit" @click="openDrawer('编辑', scope.row)">编辑</el-button>
+          <el-button type="danger" link :icon="Delete" @click="deleteData(scope.row.id)">删除</el-button>
         </template>
       </ProTable>
     </div>
@@ -38,13 +39,14 @@ import { Dialog } from '@/components/Dialog'
 import { ref } from 'vue'
 import { BookResourceApi } from '@/api/modules/book'
 import { ColumnProps } from '@/components/ProTable/interface'
-import { Edit, CirclePlus, Grid, Download, DocumentCopy, UploadFilled } from '@element-plus/icons-vue'
+import { Edit, CirclePlus, Grid, Download, DocumentCopy, UploadFilled, Delete } from '@element-plus/icons-vue'
 import ProTable from '@/components/ProTable/index.vue'
 import BookResourceEditDialog from './BookResourceEditDialog.vue'
 import { useQRCode } from '@vueuse/integrations/useQRCode'
 import { useDownload } from '@/hooks/useDownload'
 import { ElMessageBox } from 'element-plus'
 import ImportResource from '@/components/Upload/ImportResource.vue'
+import { useHandleData } from '@/hooks/useHandleData'
 
 // 定义弹出框类型
 interface DialogProps {
@@ -168,6 +170,11 @@ const afterUpload = () => {
   if (importRes.value == 0) {
     proTable.value.getTableList()
   }
+}
+
+const deleteData = async (id: number) => {
+  await useHandleData(BookResourceApi.remove, [id], `删除书籍资源`)
+  proTable.value.getTableList()
 }
 </script>
 

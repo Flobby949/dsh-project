@@ -8,6 +8,7 @@
       <!-- 表格操作 -->
       <template #operation="scope">
         <el-button type="primary" link :icon="Edit" @click="openDrawer('编辑', scope.row)">编辑</el-button>
+        <el-button type="danger" link :icon="Delete" @click="deleteData(scope.row.id)">删除</el-button>
       </template>
     </ProTable>
     <CategoryDialog ref="dialogRef" />
@@ -19,8 +20,9 @@ import { ref, reactive } from 'vue'
 import { ColumnProps } from '@/components/ProTable/interface'
 import ProTable from '@/components/ProTable/index.vue'
 import CategoryDialog from './components/CategoryDialog.vue'
-import { Edit, CirclePlus } from '@element-plus/icons-vue'
+import { Edit, CirclePlus, Delete } from '@element-plus/icons-vue'
 import { CategoryApi } from '@/api/modules/category'
+import { useHandleData } from '@/hooks/useHandleData'
 
 // 获取 ProTable 元素，调用其获取刷新数据方法（还能获取到当前查询参数，方便导出携带参数）
 const proTable = ref()
@@ -67,5 +69,9 @@ const openDrawer = (title: string, row = {}) => {
     maxHeight: '500px'
   }
   dialogRef.value.acceptParams(params)
+}
+const deleteData = async (id: number) => {
+  await useHandleData(CategoryApi.remove, [id], `删除分类`)
+  proTable.value.getTableList()
 }
 </script>

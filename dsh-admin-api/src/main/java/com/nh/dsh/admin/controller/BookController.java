@@ -8,6 +8,7 @@ import com.nh.dsh.admin.model.entity.BookExchangeEntity;
 import com.nh.dsh.admin.model.query.BookExchangeQuery;
 import com.nh.dsh.admin.model.query.BookQuery;
 import com.nh.dsh.admin.model.query.BookResourceQuery;
+import com.nh.dsh.admin.model.vo.AuditResourceVO;
 import com.nh.dsh.admin.model.vo.BookResourceVO;
 import com.nh.dsh.admin.model.vo.BookVO;
 import com.nh.dsh.admin.security.cache.TokenStoreCache;
@@ -125,6 +126,14 @@ public class BookController {
         return Result.ok();
     }
 
+    @PostMapping("resource/auditPage")
+    @Operation(summary = "资源列表")
+    @PreAuthorize("hasAuthority('sys:book:view')")
+    public Result<PageResult<AuditResourceVO>> auditResourcePage(@RequestBody BookResourceQuery query) {
+        PageResult<AuditResourceVO> page = bookResourceService.auditResourcePage(query);
+        return Result.ok(page);
+    }
+
     @PostMapping("exchange/generate")
     @Operation(summary = "生成二维码")
     @PreAuthorize("hasAuthority('sys:book:view')")
@@ -145,6 +154,14 @@ public class BookController {
     @Operation(summary = "兑换")
     public Result<String> exchange(@PathVariable(name = "id") Integer id) {
         bookExchangeService.exchange(id);
+        return Result.ok();
+    }
+
+    @PostMapping("exchange/delete")
+    @Operation(summary = "删除资源兑换")
+    @PreAuthorize("hasAuthority('sys:book:add')")
+    public Result<String> removeExchange(@RequestBody List<Integer> ids) {
+        bookExchangeService.deleteInBatch(ids);
         return Result.ok();
     }
 }

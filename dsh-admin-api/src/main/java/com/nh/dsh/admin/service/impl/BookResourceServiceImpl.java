@@ -9,14 +9,18 @@ import com.nh.dsh.admin.common.exception.ServerException;
 import com.nh.dsh.admin.common.model.BaseServiceImpl;
 import com.nh.dsh.admin.common.result.PageResult;
 import com.nh.dsh.admin.convert.BookResourceConvert;
+import com.nh.dsh.admin.mapper.BookMapper;
 import com.nh.dsh.admin.mapper.BookResourceMapper;
 import com.nh.dsh.admin.model.dto.BookResourceDTO;
 import com.nh.dsh.admin.model.dto.ResourceImportDTO;
+import com.nh.dsh.admin.model.entity.BookEntity;
 import com.nh.dsh.admin.model.entity.BookResourceEntity;
 import com.nh.dsh.admin.model.query.BookResourceQuery;
+import com.nh.dsh.admin.model.vo.AuditResourceVO;
 import com.nh.dsh.admin.model.vo.BookResourceVO;
 import com.nh.dsh.admin.security.user.SecurityUser;
 import com.nh.dsh.admin.service.BookResourceService;
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -29,10 +33,7 @@ import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
@@ -45,7 +46,9 @@ import java.util.zip.ZipOutputStream;
 
 @Slf4j
 @Service
+@AllArgsConstructor
 public class BookResourceServiceImpl extends BaseServiceImpl<BookResourceMapper, BookResourceEntity> implements BookResourceService {
+    private final BookMapper bookMapper;
 
     @Override
     public void save(BookResourceDTO dto) {
@@ -120,6 +123,24 @@ public class BookResourceServiceImpl extends BaseServiceImpl<BookResourceMapper,
             throw new ServerException("导入失败");
         }
         this.saveBatch(partialImportList);
+    }
+
+    @Override
+    public PageResult<AuditResourceVO> auditResourcePage(BookResourceQuery query) {
+        Page<BookResourceEntity> page = getPage(query);
+        LambdaQueryWrapper<BookResourceEntity> wrapper = new LambdaQueryWrapper<BookResourceEntity>()
+                .orderByDesc(BookResourceEntity::getCreateTime);
+        baseMapper.selectPage(page, wrapper);
+        List<AuditResourceVO> result = page.getRecords().stream().map(item -> {
+            AuditResourceVO vo = BookResourceConvert.INSTANCE.convert(item);
+            BookEntity bookEntity = bookMapper.selectById(item.getBookId());
+            vo.setBookName(bookEntity.getBookName());
+            vo.setBookCover(bookEntity.getBookCover());
+            // TODO 如何判断状态?
+            vo.setIsChanged(0);
+            return vo;
+        }).sorted(Comparator.comparingInt(AuditResourceVO::getIsChanged).reversed()).toList();
+        return new PageResult<>(result, page.getTotal());
     }
 
     private byte[] generateQrCode(String resource) throws IOException {

@@ -12,6 +12,7 @@ import com.nh.dsh.admin.service.BookExchangeService;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.List;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
@@ -70,5 +71,10 @@ public class BookExchangeServiceImpl extends BaseServiceImpl<BookExchangeMapper,
         bookExchange.setStatus(1);
         bookExchange.setExchangeTime(new Date());
         baseMapper.updateById(bookExchange);
+    }
+
+    @Override
+    public void deleteInBatch(List<Integer> ids) {
+        baseMapper.deleteBatchIds(ids);
     }
 }

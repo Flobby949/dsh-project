@@ -10,6 +10,7 @@
         <el-button type="primary" link @click="showDetail(scope.row)">查看</el-button>
         <el-button type="primary" link @click="openDrawer('编辑', scope.row)">编辑</el-button>
         <el-button type="primary" link @click="showNotice(scope.row)">公告</el-button>
+        <el-button type="danger" link :icon="Delete" @click="deleteData(scope.row.id)">删除</el-button>
       </template>
     </ProTable>
     <forum-edit-dialog ref="editDialogRef" />
@@ -20,13 +21,14 @@
 
 <script setup lang="tsx" name="Book">
 import { ref, reactive } from 'vue'
-import { CirclePlus } from '@element-plus/icons-vue'
+import { CirclePlus, Delete } from '@element-plus/icons-vue'
 import { ColumnProps } from '@/components/ProTable/interface'
 import ProTable from '@/components/ProTable/index.vue'
 import { MixedApi } from '@/api/modules/mixed'
 import forumEditDialog from './components/ForumEditDialog.vue'
 import forumDialog from './components/ForumDialog.vue'
 import NoticeListDialog from './components/NoticeListDialog.vue'
+import { useHandleData } from '@/hooks/useHandleData'
 
 // 获取 ProTable 元素，调用其获取刷新数据方法（还能获取到当前查询参数，方便导出携带参数）
 const proTable = ref()
@@ -129,6 +131,10 @@ const showNotice = (row = {}) => {
     row: { ...row }
   }
   noticeDialogRef.value.acceptParams(params)
+}
+const deleteData = async (id: number) => {
+  await useHandleData(MixedApi.remove, [id], `删除论坛`)
+  proTable.value.getTableList()
 }
 </script>
 

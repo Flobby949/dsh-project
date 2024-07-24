@@ -54,6 +54,7 @@ public class ForumServiceImpl extends BaseServiceImpl<ForumMapper, ForumEntity> 
         update.eq(BookEntity::getId, entity.getBookId());
         String forumLink = String.format("http://www.flobby.top/dsh-client-uniapp/#/pages/forum/forum?id=%d", entity.getId());
         update.set(BookEntity::getForumLink, forumLink);
+        bookMapper.update(update);
     }
 
     @Override
