@@ -121,7 +121,6 @@ public class BookController {
     @Operation(summary = "导入资源")
     @PreAuthorize("hasAuthority('sys:book:add')")
     public Result<String> importResource(@RequestParam(name = "bookId") String bookId, @RequestParam("file") MultipartFile file) {
-        System.out.println(bookId);
         bookResourceService.importResources(Integer.parseInt(bookId), file);
         return Result.ok();
     }
@@ -134,11 +133,11 @@ public class BookController {
         return Result.ok(page);
     }
 
-    @PostMapping("exchange/generate")
-    @Operation(summary = "生成二维码")
+    @PostMapping("exchange/import")
+    @Operation(summary = "书链导入")
     @PreAuthorize("hasAuthority('sys:book:view')")
-    public Result<String> generate(@RequestParam(name = "bookId") Integer bookId, @RequestParam(name = "num") Integer num) {
-        bookExchangeService.generate(bookId, num);
+    public Result<String> bookLinkImport(@RequestParam(name = "bookId") String bookId, @RequestParam("file") MultipartFile file) {
+        bookExchangeService.bookLinkImport(Integer.parseInt(bookId), file);
         return Result.ok();
     }
 
@@ -150,8 +149,8 @@ public class BookController {
         return Result.ok(page);
     }
 
-    @GetMapping("exchange/{id}")
-    @Operation(summary = "兑换")
+    // @GetMapping("exchange/{id}")
+    // @Operation(summary = "兑换")
     public Result<String> exchange(@PathVariable(name = "id") Integer id) {
         bookExchangeService.exchange(id);
         return Result.ok();

@@ -25,7 +25,8 @@
     </ProTable>
     <BookDialog ref="dialogRef" />
     <Dialog :model-value="showQrCodeFlag" :width="400" :maxHeight="200" title="书籍二维码" :cancel-dialog="cancelDialog">
-      <el-image :src="qrcode" width="500"></el-image>
+      <el-image v-if="qrcode" :src="qrcode" width="500"></el-image>
+      <div v-else>请先创建相关论坛后查看二维码</div>
       <template #footer>
         <slot name="footer">
           <el-button type="primary" v-loading.fullscreen.lock="fullscreenLoading" @click="downloadQrCode">下载</el-button>

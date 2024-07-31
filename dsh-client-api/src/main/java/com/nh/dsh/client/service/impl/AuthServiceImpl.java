@@ -112,4 +112,19 @@ public class AuthServiceImpl implements AuthService {
         tokenStoreCache.deleteUserById(userId);
         tokenStoreCache.deleteUser(token);
     }
+
+    @Override
+    public String wxVerify(String code) {
+        log.info("微信校验: {}", code);
+        String urlForAK = "https://api.weixin.qq.com/sns/oauth2/access_token?" +
+                "appid=" + APP_ID +
+                "&secret=" + APP_SECRET +
+                "&code=" + code +
+                "&grant_type=authorization_code";
+        RestTemplate restTemplate = new RestTemplate();
+        String accessData = restTemplate.getForObject(urlForAK, String.class);
+        log.info("accessData: {}", accessData);
+        JSONObject accessObj = JSONObject.parseObject(accessData);
+        return accessObj.getString("openid");
+    }
 }

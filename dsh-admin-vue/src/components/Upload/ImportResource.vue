@@ -22,7 +22,6 @@
 
 <script setup lang="ts" name="UploadImg">
 import { ref, computed, inject } from 'vue'
-import { BookResourceApi } from '@/api/modules/book'
 import { generateUUID } from '@/utils/util'
 import { ElNotification, formContextKey, formItemContextKey } from 'element-plus'
 import type { UploadProps, UploadRequestOptions } from 'element-plus'
@@ -32,7 +31,7 @@ type FileTypes = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sh
 
 interface UploadFileProps {
   code: string // 图片地址 ==> 必传
-  api?: (params: any) => Promise<any> // 上传图片的 api 方法，一般项目上传都是同一个 api 方法，在组件里直接引入即可 ==> 非必传
+  api: (params: any) => Promise<any> // 上传图片的 api 方法，一般项目上传都是同一个 api 方法，在组件里直接引入即可 ==> 非必传
   drag?: boolean // 是否支持拖拽上传 ==> 非必传（默认为 true）
   disabled?: boolean // 是否禁用上传组件 ==> 非必传（默认为 false）
   fileSize?: number // 图片大小限制 ==> 非必传（默认为 5M）
@@ -82,7 +81,7 @@ const handleHttpUpload = async (options: UploadRequestOptions) => {
   formData.append('file', options.file)
   formData.append('bookId', props.bookId)
   try {
-    const { code } = await BookResourceApi.importResource(formData)
+    const { code } = await props.api(formData)
     console.log(code)
     emit('update:code', code)
     // 调用 el-form 内部的校验方法（可自动校验）

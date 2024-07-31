@@ -2,7 +2,7 @@
 NODE_ENV=production
 
 # 接口前缀
-VITE_API_URL=http://106.15.104.19/dsh-admin/
+VITE_API_URL=http://8.153.16.66/
 
 # 打包路径
 VITE_BASE_PATH=./

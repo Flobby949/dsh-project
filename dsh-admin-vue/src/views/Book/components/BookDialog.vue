@@ -87,7 +87,7 @@ import { ElMessage, FormInstance } from 'element-plus'
 import { Dialog } from '@/components/Dialog'
 import UploadImg from '@/components/Upload/Img.vue'
 import { CategoryApi } from '@/api/modules/category'
-import { PublisherApi } from '@/api/modules/Publisher'
+import { PublisherApi } from '@/api/modules/publisher'
 import { useAppStoreWithOut } from '@/store/modules/app'
 
 interface DialogProps {

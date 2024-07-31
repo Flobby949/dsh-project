@@ -32,7 +32,7 @@ const indexData = ref({
   swiper: [
     {
       id: 2,
-      cover: 'http://106.15.104.19:9000/dsh/swiper.png'
+      cover: 'http://8.153.16.66:9000/dsh/swiper.png'
     }
   ],
   forumList: []

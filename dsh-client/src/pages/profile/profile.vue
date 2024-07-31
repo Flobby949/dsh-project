@@ -31,6 +31,7 @@
 
     <!-- 操作 -->
     <view class="action-info">
+      <navigator class="row" url="/pages/profile/question">
       <view class="row">
         <view class="left">
           <uni-icons
@@ -50,6 +51,8 @@
           ></uni-icons>
         </view>
       </view>
+      </navigator>
+      <navigator class="row" url="/pages/profile/feedback">
       <view class="row">
         <view class="left">
           <uni-icons
@@ -69,6 +72,7 @@
           ></uni-icons>
         </view>
       </view>
+      </navigator>
     </view>
     <!-- 登录 -->
     <view class="action">

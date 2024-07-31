@@ -28,6 +28,11 @@ public class AuthController {
         return Result.ok(authService.login(code));
     }
 
+    @PostMapping("wxVerify")
+    public Result<String> wxVerify(@RequestParam String code) {
+        return Result.ok(authService.wxVerify(code));
+    }
+
     @PostMapping("logout")
     public Result<String> logout(@RequestHeader("Authorization") String token) {
         authService.logout(token);

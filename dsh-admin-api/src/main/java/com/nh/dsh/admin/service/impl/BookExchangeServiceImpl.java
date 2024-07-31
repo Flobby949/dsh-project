@@ -1,21 +1,24 @@
 package com.nh.dsh.admin.service.impl;
 
+import com.alibaba.excel.EasyExcel;
+import com.alibaba.excel.read.listener.PageReadListener;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.nh.dsh.admin.common.exception.ServerException;
 import com.nh.dsh.admin.common.model.BaseServiceImpl;
 import com.nh.dsh.admin.common.result.PageResult;
 import com.nh.dsh.admin.mapper.BookExchangeMapper;
+import com.nh.dsh.admin.model.dto.BookExchangeDTO;
 import com.nh.dsh.admin.model.entity.BookExchangeEntity;
 import com.nh.dsh.admin.model.query.BookExchangeQuery;
 import com.nh.dsh.admin.service.BookExchangeService;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.concurrent.ArrayBlockingQueue;
-import java.util.concurrent.ThreadPoolExecutor;
-import java.util.concurrent.TimeUnit;
 
 /**
  * @author : Flobby
@@ -26,29 +29,6 @@ import java.util.concurrent.TimeUnit;
 
 @Service
 public class BookExchangeServiceImpl extends BaseServiceImpl<BookExchangeMapper, BookExchangeEntity> implements BookExchangeService {
-    public static ThreadPoolExecutor generateExecutor = new ThreadPoolExecutor(
-            2,
-            8,
-            30, TimeUnit.SECONDS, new ArrayBlockingQueue<>(10)
-            , r -> {
-        Thread thread = new Thread(r);
-        thread.setName("generate-book-exchange-thread");
-        return thread;
-    }
-    );
-
-    @Override
-    public void generate(Integer bookId, Integer num) {
-        // 异步任务插入num次
-        generateExecutor.execute(() -> {
-            for (int i = 0; i < num; i++) {
-                BookExchangeEntity bookExchangeEntity = new BookExchangeEntity();
-                bookExchangeEntity.setBookId(bookId);
-                bookExchangeEntity.setStatus(0);
-                this.save(bookExchangeEntity);
-            }
-        });
-    }
 
     @Override
     public PageResult<BookExchangeEntity> page(BookExchangeQuery query) {
@@ -76,5 +56,29 @@ public class BookExchangeServiceImpl extends BaseServiceImpl<BookExchangeMapper,
     @Override
     public void deleteInBatch(List<Integer> ids) {
         baseMapper.deleteBatchIds(ids);
+    }
+
+    @Override
+    public void bookLinkImport(Integer bookId, MultipartFile file) {
+        List<BookExchangeEntity> partialImportList = new ArrayList<>();
+        try {
+            EasyExcel.read(file.getInputStream(), BookExchangeDTO.class, new PageReadListener<BookExchangeDTO>(dataList -> {
+                partialImportList.addAll(dataList.stream().map(item -> {
+                    BookExchangeEntity exchange = new BookExchangeEntity();
+                    exchange.setBookId(bookId);
+                    // 判断url是否是网络链接
+                    if (!item.getBookLink().startsWith("http")) {
+                        throw new ServerException("资源链接有误");
+                    }
+                    exchange.setBookLink(item.getBookLink());
+                    exchange.setVerifyCode(item.getCardNum());
+                    return exchange;
+                }).toList());
+            })).sheet().doRead();
+        } catch (IOException e) {
+            log.error("导入失败", e);
+            throw new ServerException("导入失败");
+        }
+        this.saveBatch(partialImportList);
     }
 }

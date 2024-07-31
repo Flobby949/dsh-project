@@ -12,7 +12,10 @@ export const BookApi = {
   add: (params: any) => http.post(_API + '/book/save', params),
   remove: (params: number[]) => http.post(_API + '/book/delete', params),
   edit: (params: any) => http.post(_API + '/book/update', params),
-  generateExchange: (bookId: number, num: number) => http.post(_API + `/book/exchange/generate?bookId=${bookId}&num=${num}`),
+  importExchange: (params) =>
+    http.post(_API + '/book/exchange/import', params, {
+      headers: { 'Content-Type': 'multipart/form-data' }
+    }),
   exchangePage: (params: Book.BookExchangeQuery) => http.post<ResPage<Book.BookExchange>>(_API + '/book/exchange/page', params),
   removeExchange: (params: number[]) => http.post(_API + `/book/exchange/delete`, params)
 }

@@ -24,7 +24,9 @@
         </view>
       </uni-section>
     </view>
-    <view class="follow-btn" @click="followAction">{{ forumDetailInfo.follow ? '取消关注' : '点我关注' }}</view>
+    <view class="follow-btn" @click="followAction">
+      <image src="@/static/guanzhu.png" style="width: 150rpx;height:150rpx"></image>
+    </view>
     <uni-fab ref="fab" :pattern="fabPattern" horizontal="right" @click="showComment" />
     <uni-popup ref="commentPop" type="bottom" background-color="#fff">
       <view class="commentPop">
@@ -233,12 +235,12 @@ page {
   position: absolute;
   top: 100rpx;
   z-index: 10;
-  right: 0;
+  right: 50rpx;
   border-radius: 10rpx;
   line-height: 100rpx;
   height: 100rpx;
   width: 120rpx;
-  background-color: rgba(48, 225, 195, 0.615);
+  // background-color: rgba(48, 225, 195, 0.615);
   color: #fff;
   text-align: center;
 }

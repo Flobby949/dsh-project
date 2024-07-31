@@ -1,17 +1,14 @@
 <template>
-  <Dialog
-    :model-value="dialogVisible"
-    :title="dialogProps.title"
-    :fullscreen="dialogProps.fullscreen"
-    width="80%"
-    :max-height="dialogProps.maxHeight"
-    :cancel-dialog="cancelDialog"
-  >
+  <Dialog :model-value="dialogVisible" :title="dialogProps.title" :fullscreen="dialogProps.fullscreen" width="80%" :maxHeight="500" :cancel-dialog="cancelDialog">
     <div class="el-dialog__body">
       <ProTable rowKey="id" ref="proTable" title="资源兑换列表" :columns="columns" :requestApi="getTableList" :dataCallback="dataCallback">
         <!-- 表格 header 按钮 -->
         <template #tableHeader>
-          <el-button type="primary" :icon="CirclePlus" @click="openGenerateDialog">生成二维码</el-button>
+          <ImportResource v-model:code="importRes" :file-size="1" :api="BookApi.importExchange" @check-validate="afterUpload" :bookId="dialogProps.row.id">
+            <template #empty>
+              <el-button type="primary" :icon="UploadFilled">导入资源码</el-button>
+            </template>
+          </ImportResource>
         </template>
         <!-- 表格操作 -->
         <template #operation="scope">
@@ -21,21 +18,11 @@
       </ProTable>
     </div>
   </Dialog>
-  <Dialog :model-value="showQrCodeFlag" title="资源二维码" :cancel-dialog="cancelResourceDialog">
+  <Dialog :model-value="showQrCodeFlag" title="兑换二维码" :cancel-dialog="cancelResourceDialog">
     <el-image :src="qrcode"></el-image>
     <template #footer>
       <slot name="footer">
         <el-button type="primary" v-loading.fullscreen.lock="fullscreenLoading" @click="downloadQrCode">下载</el-button>
-      </slot>
-    </template>
-  </Dialog>
-  <Dialog :model-value="generateDialog" title="资源二维码" :cancel-dialog="cancelGenerateDialog">
-    <el-form-item label="资源二维码生成数量">
-      <el-input-number v-model="num" placeholder="输入生成数量" :min="1"></el-input-number>
-    </el-form-item>
-    <template #footer>
-      <slot name="footer">
-        <el-button type="primary" v-loading.fullscreen.lock="fullscreenLoading" @click="generateTask">生成</el-button>
       </slot>
     </template>
   </Dialog>
@@ -46,11 +33,11 @@ import { Dialog } from '@/components/Dialog'
 import { ref } from 'vue'
 import { BookApi } from '@/api/modules/book'
 import { ColumnProps } from '@/components/ProTable/interface'
-import { Grid, CirclePlus, Delete } from '@element-plus/icons-vue'
+import { Grid, UploadFilled, Delete } from '@element-plus/icons-vue'
 import ProTable from '@/components/ProTable/index.vue'
 import { useQRCode } from '@vueuse/integrations/useQRCode'
-import { ElMessage } from 'element-plus'
 import { useHandleData } from '@/hooks/useHandleData'
+import ImportResource from '@/components/Upload/ImportResource.vue'
 
 // 定义弹出框类型
 interface DialogProps {
@@ -72,7 +59,7 @@ const dialogProps = ref<DialogProps>({
   row: {},
   labelWidth: 160,
   fullscreen: true,
-  maxHeight: '20vh'
+  maxHeight: 700
 })
 
 // 接收父组件传过来的参数
@@ -110,12 +97,22 @@ const columns: ColumnProps[] = [
   {
     prop: 'id',
     label: '编号',
-    width: 180
+    width: 100
+  },
+  {
+    prop: 'verifyCode',
+    label: '校验码',
+    width: 400
+  },
+  {
+    prop: 'bookLink',
+    label: '内容链接',
+    width: 500
   },
   {
     prop: 'status',
     label: '状态',
-    width: 350,
+    width: 150,
     render: (scope) => {
       return <el-tag type={scope.row.status ? 'danger' : 'success'}>{scope.row.status ? '已使用' : '未使用'}</el-tag>
     }
@@ -123,9 +120,9 @@ const columns: ColumnProps[] = [
   {
     prop: 'exchangeTime',
     label: '兑换时间',
-    width: 350
+    width: 300
   },
-  { prop: 'operation', label: '操作', fixed: 'right', width: 300 }
+  { prop: 'operation', label: '操作', fixed: 'right', width: 200 }
 ]
 
 let qrcode
@@ -151,22 +148,11 @@ const cancelResourceDialog = () => {
   showQrCodeFlag.value = false
 }
 
-const generateDialog = ref(false)
-const num = ref(0)
-const openGenerateDialog = async () => {
-  generateDialog.value = true
-  num.value = 0
-}
-
-const cancelGenerateDialog = () => {
-  generateDialog.value = false
-}
-
-const generateTask = async () => {
-  await BookApi.generateExchange(dialogProps.value.row.id, num.value)
-  ElMessage.success({ message: `二维码生成成功！` })
-  proTable.value.getTableList()
-  cancelGenerateDialog()
+const importRes = ref()
+const afterUpload = () => {
+  if (importRes.value == 0) {
+    proTable.value.getTableList()
+  }
 }
 
 const deleteData = async (id: number) => {

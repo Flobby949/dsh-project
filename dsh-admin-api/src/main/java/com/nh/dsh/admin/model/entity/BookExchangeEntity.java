@@ -19,10 +19,10 @@ import java.util.Date;
 @Schema(description = "书籍兑换记录实体")
 public class BookExchangeEntity extends BaseEntity{
     private Integer bookId;
-    private Integer userId;
+    private String verifyCode;
     private String userFlag;
     private Integer status;
-    private String remark;
+    private String bookLink;
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date exchangeTime;
 }

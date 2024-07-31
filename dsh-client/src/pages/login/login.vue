@@ -36,7 +36,7 @@ import { ref } from 'vue'
 const wxLogin = () => {
   // const appid = 'wx731630b450248376'
   const appid = 'wx0055deef26d951ff'
-  const redirect_uri = encodeURIComponent('http://www.flobby.top/dsh-client-uniapp/#/pages/login/login-temp')
+  const redirect_uri = encodeURIComponent('http://demo.dianhuiyun.com.cn/dsh-client-h5/#/pages/login/login-temp')
   const scope = 'snsapi_userinfo'
   const url = ref(`https://open.weixin.qq.com/connect/oauth2/authorize?appid=${appid}&redirect_uri=${redirect_uri}&response_type=code&scope=${scope}&state=STATE#wechat_redirect`)
   window.location.href = url.value

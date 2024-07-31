@@ -96,6 +96,20 @@
         "navigationStyle": "custom",
         "navigationBarTitleText": "问答"
       }
+    },
+    {
+      "path": "pages/exchange/exchange",
+      "style": {
+        "navigationStyle": "custom",
+        "navigationBarTitleText": "资源校验"
+      }
+    },
+    {
+      "path": "pages/exchange/exchange-temp",
+      "style": {
+        "navigationStyle": "custom",
+        "navigationBarTitleText": "微信验证"
+      }
     }
 	],
 	"globalStyle": {

@@ -202,6 +202,12 @@ export namespace Book {
     exchangeTime: string
     createTime: string
   }
+
+  export interface BookExchangeDTO {
+    bookId: number
+    count: number
+    redirectUrl: string
+  }
 }
 
 export namespace BookResource {

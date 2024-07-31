@@ -7,7 +7,7 @@
           <el-button type="primary" :icon="CirclePlus" @click="openDrawer('新增')" v-hasPermi="['sys:book:add']">新增资源</el-button>
           <el-button type="primary" :icon="DocumentCopy" @click="uploadTemplate" v-hasPermi="['sys:book:add']">下载上传模板</el-button>
           <el-button type="primary" :icon="Download" @click="downloadFile" v-hasPermi="['sys:book:view']">下载资源码</el-button>
-          <ImportResource v-model:code="importRes" :file-size="1" @check-validate="afterUpload" :bookId="dialogProps.row.id">
+          <ImportResource v-model:code="importRes" :file-size="1" :api="BookResourceApi.importResource" @check-validate="afterUpload" :bookId="dialogProps.row.id">
             <template #empty>
               <el-button type="primary" :icon="UploadFilled">导入资源码</el-button>
             </template>

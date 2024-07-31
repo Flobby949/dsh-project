@@ -56,9 +56,9 @@ knife4j:
     password: 123456  #??
 
 minio:
-  host: http://106.15.104.19:9000/
-  access-key: admin123
-  secret-key: flobby529
+  host: http://8.153.16.66:9000/
+  access-key: minioadmin
+  secret-key: minioadmin
   bucket: dsh
 
 auth:

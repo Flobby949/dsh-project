@@ -10,4 +10,6 @@ public interface AuthService {
     UserLoginVO login(String code);
 
     void logout(String token);
+
+    String wxVerify(String code);
 }
