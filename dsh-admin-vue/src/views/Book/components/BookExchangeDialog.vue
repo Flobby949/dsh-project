@@ -102,7 +102,7 @@ const columns: ColumnProps[] = [
   {
     prop: 'verifyCode',
     label: '校验码',
-    width: 400
+    width: 200
   },
   {
     prop: 'bookLink',
@@ -114,8 +114,13 @@ const columns: ColumnProps[] = [
     label: '状态',
     width: 150,
     render: (scope) => {
-      return <el-tag type={scope.row.status ? 'danger' : 'success'}>{scope.row.status ? '已使用' : '未使用'}</el-tag>
+      return <el-tag type={scope.row.status === 1 ? 'danger' : 'success'}>{scope.row.status === 1 ? '已使用' : '未使用'}</el-tag>
     }
+  },
+  {
+    prop: 'userFlag',
+    label: '兑换人',
+    width: 300
   },
   {
     prop: 'exchangeTime',
@@ -128,8 +133,7 @@ const columns: ColumnProps[] = [
 let qrcode
 const showQrCodeFlag = ref(false)
 const showQrCode = (row = {}) => {
-  qrcode = useQRCode(`${import.meta.env.VITE_API_URL}/dsh-admin-api/book/exchange/${row.id}`)
-  console.log(`${import.meta.env.VITE_API_URL}/dsh-admin-api/book/exchange/${row.id}`)
+  qrcode = useQRCode(`http://demo.dianhuiyun.com.cn/dsh-client-h5/#/pages/exchange/exchange?cardNum=${row.verifyCode}`)
   showQrCodeFlag.value = true
 }
 const fullscreenLoading = ref(false)

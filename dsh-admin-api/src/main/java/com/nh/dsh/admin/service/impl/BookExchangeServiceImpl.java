@@ -72,6 +72,7 @@ public class BookExchangeServiceImpl extends BaseServiceImpl<BookExchangeMapper,
                     }
                     exchange.setBookLink(item.getBookLink());
                     exchange.setVerifyCode(item.getCardNum());
+                    exchange.setStatus(0);
                     return exchange;
                 }).toList());
             })).sheet().doRead();
