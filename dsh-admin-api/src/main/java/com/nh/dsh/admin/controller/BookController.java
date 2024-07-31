@@ -163,4 +163,11 @@ public class BookController {
         bookExchangeService.deleteInBatch(ids);
         return Result.ok();
     }
+
+    @PostMapping("exchange/download")
+    @Operation(summary = "下载兑换资源")
+    @PreAuthorize("hasAuthority('sys:book:view')")
+    public ResponseEntity<byte[]> downloadExchangeQrCode(@RequestParam(name = "bookId") Integer bookId) {
+        return bookExchangeService.downloadExchangeQrCode(bookId);
+    }
 }

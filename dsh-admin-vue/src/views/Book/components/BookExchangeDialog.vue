@@ -6,9 +6,10 @@
         <template #tableHeader>
           <ImportResource v-model:code="importRes" :file-size="1" :api="BookApi.importExchange" @check-validate="afterUpload" :bookId="dialogProps.row.id">
             <template #empty>
-              <el-button type="primary" :icon="UploadFilled">导入资源码</el-button>
+              <el-button type="primary" :icon="UploadFilled">导入兑换码</el-button>
             </template>
           </ImportResource>
+          <el-button type="primary" :icon="Download" @click="downloadFile">下载兑换码</el-button>
         </template>
         <!-- 表格操作 -->
         <template #operation="scope">
@@ -18,7 +19,7 @@
       </ProTable>
     </div>
   </Dialog>
-  <Dialog :model-value="showQrCodeFlag" title="兑换二维码" :cancel-dialog="cancelResourceDialog">
+  <Dialog :model-value="showQrCodeFlag" :maxHeight="300" title="兑换二维码" :cancel-dialog="cancelResourceDialog">
     <el-image :src="qrcode"></el-image>
     <template #footer>
       <slot name="footer">
@@ -33,11 +34,13 @@ import { Dialog } from '@/components/Dialog'
 import { ref } from 'vue'
 import { BookApi } from '@/api/modules/book'
 import { ColumnProps } from '@/components/ProTable/interface'
-import { Grid, UploadFilled, Delete } from '@element-plus/icons-vue'
+import { Grid, UploadFilled, Delete, Download } from '@element-plus/icons-vue'
+import { ElMessageBox } from 'element-plus'
 import ProTable from '@/components/ProTable/index.vue'
 import { useQRCode } from '@vueuse/integrations/useQRCode'
 import { useHandleData } from '@/hooks/useHandleData'
 import ImportResource from '@/components/Upload/ImportResource.vue'
+import { useDownload } from '@/hooks/useDownload'
 
 // 定义弹出框类型
 interface DialogProps {
@@ -162,6 +165,12 @@ const afterUpload = () => {
 const deleteData = async (id: number) => {
   await useHandleData(BookApi.removeExchange, [id], `删除书籍兑换`)
   proTable.value.getTableList()
+}
+
+const downloadFile = () => {
+  ElMessageBox.confirm('确认下载全部兑换码?', '温馨提示', { type: 'warning' }).then(() =>
+    useDownload(BookApi.downloadExchange, '兑换二维码', dialogProps.value.row.id, true, '.zip')
+  )
 }
 </script>
 

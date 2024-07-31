@@ -1,5 +1,6 @@
 package com.nh.dsh.admin.service.impl;
 
+import cn.hutool.extra.qrcode.QrCodeUtil;
 import com.alibaba.excel.EasyExcel;
 import com.alibaba.excel.read.listener.PageReadListener;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
@@ -12,13 +13,20 @@ import com.nh.dsh.admin.model.dto.BookExchangeDTO;
 import com.nh.dsh.admin.model.entity.BookExchangeEntity;
 import com.nh.dsh.admin.model.query.BookExchangeQuery;
 import com.nh.dsh.admin.service.BookExchangeService;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipOutputStream;
 
 /**
  * @author : Flobby
@@ -27,6 +35,7 @@ import java.util.List;
  * @create : 2024-06-30 15:38
  **/
 
+@Slf4j
 @Service
 public class BookExchangeServiceImpl extends BaseServiceImpl<BookExchangeMapper, BookExchangeEntity> implements BookExchangeService {
 
@@ -81,5 +90,51 @@ public class BookExchangeServiceImpl extends BaseServiceImpl<BookExchangeMapper,
             throw new ServerException("导入失败");
         }
         this.saveBatch(partialImportList);
+    }
+
+    @Override
+    public ResponseEntity<byte[]> downloadExchangeQrCode(int bookId) {
+        Map<String, byte[]> map = new HashMap<>();
+        list(new LambdaQueryWrapper<BookExchangeEntity>().eq(BookExchangeEntity::getBookId, bookId))
+                .stream()
+                .forEach(item -> {
+            try {
+                String verifyCode = item.getVerifyCode();
+                String link = String.format("http://demo.dianhuiyun.com.cn/dsh-client-h5/#/pages/exchange/exchange?cardNum=%s", verifyCode);
+                map.put(verifyCode + ".png", generateQrCode(link));
+            } catch (IOException e) {
+                log.info("{} 二维码生成失败, {}", item.getVerifyCode(), e.getMessage());
+            }
+        });
+        try {
+            byte[] zipBytes = generateZip(map);
+            HttpHeaders headers = new HttpHeaders();
+            headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=qrcodes.zip");
+            return new ResponseEntity<>(zipBytes, headers, HttpStatus.OK);
+        } catch (IOException e) {
+            log.error("二维码生成失败", e);
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    private byte[] generateQrCode(String resource) throws IOException {
+        BufferedImage bufferedImage = QrCodeUtil.generate(resource, 300, 300);
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        ImageIO.write(bufferedImage, "png", baos);
+        return baos.toByteArray();
+    }
+
+    private byte[] generateZip(Map<String, byte[]> resources) throws IOException {
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        ZipOutputStream zos = new ZipOutputStream(baos);
+
+        for (Map.Entry<String, byte[]> entry : resources.entrySet()) {
+            zos.putNextEntry(new ZipEntry(entry.getKey()));
+            zos.write(entry.getValue());
+            zos.closeEntry();
+        }
+
+        zos.close();
+        return baos.toByteArray();
     }
 }

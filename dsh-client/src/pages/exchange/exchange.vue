@@ -6,7 +6,9 @@ import { exchange } from '@/service/book'
 const wxOpenId = ref()
 const cardNum = ref()
 onLoad((e) => {
+  cardNum.value = uni.getStorageSync("cardNum") || null
   if (e.cardNum) {
+    uni.setStorageSync("cardNum", e.cardNum)
     cardNum.value = e.cardNum
   }
   if (e.wxId) {

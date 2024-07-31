@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.nh.dsh.admin.common.result.PageResult;
 import com.nh.dsh.admin.model.entity.BookExchangeEntity;
 import com.nh.dsh.admin.model.query.BookExchangeQuery;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
@@ -24,4 +25,6 @@ public interface BookExchangeService extends IService<BookExchangeEntity> {
     void deleteInBatch(List<Integer> ids);
 
     void bookLinkImport(Integer bookId, MultipartFile file);
+
+    ResponseEntity<byte[]> downloadExchangeQrCode(int bookId);
 }

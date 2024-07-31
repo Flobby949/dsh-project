@@ -17,7 +17,15 @@ export const BookApi = {
       headers: { 'Content-Type': 'multipart/form-data' }
     }),
   exchangePage: (params: Book.BookExchangeQuery) => http.post<ResPage<Book.BookExchange>>(_API + '/book/exchange/page', params),
-  removeExchange: (params: number[]) => http.post(_API + `/book/exchange/delete`, params)
+  removeExchange: (params: number[]) => http.post(_API + `/book/exchange/delete`, params),
+  downloadExchange: (bookId: number) =>
+    http.post(
+      _API + `/book/exchange/download?bookId=${bookId}`,
+      {},
+      {
+        responseType: 'blob'
+      }
+    )
 }
 
 export const BookResourceApi = {
