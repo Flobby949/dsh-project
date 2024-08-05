@@ -29,4 +29,6 @@ public class BookResourceEntity extends BaseEntity {
 
     @Schema(description = "二维码")
     private String codeCover;
+
+    private Integer validStatus;
 }

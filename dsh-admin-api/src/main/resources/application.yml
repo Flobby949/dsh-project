@@ -77,3 +77,6 @@ minio:
   access-key: minioadmin
   secret-key: minioadmin
   bucket: dsh
+
+code:
+  secret: 2253

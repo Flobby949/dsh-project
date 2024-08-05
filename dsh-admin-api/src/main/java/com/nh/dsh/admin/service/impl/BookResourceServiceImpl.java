@@ -5,6 +5,7 @@ import com.alibaba.excel.EasyExcel;
 import com.alibaba.excel.read.listener.PageReadListener;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.nh.dsh.admin.common.config.CodeConfig;
 import com.nh.dsh.admin.common.exception.ServerException;
 import com.nh.dsh.admin.common.model.BaseServiceImpl;
 import com.nh.dsh.admin.common.result.PageResult;
@@ -49,6 +50,7 @@ import java.util.zip.ZipOutputStream;
 @AllArgsConstructor
 public class BookResourceServiceImpl extends BaseServiceImpl<BookResourceMapper, BookResourceEntity> implements BookResourceService {
     private final BookMapper bookMapper;
+    private final CodeConfig codeConfig;
 
     @Override
     public void save(BookResourceDTO dto) {
@@ -83,7 +85,8 @@ public class BookResourceServiceImpl extends BaseServiceImpl<BookResourceMapper,
         Map<String, byte[]> map = new HashMap<>();
         list(new LambdaQueryWrapper<BookResourceEntity>().eq(BookResourceEntity::getBookId, bookId)).stream().forEach(item -> {
             try {
-                map.put(item.getResourceName() + item.getId() + ".png", generateQrCode(item.getLink()));
+                map.put(item.getResourceName() + item.getId() + ".png",
+                        generateQrCode("http://demo.dianhuiyun.com.cn/dsh-client-h5/book/resource?resourceId=" + item.getId() + "&secret=" + codeConfig.getSecret()));
             } catch (IOException e) {
                 log.info("{} 二维码生成失败, {}", item.getResourceName(), e.getMessage());
             }
@@ -115,6 +118,7 @@ public class BookResourceServiceImpl extends BaseServiceImpl<BookResourceMapper,
                     resource.setLink(item.getUrl());
                     resource.setResourceName(item.getDesc());
                     resource.setUserId(SecurityUser.getManagerId());
+                    resource.setValidStatus(0);
                     return resource;
                 }).toList());
             })).sheet().doRead();
@@ -136,8 +140,7 @@ public class BookResourceServiceImpl extends BaseServiceImpl<BookResourceMapper,
             BookEntity bookEntity = bookMapper.selectById(item.getBookId());
             vo.setBookName(bookEntity.getBookName());
             vo.setBookCover(bookEntity.getBookCover());
-            // TODO 如何判断状态?
-            vo.setIsChanged(0);
+            vo.setIsChanged(item.getValidStatus());
             return vo;
         }).sorted(Comparator.comparingInt(AuditResourceVO::getIsChanged).reversed()).toList();
         return new PageResult<>(result, page.getTotal());
