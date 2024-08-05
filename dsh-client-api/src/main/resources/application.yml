@@ -69,3 +69,6 @@ auth:
     - /forum/followed
     - /forum/detail
     - /forum/comment/**
+
+code:
+  secret: 2253

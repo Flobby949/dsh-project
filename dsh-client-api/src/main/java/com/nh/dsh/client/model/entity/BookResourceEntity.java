@@ -37,6 +37,8 @@ public class BookResourceEntity {
     @Schema(description = "二维码")
     private String codeCover;
 
+    private Integer validStatus;
+
     @Schema(description = "0:未删除  1:已删除")
     @TableLogic
     @JsonIgnore
