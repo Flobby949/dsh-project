@@ -1,5 +1,6 @@
 <template>
   <div class="login-container flx-center">
+    <div class="system-title">出版社二维码全生命周期管控与内容审核系统</div>
     <div class="login-box">
       <SwitchDark class="dark" />
       <div class="login-left">
@@ -7,8 +8,7 @@
       </div>
       <div class="login-form">
         <div class="login-logo">
-          <img class="login-icon" src="@/assets/images/logo.svg" alt="" />
-          <h2 class="logo-text"> 后台管理系统 </h2>
+          <h2 class="logo-text"> 系统登录 </h2>
         </div>
         <LoginForm />
       </div>

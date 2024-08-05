@@ -77,16 +77,21 @@ public class BookResourceServiceImpl extends BaseServiceImpl<BookResourceMapper,
                 .orderByDesc(BookResourceEntity::getCreateTime);
         Page<BookResourceEntity> pageResult = baseMapper.selectPage(page, wrapper);
         List<BookResourceVO> vos = BookResourceConvert.INSTANCE.convertList(pageResult.getRecords());
+        vos.forEach(item -> {
+            item.setSecret(codeConfig.getSecret());
+        });
         return new PageResult<>(vos, pageResult.getTotal());
     }
 
     @Override
     public ResponseEntity<byte[]> downloadResourcesQrCode(int bookId) {
         Map<String, byte[]> map = new HashMap<>();
-        list(new LambdaQueryWrapper<BookResourceEntity>().eq(BookResourceEntity::getBookId, bookId)).stream().forEach(item -> {
+        list(new LambdaQueryWrapper<BookResourceEntity>().eq(BookResourceEntity::getBookId, bookId))
+                .stream()
+                .forEach(item -> {
             try {
                 map.put(item.getResourceName() + item.getId() + ".png",
-                        generateQrCode("http://demo.dianhuiyun.com.cn/dsh-client-h5/book/resource?resourceId=" + item.getId() + "&secret=" + codeConfig.getSecret()));
+                        generateQrCode("http://demo.dianhuiyun.com.cn/dsh-client-h5/#/pages/book/resource?resourceId=" + item.getId() + "&secret=" + codeConfig.getSecret()));
             } catch (IOException e) {
                 log.info("{} 二维码生成失败, {}", item.getResourceName(), e.getMessage());
             }

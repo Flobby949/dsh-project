@@ -217,6 +217,7 @@ export namespace BookResource {
     userId: number
     link: string
     resourceName: string
+    secret: string
   }
   export interface BookResourceQuery extends ReqPage {
     bookId: number

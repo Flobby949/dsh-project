@@ -110,6 +110,13 @@
         "navigationStyle": "custom",
         "navigationBarTitleText": "微信验证"
       }
+    },
+    {
+      "path": "pages/book/resource",
+      "style": {
+        "navigationStyle": "custom",
+        "navigationBarTitleText": "资源验证"
+      }
     }
 	],
 	"globalStyle": {

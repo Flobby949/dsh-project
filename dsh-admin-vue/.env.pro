@@ -2,7 +2,7 @@
 NODE_ENV=production
 
 # 接口前缀
-VITE_API_URL=http://8.153.16.66/
+VITE_API_URL=http://demo.dianhuiyun.com.cn/
 
 # 打包路径
 VITE_BASE_PATH=./

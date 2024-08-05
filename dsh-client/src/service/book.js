@@ -9,3 +9,11 @@ export const exchange = (exchangeDTO) => {
     data: exchangeDTO
   })
 }
+
+export const resource = (codeDTO) => {
+  return http({
+    method: 'POST',
+    url: BOOK_API + '/resource',
+    data: codeDTO
+  })
+}

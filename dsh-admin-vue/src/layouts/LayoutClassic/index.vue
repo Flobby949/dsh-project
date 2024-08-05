@@ -4,8 +4,7 @@
     <el-header>
       <div class="header-lf">
         <div class="logo flx-center">
-          <img class="logo-img" src="@/assets/images/logo.svg" alt="logo" />
-          <span class="logo-text">dsh-admin</span>
+          <span class="logo-text">系统功能</span>
         </div>
         <ToolBarLeft />
       </div>

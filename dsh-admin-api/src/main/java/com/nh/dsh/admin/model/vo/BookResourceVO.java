@@ -27,4 +27,6 @@ public class BookResourceVO {
 
     @Schema(description = "链接")
     private String link;
+
+    private String secret;
 }

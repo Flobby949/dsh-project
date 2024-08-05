@@ -3,8 +3,7 @@
   <el-container class="layout">
     <el-header>
       <div class="logo flx-center">
-        <img class="logo-img" src="@/assets/images/logo.svg" alt="logo" />
-        <span class="logo-text"> dsh-admin</span>
+        <span class="logo-text">系统功能</span>
       </div>
       <el-menu mode="horizontal" :default-active="activeMenu" :router="false" :unique-opened="true">
         <!-- 不能直接使用 SubMenu 组件，无法触发 el-menu 隐藏省略功能 -->
