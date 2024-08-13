@@ -114,7 +114,7 @@ const dialogProps = ref<DialogProps>({
   title: '',
   row: { type: 'MENU', openType: 'TAB', keepalive: false, hide: false, sort: 0 },
   labelWidth: 160,
-  fullscreen: true,
+  fullscreen: false,
   maxHeight: '500px'
 })
 

@@ -55,7 +55,7 @@ const dialogProps = ref({
   title: '圈子详情',
   row: {},
   labelWidth: 160,
-  fullscreen: true,
+  fullscreen: false,
   maxHeight: '500px'
 })
 

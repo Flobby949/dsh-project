@@ -105,7 +105,10 @@ const noticeEditDialogRef = ref()
 const openDrawer = (title: string, row = {}) => {
   let params = {
     title,
-    row: { ...row },
+    row: {
+      ...row,
+      forumId: dialogProps.value.row.forumId
+    },
     isView: title === '查看',
     api: title === '编辑' ? NoticeApi.edit : NoticeApi.add,
     getTableList: proTable.value.getTableList,

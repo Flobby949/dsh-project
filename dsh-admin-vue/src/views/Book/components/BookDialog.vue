@@ -106,7 +106,7 @@ const dialogProps = ref<DialogProps>({
   title: '',
   row: {},
   labelWidth: 160,
-  fullscreen: true,
+  fullscreen: false,
   maxHeight: '500px'
 })
 
@@ -143,7 +143,18 @@ defineExpose({
 
 const rules = reactive({
   bookName: [{ required: true, message: '请输入书名', trigger: 'blur' }],
-  isbn: [{ required: true, message: '请输入ISBN号', trigger: 'blur' }]
+  isbn: [{ required: true, message: '请输入ISBN号', trigger: 'blur' }],
+  classificationId: [{ required: true, message: '请选择分类', trigger: 'change' }],
+  publisherId: [{ required: true, message: '请选择出版社', trigger: 'change' }],
+  translator: [{ required: true, message: '请输入译者', trigger: 'blur' }],
+  writer: [{ required: true, message: '请输入作者', trigger: 'blur' }],
+  price: [{ required: true, message: '请输入价格', trigger: 'change' }],
+  pageNumber: [{ required: true, message: '请输入页数', trigger: 'change' }],
+  bookStyle: [{ required: true, message: '请输入装帧', trigger: 'blur' }],
+  publishDate: [{ required: true, message: '请选择出版时间', trigger: 'change' }],
+  authorIntroduction: [{ required: true, message: '请输入作者简介', trigger: 'blur' }],
+  bookIntroduction: [{ required: true, message: '请输入书本简介', trigger: 'blur' }],
+  bookCover: [{ required: true, message: '请上传封面', trigger: 'blur' }]
 })
 const ruleFormRef = ref<FormInstance>()
 const handleSubmit = () => {

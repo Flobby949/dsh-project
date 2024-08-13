@@ -271,3 +271,9 @@ defineExpose({
   selectedListIds
 })
 </script>
+
+<style scoped>
+.table-main {
+  height: 90%;
+}
+</style>

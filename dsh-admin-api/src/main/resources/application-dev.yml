@@ -5,8 +5,8 @@ spring:
     druid:
       driver-class-name: com.mysql.cj.jdbc.Driver
       url: jdbc:mysql://8.153.16.66:3306/dsh?useSSL=false&allowPublicKeyRetrieval=true&allowMultiQueries=true&useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai
-      username: root
-      password: root
+      username: dsh
+      password: 123456
       initial-size: 5
       min-idle: 5
       max-active: 20

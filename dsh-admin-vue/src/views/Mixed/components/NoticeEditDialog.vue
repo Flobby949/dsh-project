@@ -1,5 +1,5 @@
 <template>
-  <Dialog :model-value="dialogVisible" :title="dialogProps.title" :fullscreen="dialogProps.fullscreen" :max-height="dialogProps.maxHeight" :cancel-dialog="cancelDialog">
+  <Dialog :model-value="dialogVisible" :title="dialogProps.title" :fullscreen="dialogProps.fullscreen" :max-height="300" :cancel-dialog="cancelDialog">
     <div :style="'width: calc(100% - ' + dialogProps.labelWidth! / 2 + 'px)'">
       <el-form
         ref="ruleFormRef"
@@ -59,7 +59,7 @@ const dialogProps = ref<DialogProps>({
     isTop: 0
   },
   labelWidth: 160,
-  fullscreen: true,
+  fullscreen: false,
   maxHeight: '500px'
 })
 
@@ -69,6 +69,7 @@ const disabledDate = (time: Date) => {
 
 // 接收父组件传过来的参数
 const acceptParams = (params: DialogProps): void => {
+  console.log(params)
   params.row = { ...dialogProps.value.row, ...params.row }
   dialogProps.value = { ...dialogProps.value, ...params }
   dialogVisible.value = true
@@ -79,8 +80,9 @@ defineExpose({
 })
 
 const rules = reactive({
-  name: [{ required: true, message: '请输入论坛名', trigger: 'blur' }],
-  bookId: [{ required: true, message: '请绑定书籍', trigger: 'change' }]
+  title: [{ required: true, message: '请输入标题', trigger: 'blur' }],
+  content: [{ required: true, message: '请输入内容', trigger: 'blur' }],
+  validTime: [{ required: true, message: '请选择时间', trigger: 'change' }]
 })
 const ruleFormRef = ref<FormInstance>()
 const handleSubmit = () => {
@@ -102,7 +104,9 @@ const cancelDialog = (isClean?: boolean) => {
   dialogVisible.value = false
   let condition = ['查看', '编辑']
   if (condition.includes(dialogProps.value.title) || isClean) {
-    dialogProps.value.row = {}
+    dialogProps.value.row = {
+      isTop: 0
+    }
     ruleFormRef.value!.resetFields()
   }
 }

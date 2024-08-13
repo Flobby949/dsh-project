@@ -40,7 +40,7 @@ interface DialogProps {
 }
 const dialogProps = ref<DialogProps>({
   title: '通知列表',
-  fullscreen: true,
+  fullscreen: false,
   maxHeight: '500px'
 })
 const initParam = reactive({})

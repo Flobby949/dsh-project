@@ -30,9 +30,9 @@
                 <el-text style="float: left; width: 40%" line-clamp="1" truncated>{{ item.bookName }}</el-text>
               </el-tooltip>
               <el-tooltip placement="top" :hide-after="0">
-                <template #content> {{ item.writer }} </template>
+                <template #content> {{ item.isbn }} </template>
                 <el-text style="float: right; color: var(--el-text-color-secondary); font-size: 13px; width: 40%" line-clamp="1" truncated>
-                  {{ item.writer }}
+                  {{ item.isbn }}
                 </el-text>
               </el-tooltip>
             </el-option>
@@ -105,7 +105,7 @@ const dialogProps = ref<DialogProps>({
   title: '',
   row: {},
   labelWidth: 160,
-  fullscreen: true,
+  fullscreen: false,
   maxHeight: '500px'
 })
 
@@ -141,8 +141,12 @@ defineExpose({
 })
 
 const rules = reactive({
+  cover: [{ required: true, message: '请上传论坛封面', trigger: 'change' }],
   name: [{ required: true, message: '请输入论坛名', trigger: 'blur' }],
-  bookId: [{ required: true, message: '请绑定书籍', trigger: 'change' }]
+  bookId: [{ required: true, message: '请绑定书籍', trigger: 'change' }],
+  userId: [{ required: true, message: '请绑定圈主', trigger: 'change' }],
+  price: [{ required: true, message: '请输入作者答缺省价', trigger: 'change' }],
+  writerIntroduction: [{ required: true, message: '请输入作者简介', trigger: 'blur' }]
 })
 const ruleFormRef = ref<FormInstance>()
 const handleSubmit = () => {

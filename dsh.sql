@@ -1,17 +1,17 @@
 /*
  Navicat Premium Data Transfer
 
- Source Server         : localhost_3306
+ Source Server         : dsh
  Source Server Type    : MySQL
- Source Server Version : 80023
- Source Host           : localhost:3306
+ Source Server Version : 80032
+ Source Host           : 8.153.16.66:3306
  Source Schema         : dsh
 
  Target Server Type    : MySQL
- Target Server Version : 80023
+ Target Server Version : 80032
  File Encoding         : 65001
 
- Date: 31/07/2024 10:42:12
+ Date: 09/08/2024 14:13:10
 */
 
 SET NAMES utf8mb4;
@@ -63,14 +63,11 @@ CREATE TABLE `book`  (
   `create_time` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '创建时间',
   `update_time` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0) ON UPDATE CURRENT_TIMESTAMP(0) COMMENT '更新时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of book
 -- ----------------------------
-INSERT INTO `book` VALUES (1, 'Integer', 'update', 1, 1, 'String', 'String', 0.10, 1, 'String', '2024-06-26 08:00:00', 'String', 'String', 'https://element-plus.org/zh-CN/component/dialog.html', 'http://106.15.104.19:9000/dsh/3e5a6ddf23324abdbbbe3d4e7324b52c.jpg', 0, '2024-06-17 13:34:31', '2024-06-29 08:31:49');
-INSERT INTO `book` VALUES (2, 'String', 'String', 2, 1, 'String', 'String', 1.30, 2, 'String', '2024-06-17 08:00:00', 'String', 'String', 'https://element-plus.org/zh-CN/component/image.html#image-api', 'http://106.15.104.19:9000/dsh/a7b86910699442f79429a8cae6dac380.jpg', 0, '2024-06-17 15:04:32', '2024-06-29 08:31:49');
-INSERT INTO `book` VALUES (3, '新增书籍', '1111', 1, 1, '译者', '作者,作者,作者,作者,作者作者，作者，作者作者，作者', 0.80, 4, '精装', '2024-06-28 08:00:00', '作者简介', '书本简介', 'https://www.baidu.com/s?ie=UTF-8&wd=forum', 'http://106.15.104.19:9000/dsh/9604fd1f12814a15a5ec18eed2679770.jpg', 0, '2024-06-20 10:55:08', '2024-06-29 08:31:49');
 
 -- ----------------------------
 -- Table structure for book_exchange
@@ -88,237 +85,11 @@ CREATE TABLE `book_exchange`  (
   `update_time` timestamp(0) NULL DEFAULT NULL,
   `create_time` timestamp(0) NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 26 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 227 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of book_exchange
 -- ----------------------------
-INSERT INTO `book_exchange` VALUES (1, 3, NULL, NULL, NULL, 1, NULL, 0, '2024-06-30 16:38:07', '2024-06-30 16:38:07');
-INSERT INTO `book_exchange` VALUES (2, 3, NULL, NULL, NULL, 0, NULL, 0, '2024-06-30 16:38:07', '2024-06-30 16:38:07');
-INSERT INTO `book_exchange` VALUES (3, 3, NULL, NULL, NULL, 0, NULL, 0, '2024-06-30 16:48:08', '2024-06-30 16:48:08');
-INSERT INTO `book_exchange` VALUES (4, 3, NULL, NULL, NULL, 0, NULL, 0, '2024-06-30 16:48:08', '2024-06-30 16:48:08');
-INSERT INTO `book_exchange` VALUES (5, 3, NULL, NULL, NULL, 0, NULL, 0, '2024-06-30 16:48:08', '2024-06-30 16:48:08');
-INSERT INTO `book_exchange` VALUES (6, 3, NULL, NULL, NULL, 0, NULL, 0, '2024-06-30 16:48:08', '2024-06-30 16:48:08');
-INSERT INTO `book_exchange` VALUES (7, 3, NULL, NULL, NULL, 0, NULL, 0, '2024-06-30 16:48:08', '2024-06-30 16:48:08');
-INSERT INTO `book_exchange` VALUES (8, 3, NULL, NULL, NULL, 0, NULL, 0, '2024-06-30 16:48:41', '2024-06-30 16:48:41');
-INSERT INTO `book_exchange` VALUES (9, 3, NULL, NULL, NULL, 0, NULL, 0, '2024-06-30 16:49:00', '2024-06-30 16:49:00');
-INSERT INTO `book_exchange` VALUES (10, 3, NULL, NULL, NULL, 0, NULL, 0, '2024-06-30 17:02:44', '2024-06-30 17:02:44');
-INSERT INTO `book_exchange` VALUES (11, 3, NULL, NULL, NULL, 0, NULL, 0, '2024-06-30 17:02:44', '2024-06-30 17:02:44');
-INSERT INTO `book_exchange` VALUES (12, 3, NULL, NULL, NULL, 0, NULL, 0, '2024-06-30 17:02:44', '2024-06-30 17:02:44');
-INSERT INTO `book_exchange` VALUES (13, 3, NULL, NULL, NULL, 0, NULL, 0, '2024-06-30 17:02:44', '2024-06-30 17:02:44');
-INSERT INTO `book_exchange` VALUES (14, 3, NULL, NULL, NULL, 0, NULL, 0, '2024-06-30 17:02:44', '2024-06-30 17:02:44');
-INSERT INTO `book_exchange` VALUES (15, 2, NULL, NULL, NULL, 0, NULL, 0, '2024-06-30 17:03:06', '2024-06-30 17:03:06');
-INSERT INTO `book_exchange` VALUES (16, 2, NULL, NULL, NULL, 0, NULL, 0, '2024-06-30 17:03:06', '2024-06-30 17:03:06');
-INSERT INTO `book_exchange` VALUES (17, 2, NULL, NULL, NULL, 0, NULL, 0, '2024-06-30 17:03:06', '2024-06-30 17:03:06');
-INSERT INTO `book_exchange` VALUES (18, 2, NULL, NULL, NULL, 0, NULL, 0, '2024-06-30 17:03:07', '2024-06-30 17:03:07');
-INSERT INTO `book_exchange` VALUES (19, 2, NULL, NULL, NULL, 0, NULL, 0, '2024-06-30 17:03:07', '2024-06-30 17:03:07');
-INSERT INTO `book_exchange` VALUES (20, 2, NULL, NULL, NULL, 0, NULL, 0, '2024-06-30 17:03:07', '2024-06-30 17:03:07');
-INSERT INTO `book_exchange` VALUES (21, 2, NULL, NULL, NULL, 0, NULL, 0, '2024-06-30 17:03:07', '2024-06-30 17:03:07');
-INSERT INTO `book_exchange` VALUES (22, 2, NULL, NULL, NULL, 0, NULL, 0, '2024-06-30 17:03:07', '2024-06-30 17:03:07');
-INSERT INTO `book_exchange` VALUES (23, 1, NULL, NULL, NULL, 0, NULL, 1, '2024-06-30 17:03:27', '2024-06-30 17:03:27');
-INSERT INTO `book_exchange` VALUES (24, 1, NULL, NULL, NULL, 0, NULL, 1, '2024-06-30 17:03:27', '2024-06-30 17:03:27');
-INSERT INTO `book_exchange` VALUES (25, 1, NULL, NULL, NULL, 0, NULL, 1, '2024-06-30 17:03:27', '2024-06-30 17:03:27');
-INSERT INTO `book_exchange` VALUES (26, 1, NULL, NULL, NULL, 0, NULL, 1, '2024-06-30 17:03:27', '2024-06-30 17:03:27');
-INSERT INTO `book_exchange` VALUES (27, 1, NULL, 'https://mp.bookln.cn/b/dj/12116VY2D0F.q', '253UGMRTPD', NULL, NULL, 0, '2024-07-30 16:50:26', '2024-07-30 16:50:26');
-INSERT INTO `book_exchange` VALUES (28, 1, NULL, 'https://mp.bookln.cn/b/dj/12116VY322E.q', '253UGMRUEZ', NULL, NULL, 0, '2024-07-30 16:50:26', '2024-07-30 16:50:26');
-INSERT INTO `book_exchange` VALUES (29, 1, NULL, 'https://mp.bookln.cn/b/dj/12116VY4A90.q', '253UGMRV2X', NULL, NULL, 0, '2024-07-30 16:50:26', '2024-07-30 16:50:26');
-INSERT INTO `book_exchange` VALUES (30, 1, NULL, 'https://mp.bookln.cn/b/dj/12116VY50ED.q', '253UGMRWNT', NULL, NULL, 0, '2024-07-30 16:50:26', '2024-07-30 16:50:26');
-INSERT INTO `book_exchange` VALUES (31, 1, NULL, 'https://mp.bookln.cn/b/dj/12116VY6388.q', '253UGMRXWB', NULL, NULL, 0, '2024-07-30 16:50:26', '2024-07-30 16:50:26');
-INSERT INTO `book_exchange` VALUES (32, 1, NULL, 'https://mp.bookln.cn/b/dj/12116VY738F.q', '253UGMRYA7', NULL, NULL, 0, '2024-07-30 16:50:26', '2024-07-30 16:50:26');
-INSERT INTO `book_exchange` VALUES (33, 1, NULL, 'https://mp.bookln.cn/b/dj/12116VY8C86.q', '253UGMRZ2S', NULL, NULL, 0, '2024-07-30 16:50:26', '2024-07-30 16:50:26');
-INSERT INTO `book_exchange` VALUES (34, 1, NULL, 'https://mp.bookln.cn/b/dj/12116VY9D8F.q', '253UGMS2HK', NULL, NULL, 0, '2024-07-30 16:50:26', '2024-07-30 16:50:26');
-INSERT INTO `book_exchange` VALUES (35, 1, NULL, 'https://mp.bookln.cn/b/dj/12116VYAEEC.q', '253UGMS3GF', NULL, NULL, 0, '2024-07-30 16:50:26', '2024-07-30 16:50:26');
-INSERT INTO `book_exchange` VALUES (36, 1, NULL, 'https://mp.bookln.cn/b/dj/12116VYBCB3.q', '253UGMS4UP', NULL, NULL, 0, '2024-07-30 16:50:26', '2024-07-30 16:50:26');
-INSERT INTO `book_exchange` VALUES (37, 1, NULL, 'https://mp.bookln.cn/b/dj/12116VYCD9D.q', '253UGMS5V4', NULL, NULL, 0, '2024-07-30 16:50:26', '2024-07-30 16:50:26');
-INSERT INTO `book_exchange` VALUES (38, 1, NULL, 'https://mp.bookln.cn/b/dj/12116VYDD74.q', '253UGMS6XU', NULL, NULL, 0, '2024-07-30 16:50:26', '2024-07-30 16:50:26');
-INSERT INTO `book_exchange` VALUES (39, 1, NULL, 'https://mp.bookln.cn/b/dj/12116VYE806.q', '253UGMS7E4', NULL, NULL, 0, '2024-07-30 16:50:26', '2024-07-30 16:50:26');
-INSERT INTO `book_exchange` VALUES (40, 1, NULL, 'https://mp.bookln.cn/b/dj/12116VYF8DF.q', '253UGMS8Y3', NULL, NULL, 0, '2024-07-30 16:50:26', '2024-07-30 16:50:26');
-INSERT INTO `book_exchange` VALUES (41, 1, NULL, 'https://mp.bookln.cn/b/dj/12116VYGDFD.q', '253UGMS9ZM', NULL, NULL, 0, '2024-07-30 16:50:26', '2024-07-30 16:50:26');
-INSERT INTO `book_exchange` VALUES (42, 1, NULL, 'https://mp.bookln.cn/b/dj/12116VYH35E.q', '253UGMSAXM', NULL, NULL, 0, '2024-07-30 16:50:26', '2024-07-30 16:50:26');
-INSERT INTO `book_exchange` VALUES (43, 1, NULL, 'https://mp.bookln.cn/b/dj/12116VYI02F.q', '253UGMSBTG', NULL, NULL, 0, '2024-07-30 16:50:26', '2024-07-30 16:50:26');
-INSERT INTO `book_exchange` VALUES (44, 1, NULL, 'https://mp.bookln.cn/b/dj/12116VYJ6E1.q', '253UGMSCQS', NULL, NULL, 0, '2024-07-30 16:50:26', '2024-07-30 16:50:26');
-INSERT INTO `book_exchange` VALUES (45, 1, NULL, 'https://mp.bookln.cn/b/dj/12116VYK2E2.q', '253UGMSDNZ', NULL, NULL, 0, '2024-07-30 16:50:26', '2024-07-30 16:50:26');
-INSERT INTO `book_exchange` VALUES (46, 1, NULL, 'https://mp.bookln.cn/b/dj/12116VYLF5F.q', '253UGMSEVA', NULL, NULL, 0, '2024-07-30 16:50:26', '2024-07-30 16:50:26');
-INSERT INTO `book_exchange` VALUES (47, 1, NULL, 'https://mp.bookln.cn/b/dj/12116VYMB37.q', '253UGMSFNR', NULL, NULL, 0, '2024-07-30 16:50:26', '2024-07-30 16:50:26');
-INSERT INTO `book_exchange` VALUES (48, 1, NULL, 'https://mp.bookln.cn/b/dj/12116VYN39E.q', '253UGMSGR5', NULL, NULL, 0, '2024-07-30 16:50:26', '2024-07-30 16:50:26');
-INSERT INTO `book_exchange` VALUES (49, 1, NULL, 'https://mp.bookln.cn/b/dj/12116VYOFCA.q', '253UGMSHZB', NULL, NULL, 0, '2024-07-30 16:50:26', '2024-07-30 16:50:26');
-INSERT INTO `book_exchange` VALUES (50, 1, NULL, 'https://mp.bookln.cn/b/dj/12116VYP79B.q', '253UGMSJCQ', NULL, NULL, 0, '2024-07-30 16:50:26', '2024-07-30 16:50:26');
-INSERT INTO `book_exchange` VALUES (51, 1, NULL, 'https://mp.bookln.cn/b/dj/12116VYQ37E.q', '253UGMSKA3', NULL, NULL, 0, '2024-07-30 16:50:26', '2024-07-30 16:50:26');
-INSERT INTO `book_exchange` VALUES (52, 1, NULL, 'https://mp.bookln.cn/b/dj/12116VYRD52.q', '253UGMSM5B', NULL, NULL, 0, '2024-07-30 16:50:26', '2024-07-30 16:50:26');
-INSERT INTO `book_exchange` VALUES (53, 1, NULL, 'https://mp.bookln.cn/b/dj/12116VYS7D7.q', '253UGMSNZN', NULL, NULL, 0, '2024-07-30 16:50:26', '2024-07-30 16:50:26');
-INSERT INTO `book_exchange` VALUES (54, 1, NULL, 'https://mp.bookln.cn/b/dj/12116VYT5C7.q', '253UGMSPY6', NULL, NULL, 0, '2024-07-30 16:50:26', '2024-07-30 16:50:26');
-INSERT INTO `book_exchange` VALUES (55, 1, NULL, 'https://mp.bookln.cn/b/dj/12116VYUC20.q', '253UGMSQUF', NULL, NULL, 0, '2024-07-30 16:50:26', '2024-07-30 16:50:26');
-INSERT INTO `book_exchange` VALUES (56, 1, NULL, 'https://mp.bookln.cn/b/dj/12116VYV4C6.q', '253UGMSR6P', NULL, NULL, 0, '2024-07-30 16:50:26', '2024-07-30 16:50:26');
-INSERT INTO `book_exchange` VALUES (57, 1, NULL, 'https://mp.bookln.cn/b/dj/12116VYW385.q', '253UGMSSS9', NULL, NULL, 0, '2024-07-30 16:50:26', '2024-07-30 16:50:26');
-INSERT INTO `book_exchange` VALUES (58, 1, NULL, 'https://mp.bookln.cn/b/dj/12116VYX5EC.q', '253UGMSTR8', NULL, NULL, 0, '2024-07-30 16:50:26', '2024-07-30 16:50:26');
-INSERT INTO `book_exchange` VALUES (59, 1, NULL, 'https://mp.bookln.cn/b/dj/12116VYYEC0.q', '253UGMSUTD', NULL, NULL, 0, '2024-07-30 16:50:26', '2024-07-30 16:50:26');
-INSERT INTO `book_exchange` VALUES (60, 1, NULL, 'https://mp.bookln.cn/b/dj/12116VYZ999.q', '253UGMSV4D', NULL, NULL, 0, '2024-07-30 16:50:26', '2024-07-30 16:50:26');
-INSERT INTO `book_exchange` VALUES (61, 1, NULL, 'https://mp.bookln.cn/b/dj/12116VZ05B3.q', '253UGMSWE2', NULL, NULL, 0, '2024-07-30 16:50:26', '2024-07-30 16:50:26');
-INSERT INTO `book_exchange` VALUES (62, 1, NULL, 'https://mp.bookln.cn/b/dj/12116VZ16E7.q', '253UGMSX8E', NULL, NULL, 0, '2024-07-30 16:50:26', '2024-07-30 16:50:26');
-INSERT INTO `book_exchange` VALUES (63, 1, NULL, 'https://mp.bookln.cn/b/dj/12116VZ29E7.q', '253UGMSYVN', NULL, NULL, 0, '2024-07-30 16:50:26', '2024-07-30 16:50:26');
-INSERT INTO `book_exchange` VALUES (64, 1, NULL, 'https://mp.bookln.cn/b/dj/12116VZ3C41.q', '253UGMSZ3G', NULL, NULL, 0, '2024-07-30 16:50:26', '2024-07-30 16:50:26');
-INSERT INTO `book_exchange` VALUES (65, 1, NULL, 'https://mp.bookln.cn/b/dj/12116VZ42C5.q', '253UGMT222', NULL, NULL, 0, '2024-07-30 16:50:26', '2024-07-30 16:50:26');
-INSERT INTO `book_exchange` VALUES (66, 1, NULL, 'https://mp.bookln.cn/b/dj/12116VZ5787.q', '253UGMT39F', NULL, NULL, 0, '2024-07-30 16:50:26', '2024-07-30 16:50:26');
-INSERT INTO `book_exchange` VALUES (67, 1, NULL, 'https://mp.bookln.cn/b/dj/12116VZ65C0.q', '253UGMT436', NULL, NULL, 0, '2024-07-30 16:50:26', '2024-07-30 16:50:26');
-INSERT INTO `book_exchange` VALUES (68, 1, NULL, 'https://mp.bookln.cn/b/dj/12116VZ7C3A.q', '253UGMT5RT', NULL, NULL, 0, '2024-07-30 16:50:26', '2024-07-30 16:50:26');
-INSERT INTO `book_exchange` VALUES (69, 1, NULL, 'https://mp.bookln.cn/b/dj/12116VZ8508.q', '253UGMT6VD', NULL, NULL, 0, '2024-07-30 16:50:26', '2024-07-30 16:50:26');
-INSERT INTO `book_exchange` VALUES (70, 1, NULL, 'https://mp.bookln.cn/b/dj/12116VZ9E50.q', '253UGMT7BM', NULL, NULL, 0, '2024-07-30 16:50:26', '2024-07-30 16:50:26');
-INSERT INTO `book_exchange` VALUES (71, 1, NULL, 'https://mp.bookln.cn/b/dj/12116VZA7D1.q', '253UGMT8ST', NULL, NULL, 0, '2024-07-30 16:50:26', '2024-07-30 16:50:26');
-INSERT INTO `book_exchange` VALUES (72, 1, NULL, 'https://mp.bookln.cn/b/dj/12116VZB443.q', '253UGMT9V6', NULL, NULL, 0, '2024-07-30 16:50:26', '2024-07-30 16:50:26');
-INSERT INTO `book_exchange` VALUES (73, 1, NULL, 'https://mp.bookln.cn/b/dj/12116VZCDC9.q', '253UGMTA44', NULL, NULL, 0, '2024-07-30 16:50:26', '2024-07-30 16:50:26');
-INSERT INTO `book_exchange` VALUES (74, 1, NULL, 'https://mp.bookln.cn/b/dj/12116VZD327.q', '253UGMTBTP', NULL, NULL, 0, '2024-07-30 16:50:26', '2024-07-30 16:50:26');
-INSERT INTO `book_exchange` VALUES (75, 1, NULL, 'https://mp.bookln.cn/b/dj/12116VZEFD3.q', '253UGMTCHD', NULL, NULL, 0, '2024-07-30 16:50:26', '2024-07-30 16:50:26');
-INSERT INTO `book_exchange` VALUES (76, 1, NULL, 'https://mp.bookln.cn/b/dj/12116VZF302.q', '253UGMTDF8', NULL, NULL, 0, '2024-07-30 16:50:26', '2024-07-30 16:50:26');
-INSERT INTO `book_exchange` VALUES (77, 1, NULL, 'https://mp.bookln.cn/b/dj/12116VZGE0B.q', '253UGMTEJG', NULL, NULL, 0, '2024-07-30 16:50:26', '2024-07-30 16:50:26');
-INSERT INTO `book_exchange` VALUES (78, 1, NULL, 'https://mp.bookln.cn/b/dj/12116VZH120.q', '253UGMTFSC', NULL, NULL, 0, '2024-07-30 16:50:26', '2024-07-30 16:50:26');
-INSERT INTO `book_exchange` VALUES (79, 1, NULL, 'https://mp.bookln.cn/b/dj/12116VZI942.q', '253UGMTGU2', NULL, NULL, 0, '2024-07-30 16:50:26', '2024-07-30 16:50:26');
-INSERT INTO `book_exchange` VALUES (80, 1, NULL, 'https://mp.bookln.cn/b/dj/12116VZJF80.q', '253UGMTH6P', NULL, NULL, 0, '2024-07-30 16:50:26', '2024-07-30 16:50:26');
-INSERT INTO `book_exchange` VALUES (81, 1, NULL, 'https://mp.bookln.cn/b/dj/12116VZK810.q', '253UGMTJHM', NULL, NULL, 0, '2024-07-30 16:50:26', '2024-07-30 16:50:26');
-INSERT INTO `book_exchange` VALUES (82, 1, NULL, 'https://mp.bookln.cn/b/dj/12116VZLCEF.q', '253UGMTK2J', NULL, NULL, 0, '2024-07-30 16:50:26', '2024-07-30 16:50:26');
-INSERT INTO `book_exchange` VALUES (83, 1, NULL, 'https://mp.bookln.cn/b/dj/12116VZMEE6.q', '253UGMTMXX', NULL, NULL, 0, '2024-07-30 16:50:26', '2024-07-30 16:50:26');
-INSERT INTO `book_exchange` VALUES (84, 1, NULL, 'https://mp.bookln.cn/b/dj/12116VZN00E.q', '253UGMTNVF', NULL, NULL, 0, '2024-07-30 16:50:26', '2024-07-30 16:50:26');
-INSERT INTO `book_exchange` VALUES (85, 1, NULL, 'https://mp.bookln.cn/b/dj/12116VZOF6A.q', '253UGMTPAT', NULL, NULL, 0, '2024-07-30 16:50:26', '2024-07-30 16:50:26');
-INSERT INTO `book_exchange` VALUES (86, 1, NULL, 'https://mp.bookln.cn/b/dj/12116VZP9A0.q', '253UGMTQVC', NULL, NULL, 0, '2024-07-30 16:50:26', '2024-07-30 16:50:26');
-INSERT INTO `book_exchange` VALUES (87, 1, NULL, 'https://mp.bookln.cn/b/dj/12116VZQ0D6.q', '253UGMTRQN', NULL, NULL, 0, '2024-07-30 16:50:26', '2024-07-30 16:50:26');
-INSERT INTO `book_exchange` VALUES (88, 1, NULL, 'https://mp.bookln.cn/b/dj/12116VZRFAE.q', '253UGMTSHM', NULL, NULL, 0, '2024-07-30 16:50:26', '2024-07-30 16:50:26');
-INSERT INTO `book_exchange` VALUES (89, 1, NULL, 'https://mp.bookln.cn/b/dj/12116VZSEA5.q', '253UGMTTS2', NULL, NULL, 0, '2024-07-30 16:50:26', '2024-07-30 16:50:26');
-INSERT INTO `book_exchange` VALUES (90, 1, NULL, 'https://mp.bookln.cn/b/dj/12116VZT549.q', '253UGMTU5K', NULL, NULL, 0, '2024-07-30 16:50:26', '2024-07-30 16:50:26');
-INSERT INTO `book_exchange` VALUES (91, 1, NULL, 'https://mp.bookln.cn/b/dj/12116VZU3FD.q', '253UGMTV7A', NULL, NULL, 0, '2024-07-30 16:50:26', '2024-07-30 16:50:26');
-INSERT INTO `book_exchange` VALUES (92, 1, NULL, 'https://mp.bookln.cn/b/dj/12116VZVD67.q', '253UGMTW52', NULL, NULL, 0, '2024-07-30 16:50:26', '2024-07-30 16:50:26');
-INSERT INTO `book_exchange` VALUES (93, 1, NULL, 'https://mp.bookln.cn/b/dj/12116VZW226.q', '253UGMTXXX', NULL, NULL, 0, '2024-07-30 16:50:26', '2024-07-30 16:50:26');
-INSERT INTO `book_exchange` VALUES (94, 1, NULL, 'https://mp.bookln.cn/b/dj/12116VZXDCF.q', '253UGMTYWU', NULL, NULL, 0, '2024-07-30 16:50:26', '2024-07-30 16:50:26');
-INSERT INTO `book_exchange` VALUES (95, 1, NULL, 'https://mp.bookln.cn/b/dj/12116VZYC5B.q', '253UGMTZUA', NULL, NULL, 0, '2024-07-30 16:50:26', '2024-07-30 16:50:26');
-INSERT INTO `book_exchange` VALUES (96, 1, NULL, 'https://mp.bookln.cn/b/dj/12116VZZF62.q', '253UGMU2CN', NULL, NULL, 0, '2024-07-30 16:50:26', '2024-07-30 16:50:26');
-INSERT INTO `book_exchange` VALUES (97, 1, NULL, 'https://mp.bookln.cn/b/dj/12116W00657.q', '253UGMU33U', NULL, NULL, 0, '2024-07-30 16:50:26', '2024-07-30 16:50:26');
-INSERT INTO `book_exchange` VALUES (98, 1, NULL, 'https://mp.bookln.cn/b/dj/12116W01BD6.q', '253UGMU4G3', NULL, NULL, 0, '2024-07-30 16:50:26', '2024-07-30 16:50:26');
-INSERT INTO `book_exchange` VALUES (99, 1, NULL, 'https://mp.bookln.cn/b/dj/12116W0254A.q', '253UGMU5U6', NULL, NULL, 0, '2024-07-30 16:50:26', '2024-07-30 16:50:26');
-INSERT INTO `book_exchange` VALUES (100, 1, NULL, 'https://mp.bookln.cn/b/dj/12116W0393D.q', '253UGMU6JU', NULL, NULL, 0, '2024-07-30 16:50:26', '2024-07-30 16:50:26');
-INSERT INTO `book_exchange` VALUES (101, 1, NULL, 'https://mp.bookln.cn/b/dj/12116W048DF.q', '253UGMU7WZ', NULL, NULL, 0, '2024-07-30 16:50:26', '2024-07-30 16:50:26');
-INSERT INTO `book_exchange` VALUES (102, 1, NULL, 'https://mp.bookln.cn/b/dj/12116W05A5C.q', '253UGMU8YH', NULL, NULL, 0, '2024-07-30 16:50:26', '2024-07-30 16:50:26');
-INSERT INTO `book_exchange` VALUES (103, 1, NULL, 'https://mp.bookln.cn/b/dj/12116W06A6A.q', '253UGMU9DD', NULL, NULL, 0, '2024-07-30 16:50:26', '2024-07-30 16:50:26');
-INSERT INTO `book_exchange` VALUES (104, 1, NULL, 'https://mp.bookln.cn/b/dj/12116W07AE7.q', '253UGMUAJY', NULL, NULL, 0, '2024-07-30 16:50:26', '2024-07-30 16:50:26');
-INSERT INTO `book_exchange` VALUES (105, 1, NULL, 'https://mp.bookln.cn/b/dj/12116W08636.q', '253UGMUB62', NULL, NULL, 0, '2024-07-30 16:50:26', '2024-07-30 16:50:26');
-INSERT INTO `book_exchange` VALUES (106, 1, NULL, 'https://mp.bookln.cn/b/dj/12116W09471.q', '253UGMUCSJ', NULL, NULL, 0, '2024-07-30 16:50:26', '2024-07-30 16:50:26');
-INSERT INTO `book_exchange` VALUES (107, 1, NULL, 'https://mp.bookln.cn/b/dj/12116W0A8A7.q', '253UGMUD9A', NULL, NULL, 0, '2024-07-30 16:50:26', '2024-07-30 16:50:26');
-INSERT INTO `book_exchange` VALUES (108, 1, NULL, 'https://mp.bookln.cn/b/dj/12116W0B711.q', '253UGMUESE', NULL, NULL, 0, '2024-07-30 16:50:26', '2024-07-30 16:50:26');
-INSERT INTO `book_exchange` VALUES (109, 1, NULL, 'https://mp.bookln.cn/b/dj/12116W0C6CE.q', '253UGMUFNY', NULL, NULL, 0, '2024-07-30 16:50:26', '2024-07-30 16:50:26');
-INSERT INTO `book_exchange` VALUES (110, 1, NULL, 'https://mp.bookln.cn/b/dj/12116W0DB94.q', '253UGMUGSZ', NULL, NULL, 0, '2024-07-30 16:50:26', '2024-07-30 16:50:26');
-INSERT INTO `book_exchange` VALUES (111, 1, NULL, 'https://mp.bookln.cn/b/dj/12116W0E061.q', '253UGMUHZF', NULL, NULL, 0, '2024-07-30 16:50:26', '2024-07-30 16:50:26');
-INSERT INTO `book_exchange` VALUES (112, 1, NULL, 'https://mp.bookln.cn/b/dj/12116W0F0FC.q', '253UGMUJN7', NULL, NULL, 0, '2024-07-30 16:50:26', '2024-07-30 16:50:26');
-INSERT INTO `book_exchange` VALUES (113, 1, NULL, 'https://mp.bookln.cn/b/dj/12116W0G89F.q', '253UGMUKUE', NULL, NULL, 0, '2024-07-30 16:50:26', '2024-07-30 16:50:26');
-INSERT INTO `book_exchange` VALUES (114, 1, NULL, 'https://mp.bookln.cn/b/dj/12116W0HFF8.q', '253UGMUMAX', NULL, NULL, 0, '2024-07-30 16:50:26', '2024-07-30 16:50:26');
-INSERT INTO `book_exchange` VALUES (115, 1, NULL, 'https://mp.bookln.cn/b/dj/12116W0I465.q', '253UGMUN4A', NULL, NULL, 0, '2024-07-30 16:50:26', '2024-07-30 16:50:26');
-INSERT INTO `book_exchange` VALUES (116, 1, NULL, 'https://mp.bookln.cn/b/dj/12116W0JBFE.q', '253UGMUPNW', NULL, NULL, 0, '2024-07-30 16:50:26', '2024-07-30 16:50:26');
-INSERT INTO `book_exchange` VALUES (117, 1, NULL, 'https://mp.bookln.cn/b/dj/12116W0K180.q', '253UGMUQS7', NULL, NULL, 0, '2024-07-30 16:50:26', '2024-07-30 16:50:26');
-INSERT INTO `book_exchange` VALUES (118, 1, NULL, 'https://mp.bookln.cn/b/dj/12116W0LA91.q', '253UGMURFY', NULL, NULL, 0, '2024-07-30 16:50:26', '2024-07-30 16:50:26');
-INSERT INTO `book_exchange` VALUES (119, 1, NULL, 'https://mp.bookln.cn/b/dj/12116W0M52F.q', '253UGMUSVM', NULL, NULL, 0, '2024-07-30 16:50:26', '2024-07-30 16:50:26');
-INSERT INTO `book_exchange` VALUES (120, 1, NULL, 'https://mp.bookln.cn/b/dj/12116W0N25E.q', '253UGMUT2U', NULL, NULL, 0, '2024-07-30 16:50:26', '2024-07-30 16:50:26');
-INSERT INTO `book_exchange` VALUES (121, 1, NULL, 'https://mp.bookln.cn/b/dj/12116W0O28D.q', '253UGMUUZA', NULL, NULL, 0, '2024-07-30 16:50:26', '2024-07-30 16:50:26');
-INSERT INTO `book_exchange` VALUES (122, 1, NULL, 'https://mp.bookln.cn/b/dj/12116W0PDC9.q', '253UGMUVND', NULL, NULL, 0, '2024-07-30 16:50:26', '2024-07-30 16:50:26');
-INSERT INTO `book_exchange` VALUES (123, 1, NULL, 'https://mp.bookln.cn/b/dj/12116W0Q5A3.q', '253UGMUWS9', NULL, NULL, 0, '2024-07-30 16:50:26', '2024-07-30 16:50:26');
-INSERT INTO `book_exchange` VALUES (124, 1, NULL, 'https://mp.bookln.cn/b/dj/12116W0RB7A.q', '253UGMUXKY', NULL, NULL, 0, '2024-07-30 16:50:26', '2024-07-30 16:50:26');
-INSERT INTO `book_exchange` VALUES (125, 1, NULL, 'https://mp.bookln.cn/b/dj/12116W0S145.q', '253UGMUYZ7', NULL, NULL, 0, '2024-07-30 16:50:26', '2024-07-30 16:50:26');
-INSERT INTO `book_exchange` VALUES (126, 1, NULL, 'https://mp.bookln.cn/b/dj/12116W0TA39.q', '253UGMUZ7U', NULL, NULL, 0, '2024-07-30 16:50:26', '2024-07-30 16:50:26');
-INSERT INTO `book_exchange` VALUES (127, 1, NULL, 'https://mp.bookln.cn/b/dj/12116W0U5C6.q', '253UGMV222', NULL, NULL, 0, '2024-07-30 16:50:26', '2024-07-30 16:50:26');
-INSERT INTO `book_exchange` VALUES (128, 1, NULL, 'https://mp.bookln.cn/b/dj/12116W0V9A7.q', '253UGMV3PP', NULL, NULL, 0, '2024-07-30 16:50:26', '2024-07-30 16:50:26');
-INSERT INTO `book_exchange` VALUES (129, 1, NULL, 'https://mp.bookln.cn/b/dj/12116W0W212.q', '253UGMV4PG', NULL, NULL, 0, '2024-07-30 16:50:26', '2024-07-30 16:50:26');
-INSERT INTO `book_exchange` VALUES (130, 1, NULL, 'https://mp.bookln.cn/b/dj/12116W0X428.q', '253UGMV5MY', NULL, NULL, 0, '2024-07-30 16:50:26', '2024-07-30 16:50:26');
-INSERT INTO `book_exchange` VALUES (131, 1, NULL, 'https://mp.bookln.cn/b/dj/12116W0YA33.q', '253UGMV6SX', NULL, NULL, 0, '2024-07-30 16:50:26', '2024-07-30 16:50:26');
-INSERT INTO `book_exchange` VALUES (132, 1, NULL, 'https://mp.bookln.cn/b/dj/12116W0ZC32.q', '253UGMV72E', NULL, NULL, 0, '2024-07-30 16:50:26', '2024-07-30 16:50:26');
-INSERT INTO `book_exchange` VALUES (133, 1, NULL, 'https://mp.bookln.cn/b/dj/12116W105E1.q', '253UGMV8MK', NULL, NULL, 0, '2024-07-30 16:50:26', '2024-07-30 16:50:26');
-INSERT INTO `book_exchange` VALUES (134, 1, NULL, 'https://mp.bookln.cn/b/dj/12116W11D23.q', '253UGMV97F', NULL, NULL, 0, '2024-07-30 16:50:26', '2024-07-30 16:50:26');
-INSERT INTO `book_exchange` VALUES (135, 1, NULL, 'https://mp.bookln.cn/b/dj/12116W123CD.q', '253UGMVAEP', NULL, NULL, 0, '2024-07-30 16:50:26', '2024-07-30 16:50:26');
-INSERT INTO `book_exchange` VALUES (136, 1, NULL, 'https://mp.bookln.cn/b/dj/12116W135B3.q', '253UGMVBME', NULL, NULL, 0, '2024-07-30 16:50:26', '2024-07-30 16:50:26');
-INSERT INTO `book_exchange` VALUES (137, 1, NULL, 'https://mp.bookln.cn/b/dj/12116W148FF.q', '253UGMVCRE', NULL, NULL, 0, '2024-07-30 16:50:26', '2024-07-30 16:50:26');
-INSERT INTO `book_exchange` VALUES (138, 1, NULL, 'https://mp.bookln.cn/b/dj/12116W15AA3.q', '253UGMVDTB', NULL, NULL, 0, '2024-07-30 16:50:26', '2024-07-30 16:50:26');
-INSERT INTO `book_exchange` VALUES (139, 1, NULL, 'https://mp.bookln.cn/b/dj/12116W165E6.q', '253UGMVE7B', NULL, NULL, 0, '2024-07-30 16:50:26', '2024-07-30 16:50:26');
-INSERT INTO `book_exchange` VALUES (140, 1, NULL, 'https://mp.bookln.cn/b/dj/12116W17EC1.q', '253UGMVF2K', NULL, NULL, 0, '2024-07-30 16:50:26', '2024-07-30 16:50:26');
-INSERT INTO `book_exchange` VALUES (141, 1, NULL, 'https://mp.bookln.cn/b/dj/12116W1811D.q', '253UGMVGCK', NULL, NULL, 0, '2024-07-30 16:50:26', '2024-07-30 16:50:26');
-INSERT INTO `book_exchange` VALUES (142, 1, NULL, 'https://mp.bookln.cn/b/dj/12116W19B15.q', '253UGMVH7K', NULL, NULL, 0, '2024-07-30 16:50:26', '2024-07-30 16:50:26');
-INSERT INTO `book_exchange` VALUES (143, 1, NULL, 'https://mp.bookln.cn/b/dj/12116W1A047.q', '253UGMVJCF', NULL, NULL, 0, '2024-07-30 16:50:26', '2024-07-30 16:50:26');
-INSERT INTO `book_exchange` VALUES (144, 1, NULL, 'https://mp.bookln.cn/b/dj/12116W1B189.q', '253UGMVKY3', NULL, NULL, 0, '2024-07-30 16:50:26', '2024-07-30 16:50:26');
-INSERT INTO `book_exchange` VALUES (145, 1, NULL, 'https://mp.bookln.cn/b/dj/12116W1CE1F.q', '253UGMVMEU', NULL, NULL, 0, '2024-07-30 16:50:26', '2024-07-30 16:50:26');
-INSERT INTO `book_exchange` VALUES (146, 1, NULL, 'https://mp.bookln.cn/b/dj/12116W1D136.q', '253UGMVNX9', NULL, NULL, 0, '2024-07-30 16:50:26', '2024-07-30 16:50:26');
-INSERT INTO `book_exchange` VALUES (147, 1, NULL, 'https://mp.bookln.cn/b/dj/12116W1E49C.q', '253UGMVPR9', NULL, NULL, 0, '2024-07-30 16:50:26', '2024-07-30 16:50:26');
-INSERT INTO `book_exchange` VALUES (148, 1, NULL, 'https://mp.bookln.cn/b/dj/12116W1F816.q', '253UGMVQ8Z', NULL, NULL, 0, '2024-07-30 16:50:26', '2024-07-30 16:50:26');
-INSERT INTO `book_exchange` VALUES (149, 1, NULL, 'https://mp.bookln.cn/b/dj/12116W1GD5E.q', '253UGMVRAH', NULL, NULL, 0, '2024-07-30 16:50:26', '2024-07-30 16:50:26');
-INSERT INTO `book_exchange` VALUES (150, 1, NULL, 'https://mp.bookln.cn/b/dj/12116W1H466.q', '253UGMVSA4', NULL, NULL, 0, '2024-07-30 16:50:26', '2024-07-30 16:50:26');
-INSERT INTO `book_exchange` VALUES (151, 1, NULL, 'https://mp.bookln.cn/b/dj/12116W1I050.q', '253UGMVTJU', NULL, NULL, 0, '2024-07-30 16:50:26', '2024-07-30 16:50:26');
-INSERT INTO `book_exchange` VALUES (152, 1, NULL, 'https://mp.bookln.cn/b/dj/12116W1JFCC.q', '253UGMVU39', NULL, NULL, 0, '2024-07-30 16:50:26', '2024-07-30 16:50:26');
-INSERT INTO `book_exchange` VALUES (153, 1, NULL, 'https://mp.bookln.cn/b/dj/12116W1KFA9.q', '253UGMVVB3', NULL, NULL, 0, '2024-07-30 16:50:26', '2024-07-30 16:50:26');
-INSERT INTO `book_exchange` VALUES (154, 1, NULL, 'https://mp.bookln.cn/b/dj/12116W1L734.q', '253UGMVWPU', NULL, NULL, 0, '2024-07-30 16:50:26', '2024-07-30 16:50:26');
-INSERT INTO `book_exchange` VALUES (155, 1, NULL, 'https://mp.bookln.cn/b/dj/12116W1MC01.q', '253UGMVXKZ', NULL, NULL, 0, '2024-07-30 16:50:26', '2024-07-30 16:50:26');
-INSERT INTO `book_exchange` VALUES (156, 1, NULL, 'https://mp.bookln.cn/b/dj/12116W1N3F7.q', '253UGMVY2V', NULL, NULL, 0, '2024-07-30 16:50:26', '2024-07-30 16:50:26');
-INSERT INTO `book_exchange` VALUES (157, 1, NULL, 'https://mp.bookln.cn/b/dj/12116W1O5FC.q', '253UGMVZCP', NULL, NULL, 0, '2024-07-30 16:50:26', '2024-07-30 16:50:26');
-INSERT INTO `book_exchange` VALUES (158, 1, NULL, 'https://mp.bookln.cn/b/dj/12116W1P38A.q', '253UGMW2E8', NULL, NULL, 0, '2024-07-30 16:50:26', '2024-07-30 16:50:26');
-INSERT INTO `book_exchange` VALUES (159, 1, NULL, 'https://mp.bookln.cn/b/dj/12116W1Q3F2.q', '253UGMW35F', NULL, NULL, 0, '2024-07-30 16:50:26', '2024-07-30 16:50:26');
-INSERT INTO `book_exchange` VALUES (160, 1, NULL, 'https://mp.bookln.cn/b/dj/12116W1REDB.q', '253UGMW4WZ', NULL, NULL, 0, '2024-07-30 16:50:26', '2024-07-30 16:50:26');
-INSERT INTO `book_exchange` VALUES (161, 1, NULL, 'https://mp.bookln.cn/b/dj/12116W1S2AE.q', '253UGMW5TD', NULL, NULL, 0, '2024-07-30 16:50:26', '2024-07-30 16:50:26');
-INSERT INTO `book_exchange` VALUES (162, 1, NULL, 'https://mp.bookln.cn/b/dj/12116W1T669.q', '253UGMW6R5', NULL, NULL, 0, '2024-07-30 16:50:26', '2024-07-30 16:50:26');
-INSERT INTO `book_exchange` VALUES (163, 1, NULL, 'https://mp.bookln.cn/b/dj/12116W1U0FD.q', '253UGMW79N', NULL, NULL, 0, '2024-07-30 16:50:26', '2024-07-30 16:50:26');
-INSERT INTO `book_exchange` VALUES (164, 1, NULL, 'https://mp.bookln.cn/b/dj/12116W1VC2D.q', '253UGMW8RA', NULL, NULL, 0, '2024-07-30 16:50:26', '2024-07-30 16:50:26');
-INSERT INTO `book_exchange` VALUES (165, 1, NULL, 'https://mp.bookln.cn/b/dj/12116W1WC12.q', '253UGMW9RN', NULL, NULL, 0, '2024-07-30 16:50:26', '2024-07-30 16:50:26');
-INSERT INTO `book_exchange` VALUES (166, 1, NULL, 'https://mp.bookln.cn/b/dj/12116W1X863.q', '253UGMWAH7', NULL, NULL, 0, '2024-07-30 16:50:26', '2024-07-30 16:50:26');
-INSERT INTO `book_exchange` VALUES (167, 1, NULL, 'https://mp.bookln.cn/b/dj/12116W1Y365.q', '253UGMWBFM', NULL, NULL, 0, '2024-07-30 16:50:26', '2024-07-30 16:50:26');
-INSERT INTO `book_exchange` VALUES (168, 1, NULL, 'https://mp.bookln.cn/b/dj/12116W1Z7BF.q', '253UGMWCBC', NULL, NULL, 0, '2024-07-30 16:50:26', '2024-07-30 16:50:26');
-INSERT INTO `book_exchange` VALUES (169, 1, NULL, 'https://mp.bookln.cn/b/dj/12116W20FF9.q', '253UGMWDQU', NULL, NULL, 0, '2024-07-30 16:50:26', '2024-07-30 16:50:26');
-INSERT INTO `book_exchange` VALUES (170, 1, NULL, 'https://mp.bookln.cn/b/dj/12116W2108C.q', '253UGMWE8D', NULL, NULL, 0, '2024-07-30 16:50:26', '2024-07-30 16:50:26');
-INSERT INTO `book_exchange` VALUES (171, 1, NULL, 'https://mp.bookln.cn/b/dj/12116W22C32.q', '253UGMWF9K', NULL, NULL, 0, '2024-07-30 16:50:26', '2024-07-30 16:50:26');
-INSERT INTO `book_exchange` VALUES (172, 1, NULL, 'https://mp.bookln.cn/b/dj/12116W23444.q', '253UGMWG3Y', NULL, NULL, 0, '2024-07-30 16:50:26', '2024-07-30 16:50:26');
-INSERT INTO `book_exchange` VALUES (173, 1, NULL, 'https://mp.bookln.cn/b/dj/12116W246C4.q', '253UGMWHQW', NULL, NULL, 0, '2024-07-30 16:50:26', '2024-07-30 16:50:26');
-INSERT INTO `book_exchange` VALUES (174, 1, NULL, 'https://mp.bookln.cn/b/dj/12116W2515C.q', '253UGMWJGM', NULL, NULL, 0, '2024-07-30 16:50:26', '2024-07-30 16:50:26');
-INSERT INTO `book_exchange` VALUES (175, 1, NULL, 'https://mp.bookln.cn/b/dj/12116W26E5B.q', '253UGMWKDE', NULL, NULL, 0, '2024-07-30 16:50:26', '2024-07-30 16:50:26');
-INSERT INTO `book_exchange` VALUES (176, 1, NULL, 'https://mp.bookln.cn/b/dj/12116W27A26.q', '253UGMWMW8', NULL, NULL, 0, '2024-07-30 16:50:26', '2024-07-30 16:50:26');
-INSERT INTO `book_exchange` VALUES (177, 1, NULL, 'https://mp.bookln.cn/b/dj/12116W2878D.q', '253UGMWN49', NULL, NULL, 0, '2024-07-30 16:50:26', '2024-07-30 16:50:26');
-INSERT INTO `book_exchange` VALUES (178, 1, NULL, 'https://mp.bookln.cn/b/dj/12116W29CAF.q', '253UGMWPCD', NULL, NULL, 0, '2024-07-30 16:50:26', '2024-07-30 16:50:26');
-INSERT INTO `book_exchange` VALUES (179, 1, NULL, 'https://mp.bookln.cn/b/dj/12116W2AD32.q', '253UGMWQSD', NULL, NULL, 0, '2024-07-30 16:50:26', '2024-07-30 16:50:26');
-INSERT INTO `book_exchange` VALUES (180, 1, NULL, 'https://mp.bookln.cn/b/dj/12116W2B6E6.q', '253UGMWRF2', NULL, NULL, 0, '2024-07-30 16:50:26', '2024-07-30 16:50:26');
-INSERT INTO `book_exchange` VALUES (181, 1, NULL, 'https://mp.bookln.cn/b/dj/12116W2CD15.q', '253UGMWSXT', NULL, NULL, 0, '2024-07-30 16:50:26', '2024-07-30 16:50:26');
-INSERT INTO `book_exchange` VALUES (182, 1, NULL, 'https://mp.bookln.cn/b/dj/12116W2DD05.q', '253UGMWTTY', NULL, NULL, 0, '2024-07-30 16:50:26', '2024-07-30 16:50:26');
-INSERT INTO `book_exchange` VALUES (183, 1, NULL, 'https://mp.bookln.cn/b/dj/12116W2E076.q', '253UGMWUFT', NULL, NULL, 0, '2024-07-30 16:50:26', '2024-07-30 16:50:26');
-INSERT INTO `book_exchange` VALUES (184, 1, NULL, 'https://mp.bookln.cn/b/dj/12116W2F531.q', '253UGMWVMG', NULL, NULL, 0, '2024-07-30 16:50:26', '2024-07-30 16:50:26');
-INSERT INTO `book_exchange` VALUES (185, 1, NULL, 'https://mp.bookln.cn/b/dj/12116W2GB21.q', '253UGMWW8J', NULL, NULL, 0, '2024-07-30 16:50:26', '2024-07-30 16:50:26');
-INSERT INTO `book_exchange` VALUES (186, 1, NULL, 'https://mp.bookln.cn/b/dj/12116W2H2D8.q', '253UGMWX37', NULL, NULL, 0, '2024-07-30 16:50:26', '2024-07-30 16:50:26');
-INSERT INTO `book_exchange` VALUES (187, 1, NULL, 'https://mp.bookln.cn/b/dj/12116W2I401.q', '253UGMWYVJ', NULL, NULL, 0, '2024-07-30 16:50:26', '2024-07-30 16:50:26');
-INSERT INTO `book_exchange` VALUES (188, 1, NULL, 'https://mp.bookln.cn/b/dj/12116W2J236.q', '253UGMWZGV', NULL, NULL, 0, '2024-07-30 16:50:26', '2024-07-30 16:50:26');
-INSERT INTO `book_exchange` VALUES (189, 1, NULL, 'https://mp.bookln.cn/b/dj/12116W2KBB8.q', '253UGMX2FS', NULL, NULL, 0, '2024-07-30 16:50:26', '2024-07-30 16:50:26');
-INSERT INTO `book_exchange` VALUES (190, 1, NULL, 'https://mp.bookln.cn/b/dj/12116W2L805.q', '253UGMX36J', NULL, NULL, 0, '2024-07-30 16:50:26', '2024-07-30 16:50:26');
-INSERT INTO `book_exchange` VALUES (191, 1, NULL, 'https://mp.bookln.cn/b/dj/12116W2M371.q', '253UGMX4PX', NULL, NULL, 0, '2024-07-30 16:50:26', '2024-07-30 16:50:26');
-INSERT INTO `book_exchange` VALUES (192, 1, NULL, 'https://mp.bookln.cn/b/dj/12116W2NC3B.q', '253UGMX58E', NULL, NULL, 0, '2024-07-30 16:50:26', '2024-07-30 16:50:26');
-INSERT INTO `book_exchange` VALUES (193, 1, NULL, 'https://mp.bookln.cn/b/dj/12116W2O8D2.q', '253UGMX6GD', NULL, NULL, 0, '2024-07-30 16:50:26', '2024-07-30 16:50:26');
-INSERT INTO `book_exchange` VALUES (194, 1, NULL, 'https://mp.bookln.cn/b/dj/12116W2PD3E.q', '253UGMX78J', NULL, NULL, 0, '2024-07-30 16:50:26', '2024-07-30 16:50:26');
-INSERT INTO `book_exchange` VALUES (195, 1, NULL, 'https://mp.bookln.cn/b/dj/12116W2Q84C.q', '253UGMX8NX', NULL, NULL, 0, '2024-07-30 16:50:26', '2024-07-30 16:50:26');
-INSERT INTO `book_exchange` VALUES (196, 1, NULL, 'https://mp.bookln.cn/b/dj/12116W2R690.q', '253UGMX992', NULL, NULL, 0, '2024-07-30 16:50:26', '2024-07-30 16:50:26');
-INSERT INTO `book_exchange` VALUES (197, 1, NULL, 'https://mp.bookln.cn/b/dj/12116W2S9FB.q', '253UGMXAEW', NULL, NULL, 0, '2024-07-30 16:50:26', '2024-07-30 16:50:26');
-INSERT INTO `book_exchange` VALUES (198, 1, NULL, 'https://mp.bookln.cn/b/dj/12116W2T203.q', '253UGMXBRV', NULL, NULL, 0, '2024-07-30 16:50:26', '2024-07-30 16:50:26');
-INSERT INTO `book_exchange` VALUES (199, 1, NULL, 'https://mp.bookln.cn/b/dj/12116W2UD84.q', '253UGMXCBA', NULL, NULL, 0, '2024-07-30 16:50:26', '2024-07-30 16:50:26');
-INSERT INTO `book_exchange` VALUES (200, 1, NULL, 'https://mp.bookln.cn/b/dj/12116W2V290.q', '253UGMXDK4', NULL, NULL, 0, '2024-07-30 16:50:26', '2024-07-30 16:50:26');
-INSERT INTO `book_exchange` VALUES (201, 1, NULL, 'https://mp.bookln.cn/b/dj/12116W2W2C5.q', '253UGMXE3T', NULL, NULL, 0, '2024-07-30 16:50:26', '2024-07-30 16:50:26');
-INSERT INTO `book_exchange` VALUES (202, 1, NULL, 'https://mp.bookln.cn/b/dj/12116W2XD6C.q', '253UGMXF6B', NULL, NULL, 0, '2024-07-30 16:50:26', '2024-07-30 16:50:26');
-INSERT INTO `book_exchange` VALUES (203, 1, NULL, 'https://mp.bookln.cn/b/dj/12116W2YEA4.q', '253UGMXGHF', NULL, NULL, 0, '2024-07-30 16:50:26', '2024-07-30 16:50:26');
-INSERT INTO `book_exchange` VALUES (204, 1, NULL, 'https://mp.bookln.cn/b/dj/12116W2ZA68.q', '253UGMXH6V', NULL, NULL, 0, '2024-07-30 16:50:26', '2024-07-30 16:50:26');
-INSERT INTO `book_exchange` VALUES (205, 1, NULL, 'https://mp.bookln.cn/b/dj/12116W30E65.q', '253UGMXJH4', NULL, NULL, 0, '2024-07-30 16:50:26', '2024-07-30 16:50:26');
-INSERT INTO `book_exchange` VALUES (206, 1, NULL, 'https://mp.bookln.cn/b/dj/12116W31E4F.q', '253UGMXKBZ', NULL, NULL, 0, '2024-07-30 16:50:26', '2024-07-30 16:50:26');
-INSERT INTO `book_exchange` VALUES (207, 1, NULL, 'https://mp.bookln.cn/b/dj/12116W323A1.q', '253UGMXMCS', NULL, NULL, 0, '2024-07-30 16:50:26', '2024-07-30 16:50:26');
-INSERT INTO `book_exchange` VALUES (208, 1, NULL, 'https://mp.bookln.cn/b/dj/12116W33696.q', '253UGMXNSU', NULL, NULL, 0, '2024-07-30 16:50:26', '2024-07-30 16:50:26');
-INSERT INTO `book_exchange` VALUES (209, 1, NULL, 'https://mp.bookln.cn/b/dj/12116W3461E.q', '253UGMXPUG', NULL, NULL, 0, '2024-07-30 16:50:26', '2024-07-30 16:50:26');
-INSERT INTO `book_exchange` VALUES (210, 1, NULL, 'https://mp.bookln.cn/b/dj/12116W35A51.q', '253UGMXQNW', NULL, NULL, 0, '2024-07-30 16:50:26', '2024-07-30 16:50:26');
-INSERT INTO `book_exchange` VALUES (211, 1, NULL, 'https://mp.bookln.cn/b/dj/12116W367C3.q', '253UGMXRK7', NULL, NULL, 0, '2024-07-30 16:50:26', '2024-07-30 16:50:26');
-INSERT INTO `book_exchange` VALUES (212, 1, NULL, 'https://mp.bookln.cn/b/dj/12116W37912.q', '253UGMXSQX', NULL, NULL, 0, '2024-07-30 16:50:26', '2024-07-30 16:50:26');
-INSERT INTO `book_exchange` VALUES (213, 1, NULL, 'https://mp.bookln.cn/b/dj/12116W38EC0.q', '253UGMXTJ9', NULL, NULL, 0, '2024-07-30 16:50:26', '2024-07-30 16:50:26');
-INSERT INTO `book_exchange` VALUES (214, 1, NULL, 'https://mp.bookln.cn/b/dj/12116W39830.q', '253UGMXUNP', NULL, NULL, 0, '2024-07-30 16:50:26', '2024-07-30 16:50:26');
-INSERT INTO `book_exchange` VALUES (215, 1, NULL, 'https://mp.bookln.cn/b/dj/12116W3A7AC.q', '253UGMXVYV', NULL, NULL, 0, '2024-07-30 16:50:26', '2024-07-30 16:50:26');
-INSERT INTO `book_exchange` VALUES (216, 1, NULL, 'https://mp.bookln.cn/b/dj/12116W3BAF3.q', '253UGMXW7K', NULL, NULL, 0, '2024-07-30 16:50:26', '2024-07-30 16:50:26');
-INSERT INTO `book_exchange` VALUES (217, 1, NULL, 'https://mp.bookln.cn/b/dj/12116W3CCB0.q', '253UGMXXE8', NULL, NULL, 0, '2024-07-30 16:50:26', '2024-07-30 16:50:26');
-INSERT INTO `book_exchange` VALUES (218, 1, NULL, 'https://mp.bookln.cn/b/dj/12116W3D488.q', '253UGMXYN4', NULL, NULL, 0, '2024-07-30 16:50:26', '2024-07-30 16:50:26');
-INSERT INTO `book_exchange` VALUES (219, 1, NULL, 'https://mp.bookln.cn/b/dj/12116W3E474.q', '253UGMXZBR', NULL, NULL, 0, '2024-07-30 16:50:26', '2024-07-30 16:50:26');
-INSERT INTO `book_exchange` VALUES (220, 1, NULL, 'https://mp.bookln.cn/b/dj/12116W3FCF7.q', '253UGMY2FF', NULL, NULL, 0, '2024-07-30 16:50:26', '2024-07-30 16:50:26');
-INSERT INTO `book_exchange` VALUES (221, 1, NULL, 'https://mp.bookln.cn/b/dj/12116W3G179.q', '253UGMY382', NULL, NULL, 0, '2024-07-30 16:50:26', '2024-07-30 16:50:26');
-INSERT INTO `book_exchange` VALUES (222, 1, NULL, 'https://mp.bookln.cn/b/dj/12116W3H02F.q', '253UGMY4NZ', NULL, NULL, 0, '2024-07-30 16:50:26', '2024-07-30 16:50:26');
-INSERT INTO `book_exchange` VALUES (223, 1, NULL, 'https://mp.bookln.cn/b/dj/12116W3I092.q', '253UGMY52G', NULL, NULL, 0, '2024-07-30 16:50:26', '2024-07-30 16:50:26');
-INSERT INTO `book_exchange` VALUES (224, 1, NULL, 'https://mp.bookln.cn/b/dj/12116W3JA7D.q', '253UGMY65K', NULL, NULL, 0, '2024-07-30 16:50:26', '2024-07-30 16:50:26');
-INSERT INTO `book_exchange` VALUES (225, 1, NULL, 'https://mp.bookln.cn/b/dj/12116W3K422.q', '253UGMY7VT', NULL, NULL, 0, '2024-07-30 16:50:26', '2024-07-30 16:50:26');
-INSERT INTO `book_exchange` VALUES (226, 1, NULL, 'https://mp.bookln.cn/b/dj/12116W3L778.q', '253UGMY8R8', NULL, NULL, 0, '2024-07-30 16:50:26', '2024-07-30 16:50:26');
 
 -- ----------------------------
 -- Table structure for book_resource
@@ -331,17 +102,16 @@ CREATE TABLE `book_resource`  (
   `code_cover` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '二维码 后台生成',
   `book_id` int NOT NULL,
   `user_id` int NOT NULL COMMENT '上传人id',
+  `valid_status` int NOT NULL DEFAULT 0,
   `delete_flag` tinyint NOT NULL DEFAULT 0 COMMENT '逻辑删除(0-未删除，1-删除)',
   `create_time` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '创建时间',
   `update_time` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0) ON UPDATE CURRENT_TIMESTAMP(0) COMMENT '更新时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of book_resource
 -- ----------------------------
-INSERT INTO `book_resource` VALUES (1, '修改资源', '777', NULL, 2, 1, 0, '2024-06-18 14:41:03', '2024-06-18 14:52:09');
-INSERT INTO `book_resource` VALUES (2, '新增', '111', NULL, 2, 1, 0, '2024-06-18 16:58:11', '2024-06-18 16:58:11');
 
 -- ----------------------------
 -- Table structure for category
@@ -355,14 +125,11 @@ CREATE TABLE `category`  (
   `create_time` timestamp(0) NOT NULL,
   `update_time` timestamp(0) NOT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of category
 -- ----------------------------
-INSERT INTO `category` VALUES (1, '字符串', '字符串', 0, '2024-06-17 14:54:29', '2024-06-17 15:36:28');
-INSERT INTO `category` VALUES (2, 'Integer', 'Integer', 0, '2024-06-17 14:54:43', '2024-06-17 14:54:43');
-INSERT INTO `category` VALUES (3, 'Float', 'Float', 0, '2024-06-17 14:54:49', '2024-06-17 15:17:27');
 
 -- ----------------------------
 -- Table structure for comment
@@ -381,30 +148,11 @@ CREATE TABLE `comment`  (
   `create_time` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '创建时间',
   `update_time` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0) ON UPDATE CURRENT_TIMESTAMP(0) COMMENT '更新时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 19 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 20 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of comment
 -- ----------------------------
-INSERT INTO `comment` VALUES (1, 1, NULL, 1, 0, NULL, NULL, '这是第一条评论', 0, '2024-07-02 16:11:15', '2024-07-02 16:11:15');
-INSERT INTO `comment` VALUES (2, 1, NULL, 1, 0, NULL, NULL, '这是第二条评论', 0, '2024-07-02 16:11:27', '2024-07-02 16:11:27');
-INSERT INTO `comment` VALUES (3, 1, '1', 1, 0, NULL, NULL, '这是第一条评论的第一条回复', 0, '2024-07-02 16:12:58', '2024-07-02 16:12:58');
-INSERT INTO `comment` VALUES (4, 1, '3', 1, 0, NULL, NULL, '这是第一条评论第一条回复的回复', 0, '2024-07-02 16:13:23', '2024-07-02 16:13:23');
-INSERT INTO `comment` VALUES (5, 1, '4', 1, 0, NULL, NULL, '这是第一条评论第一条回复的回复的回复', 0, '2024-07-02 16:37:57', '2024-07-02 16:37:57');
-INSERT INTO `comment` VALUES (6, 1, NULL, 1, 0, NULL, NULL, '第三条评论', 0, '2024-07-03 07:41:04', '2024-07-03 07:41:04');
-INSERT INTO `comment` VALUES (7, 1, NULL, 1, 0, NULL, NULL, '第四条评论', 0, '2024-07-03 07:41:21', '2024-07-03 07:41:21');
-INSERT INTO `comment` VALUES (8, 1, '1', 1, 1, NULL, NULL, 'hei', 0, '2024-07-04 18:00:57', '2024-07-04 18:00:57');
-INSERT INTO `comment` VALUES (9, 1, '1', 1, 1, NULL, NULL, 'ballo', 0, '2024-07-04 18:02:29', '2024-07-04 18:02:29');
-INSERT INTO `comment` VALUES (10, 1, '9', 1, 1, NULL, NULL, 'okok', 0, '2024-07-04 18:03:09', '2024-07-04 18:03:09');
-INSERT INTO `comment` VALUES (11, 1, '4', 1, 1, NULL, NULL, '嵌套回复', 0, '2024-07-04 18:04:38', '2024-07-04 18:04:38');
-INSERT INTO `comment` VALUES (12, 1, '7', 1, 1, NULL, NULL, '评论一下', 0, '2024-07-04 18:05:35', '2024-07-04 18:05:35');
-INSERT INTO `comment` VALUES (13, 1, NULL, 1, 1, NULL, NULL, NULL, 0, '2024-07-04 22:43:52', '2024-07-04 22:43:52');
-INSERT INTO `comment` VALUES (14, 1, NULL, 1, 1, NULL, NULL, '评论评论', 0, '2024-07-04 22:45:37', '2024-07-04 22:45:38');
-INSERT INTO `comment` VALUES (15, 1, NULL, 1, 1, NULL, NULL, 'gogogo', 0, '2024-07-04 22:46:30', '2024-07-04 22:46:30');
-INSERT INTO `comment` VALUES (16, 1, NULL, 1, 1, 0, '[\"http://106.15.104.19:9000/dsh/ca9f18f3d99e4352877d71b33a807217.jpg\", \"http://106.15.104.19:9000/dsh/0d542ba91e624902931c614495635f5d.jpg\"]', '图片评论', 0, '2024-07-05 10:39:41', '2024-07-05 10:39:41');
-INSERT INTO `comment` VALUES (17, 1, '1', 2, 1, NULL, NULL, '哈哈哈', 0, '2024-07-07 16:49:30', '2024-07-07 16:49:30');
-INSERT INTO `comment` VALUES (18, 1, NULL, 3, 1, 0, '[]', '第四条评论', 0, '2024-07-07 17:21:37', '2024-07-07 17:21:37');
-INSERT INTO `comment` VALUES (19, 1, NULL, 3, 1, 0, '[]', '阿巴巴', 0, '2024-07-07 17:22:10', '2024-07-07 17:22:10');
 
 -- ----------------------------
 -- Table structure for feedback
@@ -419,13 +167,11 @@ CREATE TABLE `feedback`  (
   `update_time` timestamp(0) NULL DEFAULT NULL,
   `create_time` timestamp(0) NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of feedback
 -- ----------------------------
-INSERT INTO `feedback` VALUES (1, '书多一点', NULL, 1, 0, '2024-06-19 10:12:22', '2024-06-19 10:12:25');
-INSERT INTO `feedback` VALUES (2, '书不够多', NULL, 1, 0, '2024-06-19 10:45:58', '2024-06-19 10:46:01');
 
 -- ----------------------------
 -- Table structure for forum
@@ -446,21 +192,11 @@ CREATE TABLE `forum`  (
   `create_time` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '创建时间',
   `update_time` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0) ON UPDATE CURRENT_TIMESTAMP(0) COMMENT '更新时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 10 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 11 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of forum
 -- ----------------------------
-INSERT INTO `forum` VALUES (1, 1, '论坛', '课程链接', 1, 1.01, '作者简介', 'http://106.15.104.19:9000/dsh/f734978f5e8645e1b6555a9b3e217266.mp3', 'http://106.15.104.19:9000/dsh/b7d20d5d268b43629438d09b7a1a9851.jpg', 'http://106.15.104.19:9000/dsh/9db84c088d7a441cb1aee743c0d0358f.jpg', 0, '2024-06-20 02:18:19', '2024-06-20 16:09:42');
-INSERT INTO `forum` VALUES (2, 1, '新的论坛', NULL, 3, NULL, NULL, NULL, NULL, NULL, 0, '2024-06-20 15:09:54', '2024-06-20 15:09:54');
-INSERT INTO `forum` VALUES (3, 1, '论坛一', NULL, 2, NULL, NULL, NULL, NULL, NULL, 0, '2024-07-04 09:45:50', '2024-07-04 09:45:50');
-INSERT INTO `forum` VALUES (4, 1, '论坛二论坛二论坛二论坛二论坛二论坛二论坛二论坛二论坛二论坛二论坛二论坛二论坛二论坛二论坛二', NULL, 2, NULL, NULL, NULL, NULL, NULL, 0, '2024-07-04 09:46:03', '2024-07-04 09:46:03');
-INSERT INTO `forum` VALUES (5, 1, '论坛三论坛三论坛三论坛三论坛三论坛三论坛三论坛三论坛三论坛三论坛三论坛三论坛三论坛三论坛三论坛三论坛三论坛三论坛三论坛三论坛三论坛三论坛三论坛三论坛三论坛三论坛三论坛三论坛三', NULL, 1, NULL, NULL, NULL, NULL, NULL, 0, '2024-07-04 09:46:16', '2024-07-04 09:46:16');
-INSERT INTO `forum` VALUES (6, 1, '论坛四', NULL, 3, NULL, NULL, NULL, NULL, NULL, 0, '2024-07-04 09:46:27', '2024-07-04 09:46:27');
-INSERT INTO `forum` VALUES (7, 1, '论坛五', NULL, 2, NULL, NULL, NULL, NULL, NULL, 0, '2024-07-04 09:46:36', '2024-07-04 09:46:36');
-INSERT INTO `forum` VALUES (8, 1, '论坛六', NULL, 1, NULL, NULL, NULL, NULL, NULL, 0, '2024-07-04 09:46:47', '2024-07-04 09:46:47');
-INSERT INTO `forum` VALUES (9, 1, '论坛七', NULL, 1, NULL, NULL, NULL, NULL, NULL, 0, '2024-07-04 09:47:00', '2024-07-04 09:47:00');
-INSERT INTO `forum` VALUES (10, 1, '伦塔吧', NULL, 2, NULL, NULL, NULL, NULL, NULL, 0, '2024-07-04 09:47:17', '2024-07-04 09:47:17');
 
 -- ----------------------------
 -- Table structure for notice
@@ -478,16 +214,11 @@ CREATE TABLE `notice`  (
   `create_time` timestamp(0) NULL DEFAULT NULL,
   `update_time` timestamp(0) NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 6 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of notice
 -- ----------------------------
-INSERT INTO `notice` VALUES (1, 1, 1, '公告', '公告内容', '2024-06-22 09:32:36', 1, 1, '2024-06-21 09:32:47', '2024-06-21 09:32:50');
-INSERT INTO `notice` VALUES (2, 2, 1, '新的公告', '新的公告内容', '2024-06-21 10:41:43', 0, 1, '2024-06-21 10:37:59', '2024-06-21 10:37:59');
-INSERT INTO `notice` VALUES (3, 1, 1, '标题', '内容', '2024-06-28 00:00:00', 1, 1, '2024-06-21 10:47:26', '2024-06-21 10:47:26');
-INSERT INTO `notice` VALUES (4, 2, 1, 'hhh', 'hhhhh', '2024-06-28 00:00:00', 1, 1, '2024-06-21 10:51:43', '2024-06-21 10:51:43');
-INSERT INTO `notice` VALUES (5, 2, 1, '555', '123132', '2024-06-23 00:00:00', 1, 1, '2024-06-21 10:53:46', '2024-06-21 10:53:46');
 
 -- ----------------------------
 -- Table structure for publisher
@@ -501,13 +232,11 @@ CREATE TABLE `publisher`  (
   `update_time` timestamp(0) NOT NULL,
   `create_time` timestamp(0) NOT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of publisher
 -- ----------------------------
-INSERT INTO `publisher` VALUES (1, '北京大学出版社', '北京大学出版社描述', 0, '2024-06-30 13:08:48', '2024-06-30 13:05:49');
-INSERT INTO `publisher` VALUES (2, '清华大学出版社', '清华大学出版社', 0, '2024-06-30 14:39:38', '2024-06-30 14:39:38');
 
 -- ----------------------------
 -- Table structure for suggestion
@@ -535,14 +264,14 @@ CREATE TABLE `suggestion`  (
 DROP TABLE IF EXISTS `sys_dict`;
 CREATE TABLE `sys_dict`  (
   `pk_id` int NOT NULL AUTO_INCREMENT COMMENT '主键唯一字段',
-  `title` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '名称',
-  `number` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '编号',
-  `description` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '描述',
+  `title` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL DEFAULT '' COMMENT '名称',
+  `number` varchar(64) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL DEFAULT '' COMMENT '编号',
+  `description` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL DEFAULT '' COMMENT '描述',
   `delete_flag` tinyint NOT NULL DEFAULT 0 COMMENT '0:未删除  1:已删除',
   `create_time` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '创建时间',
   `update_time` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0) ON UPDATE CURRENT_TIMESTAMP(0) COMMENT '更新时间',
   PRIMARY KEY (`pk_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 6 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 7 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of sys_dict
@@ -560,14 +289,14 @@ INSERT INTO `sys_dict` VALUES (6, '是否轮播', 'isSwiper', 'isSwiper', 1, '20
 DROP TABLE IF EXISTS `sys_dict_config`;
 CREATE TABLE `sys_dict_config`  (
   `pk_id` int NOT NULL AUTO_INCREMENT COMMENT '主键唯一字段',
-  `dict_number` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '字典编号',
-  `title` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '名称',
-  `value` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '数据值',
+  `dict_number` varchar(64) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL COMMENT '字典编号',
+  `title` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL COMMENT '名称',
+  `value` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL COMMENT '数据值',
   `delete_flag` tinyint NOT NULL DEFAULT 0 COMMENT '0:未删除  1:已删除',
   `create_time` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '创建时间',
   `update_time` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0) ON UPDATE CURRENT_TIMESTAMP(0) COMMENT '更新时间',
   PRIMARY KEY (`pk_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 13 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 14 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of sys_dict_config
@@ -601,16 +330,16 @@ CREATE TABLE `sys_manager`  (
   `create_time` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '创建时间',
   `update_time` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0) ON UPDATE CURRENT_TIMESTAMP(0) COMMENT '更新时间',
   PRIMARY KEY (`pk_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '用户管理' ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 6 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '用户管理' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of sys_manager
 -- ----------------------------
 INSERT INTO `sys_manager` VALUES (1, 'admin', '{bcrypt}$2a$10$mW/yJPHjyueQ1g26WNBz0uxVPa0GQdJO1fFZmqdkqgMTGnyszlXxu', 'https://cdn.maku.net/images/avatar.png', 1, 1, 0, '2023-05-18 18:18:55', '2024-02-28 09:27:51');
 INSERT INTO `sys_manager` VALUES (2, 'user', '{bcrypt}$2a$10$IPBm/F3E7NUeX/I1xfr0iO5ZzghwCQp/kc4NDGmRf.rVYuApWWvzC', '', 0, 1, 1, '2024-03-08 12:23:28', '2024-03-13 10:52:38');
-INSERT INTO `sys_manager` VALUES (3, '北京大学出版社管理员', '{bcrypt}$2a$10$qAxwKywaR28fubM84dfOKuOHiPGYCGRtVsA/Sfe2BUrFBp6m5aRiy', '', 0, 1, 0, '2024-06-30 14:35:55', '2024-06-30 15:31:27');
-INSERT INTO `sys_manager` VALUES (4, '清华大学出版社管理员', '{bcrypt}$2a$10$it4Kw8uv0itJ91TQ8sxfv.Vf.hpaiCylD4zh.7eC72viypvRYkERm', '', 0, 1, 0, '2024-06-30 14:39:11', '2024-06-30 15:24:38');
-INSERT INTO `sys_manager` VALUES (5, '北京出版社管理员', '{bcrypt}$2a$10$wjhWROdHrsz7AHruZ1n/a.YzopeUfg3lDU8FEGSbktaW/qZK1kRk.', '', 0, 1, 0, '2024-06-30 14:40:13', '2024-06-30 14:40:13');
+INSERT INTO `sys_manager` VALUES (3, '北京大学出版社管理员', '{bcrypt}$2a$10$qAxwKywaR28fubM84dfOKuOHiPGYCGRtVsA/Sfe2BUrFBp6m5aRiy', '', 0, 1, 1, '2024-06-30 14:35:55', '2024-08-09 14:10:56');
+INSERT INTO `sys_manager` VALUES (4, '清华大学出版社管理员', '{bcrypt}$2a$10$it4Kw8uv0itJ91TQ8sxfv.Vf.hpaiCylD4zh.7eC72viypvRYkERm', '', 0, 1, 1, '2024-06-30 14:39:11', '2024-08-09 14:10:52');
+INSERT INTO `sys_manager` VALUES (5, '北京出版社管理员', '{bcrypt}$2a$10$wjhWROdHrsz7AHruZ1n/a.YzopeUfg3lDU8FEGSbktaW/qZK1kRk.', '', 0, 1, 1, '2024-06-30 14:40:13', '2024-08-09 14:10:50');
 
 -- ----------------------------
 -- Table structure for sys_manager_publisher
@@ -624,10 +353,6 @@ CREATE TABLE `sys_manager_publisher`  (
 -- ----------------------------
 -- Records of sys_manager_publisher
 -- ----------------------------
-INSERT INTO `sys_manager_publisher` VALUES (5, 1);
-INSERT INTO `sys_manager_publisher` VALUES (5, 2);
-INSERT INTO `sys_manager_publisher` VALUES (4, 2);
-INSERT INTO `sys_manager_publisher` VALUES (3, 1);
 
 -- ----------------------------
 -- Table structure for sys_manager_role
@@ -641,16 +366,16 @@ CREATE TABLE `sys_manager_role`  (
   `create_time` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '创建时间',
   `update_time` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0) ON UPDATE CURRENT_TIMESTAMP(0) COMMENT '更新时间',
   PRIMARY KEY (`pk_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '用户角色关系' ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 6 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '用户角色关系' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of sys_manager_role
 -- ----------------------------
 INSERT INTO `sys_manager_role` VALUES (1, 1, 1, 0, '2024-02-28 10:17:32', '2024-02-28 10:17:32');
 INSERT INTO `sys_manager_role` VALUES (2, 2, 2, 1, '2024-03-08 12:23:28', '2024-03-13 10:52:46');
-INSERT INTO `sys_manager_role` VALUES (3, 2, 3, 0, '2024-06-30 14:35:55', '2024-06-30 14:35:55');
-INSERT INTO `sys_manager_role` VALUES (4, 2, 4, 0, '2024-06-30 14:39:11', '2024-06-30 14:39:11');
-INSERT INTO `sys_manager_role` VALUES (5, 2, 5, 0, '2024-06-30 14:40:13', '2024-06-30 14:40:13');
+INSERT INTO `sys_manager_role` VALUES (3, 2, 3, 1, '2024-06-30 14:35:55', '2024-08-09 14:10:55');
+INSERT INTO `sys_manager_role` VALUES (4, 2, 4, 1, '2024-06-30 14:39:11', '2024-08-09 14:10:52');
+INSERT INTO `sys_manager_role` VALUES (5, 2, 5, 1, '2024-06-30 14:40:13', '2024-08-09 14:10:49');
 
 -- ----------------------------
 -- Table structure for sys_menu
@@ -659,15 +384,15 @@ DROP TABLE IF EXISTS `sys_menu`;
 CREATE TABLE `sys_menu`  (
   `pk_id` int NOT NULL AUTO_INCREMENT COMMENT '自增主键',
   `parent_id` int NOT NULL DEFAULT 0 COMMENT '父级id',
-  `name` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '名称',
-  `title` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '标题',
-  `path` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '路径',
-  `component` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '组件路径',
-  `type` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '菜单类型 menu: 菜单 button: 按钮',
-  `open_type` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '打开类型 tab: 选项卡 url: 外链',
-  `url` varchar(500) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '外链地址',
-  `icon` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '菜单图标',
-  `auth` varchar(500) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '授权标识(多个用逗号分隔，如：sys:menu:list,sys:menu:save)',
+  `name` varchar(200) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL DEFAULT '' COMMENT '名称',
+  `title` varchar(200) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL DEFAULT '' COMMENT '标题',
+  `path` varchar(200) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL DEFAULT '' COMMENT '路径',
+  `component` varchar(200) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL DEFAULT '' COMMENT '组件路径',
+  `type` varchar(50) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL DEFAULT '' COMMENT '菜单类型 menu: 菜单 button: 按钮',
+  `open_type` varchar(50) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL DEFAULT '' COMMENT '打开类型 tab: 选项卡 url: 外链',
+  `url` varchar(500) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL DEFAULT '' COMMENT '外链地址',
+  `icon` varchar(50) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL DEFAULT '' COMMENT '菜单图标',
+  `auth` varchar(500) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL DEFAULT '' COMMENT '授权标识(多个用逗号分隔，如：sys:menu:list,sys:menu:save)',
   `keep_alive` tinyint NOT NULL DEFAULT 0 COMMENT '是否缓存 0:true 1:false',
   `sort` int NOT NULL DEFAULT 0 COMMENT '排序',
   `delete_flag` tinyint NOT NULL DEFAULT 0 COMMENT '逻辑删除(0-未删除，1-删除)',
@@ -675,7 +400,7 @@ CREATE TABLE `sys_menu`  (
   `update_time` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0) ON UPDATE CURRENT_TIMESTAMP(0) COMMENT '更新时间',
   `hide` tinyint NOT NULL DEFAULT 1 COMMENT '是否隐藏（0:true,1fasle）',
   PRIMARY KEY (`pk_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 191 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 192 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of sys_menu
@@ -698,7 +423,7 @@ INSERT INTO `sys_menu` VALUES (16, 2, 'reset-psw', '重置密码', '', '', 'BUTT
 INSERT INTO `sys_menu` VALUES (17, 2, 'remove', '删除', '', '', 'BUTTON', '', '', '', 'sys:manager:remove', 1, 4, 0, '2023-07-26 09:03:33', '2024-02-28 10:25:45', 1);
 INSERT INTO `sys_menu` VALUES (18, 0, 'home', '首页', '/home', '/Home/Home', 'MENU', 'TAB', '', 'HomeFilled', 'none', 1, 0, 0, '2023-11-01 03:38:01', '2024-02-28 10:25:49', 1);
 INSERT INTO `sys_menu` VALUES (19, 2, 'edit', '编辑', '', '', 'BUTTON', '', '', '', 'sys:manager:edit', 1, 0, 0, '2023-12-02 01:56:23', '2024-02-28 10:25:53', 1);
-INSERT INTO `sys_menu` VALUES (20, 1, 'Dict', '字典管理', '/system/dict', '/System/Dict/index', 'MENU', 'TAB', '', 'Memo', 'sys:dict:list', 1, 4, 0, '2024-02-27 08:16:57', '2024-06-17 02:32:30', 1);
+INSERT INTO `sys_menu` VALUES (20, 1, 'Dict', '字典管理', '/system/dict', '/System/Dict/index', 'MENU', 'TAB', '', 'Memo', 'sys:dict:list', 1, 4, 0, '2024-02-27 08:16:57', '2024-08-09 14:09:02', 0);
 INSERT INTO `sys_menu` VALUES (145, 20, 'view', '查看', '', '', 'BUTTON', '', '', '', 'sys:dict:view', 1, 0, 0, '2024-06-17 02:33:25', '2024-06-17 02:33:25', 1);
 INSERT INTO `sys_menu` VALUES (146, 20, 'add', '新增', '', '', 'BUTTON', '', '', '', 'sys:dict:add', 0, 1, 0, '2024-06-17 10:34:08', '2024-06-17 10:34:08', 1);
 INSERT INTO `sys_menu` VALUES (147, 20, 'edit', '编辑', '', '', 'BUTTON', '', '', '', 'sys:dict:edit', 0, 2, 0, '2024-06-17 10:34:40', '2024-06-17 10:34:40', 1);
@@ -746,6 +471,7 @@ INSERT INTO `sys_menu` VALUES (188, 187, 'add', '新增', '', '', 'BUTTON', '', 
 INSERT INTO `sys_menu` VALUES (189, 187, 'view', '查看', '', '', 'BUTTON', '', '', '', 'sys:publisher:view', 0, 0, 0, '2024-06-30 12:57:50', '2024-06-30 12:57:50', 1);
 INSERT INTO `sys_menu` VALUES (190, 187, 'edit', '编辑', '', '', 'BUTTON', '', '', '', 'sys:publisher:edit', 0, 0, 0, '2024-06-30 12:58:19', '2024-06-30 12:58:19', 1);
 INSERT INTO `sys_menu` VALUES (191, 187, 'remove', '删除', '', '', 'BUTTON', '', '', '', 'sys:publisher:remove', 0, 0, 0, '2024-06-30 12:58:39', '2024-06-30 12:58:39', 1);
+INSERT INTO `sys_menu` VALUES (192, 154, 'qrCode', '二维码审核', '/aduit/qrcode', '/Audit/QrCode', 'MENU', 'TAB', '', 'FullScreen', '', 0, 6, 0, '2024-08-09 14:09:56', '2024-08-09 14:09:56', 1);
 
 -- ----------------------------
 -- Table structure for sys_role
@@ -759,12 +485,12 @@ CREATE TABLE `sys_role`  (
   `create_time` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '创建时间',
   `update_time` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '更新时间',
   PRIMARY KEY (`pk_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '角色管理' ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '角色管理' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of sys_role
 -- ----------------------------
-INSERT INTO `sys_role` VALUES (1, '超级管理员', '超级管理员', 0, '2024-02-28 10:18:26', '2024-06-30 13:20:36');
+INSERT INTO `sys_role` VALUES (1, '超级管理员', '超级管理员', 0, '2024-02-28 10:18:26', '2024-08-09 14:10:05');
 INSERT INTO `sys_role` VALUES (2, '出版社管理员', '出版社管理员', 0, '2024-06-30 13:15:58', '2024-06-30 22:21:45');
 INSERT INTO `sys_role` VALUES (4, '普通用户', '普通用户', 0, '2024-06-30 13:17:08', '2024-06-30 13:17:08');
 
@@ -780,7 +506,7 @@ CREATE TABLE `sys_role_menu`  (
   `create_time` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '创建时间',
   `update_time` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0) ON UPDATE CURRENT_TIMESTAMP(0) COMMENT '更新时间',
   PRIMARY KEY (`pk_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 162 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '角色菜单关系' ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 163 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '角色菜单关系' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of sys_role_menu
@@ -876,6 +602,7 @@ INSERT INTO `sys_role_menu` VALUES (159, 2, 153, 0, '2024-06-30 13:15:58', '2024
 INSERT INTO `sys_role_menu` VALUES (160, 2, 170, 0, '2024-06-30 13:15:58', '2024-06-30 07:02:22');
 INSERT INTO `sys_role_menu` VALUES (161, 2, 187, 0, '2024-06-30 13:15:58', '2024-06-30 07:02:22');
 INSERT INTO `sys_role_menu` VALUES (162, 4, 18, 0, '2024-06-30 13:17:08', '2024-06-30 13:17:08');
+INSERT INTO `sys_role_menu` VALUES (163, 1, 192, 0, '2024-08-09 14:10:05', '2024-08-09 14:10:05');
 
 -- ----------------------------
 -- Table structure for user_action
@@ -893,45 +620,6 @@ CREATE TABLE `user_action`  (
 -- ----------------------------
 -- Records of user_action
 -- ----------------------------
-INSERT INTO `user_action` VALUES (1, 0, 1, '2024-07-02 16:05:10', 1, '2024-07-02 16:05:10');
-INSERT INTO `user_action` VALUES (1, 0, 1, '2024-07-02 16:29:39', 1, '2024-07-02 16:29:39');
-INSERT INTO `user_action` VALUES (1, 0, 1, '2024-07-02 16:29:59', 1, '2024-07-02 16:29:59');
-INSERT INTO `user_action` VALUES (1, 1, 1, '2024-07-02 16:30:05', 1, '2024-07-02 16:30:05');
-INSERT INTO `user_action` VALUES (1, 1, 3, '2024-07-02 16:30:12', 0, '2024-07-02 16:30:12');
-INSERT INTO `user_action` VALUES (1, 2, 7, '2024-07-02 16:32:26', 0, '2024-07-02 16:32:26');
-INSERT INTO `user_action` VALUES (1, 1, 2, '2024-07-03 17:25:04', 1, '2024-07-03 17:25:04');
-INSERT INTO `user_action` VALUES (1, 1, 1, '2024-07-03 17:27:31', 1, '2024-07-03 17:27:31');
-INSERT INTO `user_action` VALUES (1, 2, 2, '2024-07-03 17:27:32', 1, '2024-07-03 17:27:32');
-INSERT INTO `user_action` VALUES (1, 2, 2, '2024-07-03 17:27:57', 1, '2024-07-03 17:27:57');
-INSERT INTO `user_action` VALUES (1, 2, 1, '2024-07-03 17:27:58', 1, '2024-07-03 17:27:58');
-INSERT INTO `user_action` VALUES (1, 2, 6, '2024-07-03 17:28:10', 1, '2024-07-03 17:28:10');
-INSERT INTO `user_action` VALUES (1, 0, 1, '2024-07-03 17:41:14', 1, '2024-07-03 17:41:14');
-INSERT INTO `user_action` VALUES (1, 0, 1, '2024-07-03 17:41:46', 1, '2024-07-03 17:41:46');
-INSERT INTO `user_action` VALUES (1, 0, 1, '2024-07-03 17:41:50', 1, '2024-07-03 17:41:50');
-INSERT INTO `user_action` VALUES (1, 2, 1, '2024-07-03 17:42:49', 1, '2024-07-03 17:42:49');
-INSERT INTO `user_action` VALUES (1, 2, 1, '2024-07-03 17:43:25', 1, '2024-07-03 17:43:25');
-INSERT INTO `user_action` VALUES (1, 2, 1, '2024-07-03 17:43:49', 1, '2024-07-03 17:43:49');
-INSERT INTO `user_action` VALUES (1, 2, 2, '2024-07-03 17:45:21', 1, '2024-07-03 17:45:21');
-INSERT INTO `user_action` VALUES (1, 2, 6, '2024-07-03 17:45:21', 0, '2024-07-03 17:45:21');
-INSERT INTO `user_action` VALUES (1, 1, 6, '2024-07-03 17:45:22', 1, '2024-07-03 17:45:22');
-INSERT INTO `user_action` VALUES (1, 2, 1, '2024-07-03 17:45:23', 1, '2024-07-03 17:45:23');
-INSERT INTO `user_action` VALUES (1, 1, 2, '2024-07-03 17:45:25', 0, '2024-07-03 17:45:25');
-INSERT INTO `user_action` VALUES (1, 0, 1, '2024-07-03 17:45:49', 1, '2024-07-03 17:45:49');
-INSERT INTO `user_action` VALUES (1, 0, 1, '2024-07-03 17:46:40', 1, '2024-07-03 17:46:40');
-INSERT INTO `user_action` VALUES (1, 0, 1, '2024-07-03 17:47:46', 1, '2024-07-03 17:47:46');
-INSERT INTO `user_action` VALUES (1, 0, 1, '2024-07-03 17:47:48', 1, '2024-07-03 17:47:48');
-INSERT INTO `user_action` VALUES (1, 0, 1, '2024-07-03 17:48:41', 1, '2024-07-03 17:48:41');
-INSERT INTO `user_action` VALUES (1, 0, 1, '2024-07-04 15:00:18', 1, '2024-07-04 15:00:18');
-INSERT INTO `user_action` VALUES (1, 0, 1, '2024-07-04 15:00:47', 1, '2024-07-04 15:00:47');
-INSERT INTO `user_action` VALUES (1, 2, 5, '2024-07-04 16:20:01', 1, '2024-07-04 16:20:01');
-INSERT INTO `user_action` VALUES (1, 1, 4, '2024-07-04 16:20:04', 0, '2024-07-04 16:20:04');
-INSERT INTO `user_action` VALUES (1, 1, 11, '2024-07-04 18:05:00', 0, '2024-07-04 18:05:00');
-INSERT INTO `user_action` VALUES (1, 2, 1, '2024-07-04 22:14:14', 1, '2024-07-04 22:14:14');
-INSERT INTO `user_action` VALUES (1, 0, 1, '2024-07-04 22:46:40', 0, '2024-07-04 22:46:40');
-INSERT INTO `user_action` VALUES (2, 0, 1, '2024-07-07 16:49:23', 0, '2024-07-07 16:49:23');
-INSERT INTO `user_action` VALUES (2, 1, 1, '2024-07-07 16:49:26', 0, '2024-07-07 16:49:26');
-INSERT INTO `user_action` VALUES (2, 2, 3, '2024-07-12 16:58:45', 0, '2024-07-12 16:58:45');
-INSERT INTO `user_action` VALUES (1, 0, 10, '2024-07-28 14:06:01', 1, '2024-07-28 14:06:01');
 
 -- ----------------------------
 -- Table structure for wuser
@@ -946,16 +634,11 @@ CREATE TABLE `wuser`  (
   `create_time` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '创建时间',
   `update_time` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0) ON UPDATE CURRENT_TIMESTAMP(0) COMMENT '更新时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 10 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 11 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of wuser
 -- ----------------------------
-INSERT INTO `wuser` VALUES (1, 'wxwxwx', 'https://pica.zhimg.com/v2-9ef139b3a1f11a59f6a768334b06a813_l.jpg?source=32738c0c', 'nickname', 0, '2024-06-19 02:11:51', '2024-07-03 07:36:01');
-INSERT INTO `wuser` VALUES (2, 'ohi8-69oedLZ1YPywFitl2uX7YLw', 'https://thirdwx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTKYqaSBaoxlXLP9OwB0bNvpVX3drRjHiav5jDJvzVwt817fTBc4QIsvITqsedADTZgFdLW6M4tYYhg/132', 'FlobbYð', 0, '2024-07-07 16:05:15', '2024-07-07 16:05:15');
-INSERT INTO `wuser` VALUES (3, 'ohi8-65EgQzgeKn-OzFWOI5Fq1Zc', 'https://thirdwx.qlogo.cn/mmopen/vi_32/0MBuP1Zkbt6v4YI5AibzMprTzD1doUUyWthJbJOicnYqkcEJ9PpAP82HGn0U63Yy3VbwjY7XLZ5nY6dlswt1M1UggmttM1Gas4NNTb0l5R7Lc/132', 'æ¥æ ä¸', 1, '2024-07-07 17:21:22', '2024-07-08 01:51:49');
-INSERT INTO `wuser` VALUES (7, 'ohi8-65EgQzgeKn-OzFWOI5Fq1Zc', 'https://thirdwx.qlogo.cn/mmopen/vi_32/0MBuP1Zkbt6v4YI5AibzMprTzD1doUUyWthJbJOicnYqkcEJ9PpAP82HGn0U63Yy3VbwjY7XLZ5nY6dlswt1M1UggmttM1Gas4NNTb0l5R7Lc/132', 'æ¥æ ä¸', 1, '2024-07-08 12:11:42', '2024-07-08 04:13:40');
-INSERT INTO `wuser` VALUES (9, 'ohi8-65EgQzgeKn-OzFWOI5Fq1Zc', 'https://thirdwx.qlogo.cn/mmopen/vi_32/0MBuP1Zkbt6v4YI5AibzMprTzD1doUUyWthJbJOicnYqkcEJ9PpAP82HGn0U63Yy3VbwjY7XLZ5nY6dlswt1M1UggmttM1Gas4NNTb0l5R7Lc/132', 'æ¥æ ä¸', 1, '2024-07-08 12:23:03', '2024-07-09 14:58:49');
-INSERT INTO `wuser` VALUES (10, 'ohi8-65EgQzgeKn-OzFWOI5Fq1Zc', 'https://thirdwx.qlogo.cn/mmopen/vi_32/0MBuP1Zkbt6v4YI5AibzMprTzD1doUUyWthJbJOicnYqkcEJ9PpAP82HGn0U63Yy3VbwjY7XLZ5nY6dlswt1M1UggmttM1Gas4NNTb0l5R7Lc/132', '来树下', 0, '2024-07-09 23:04:45', '2024-07-09 23:04:45');
+INSERT INTO `wuser` VALUES (1, 'oXh4A6wO60N1DnYalVKpGgMTpLuA', 'https://thirdwx.qlogo.cn/mmopen/vi_32/Q3auHgzwzM6qfzDSRtycXNxNNQibQZdRiaNKFKEHicaWMTDcD58A53nG3WVY0bRue2rRZ0hEibVdKicj6rguiag24exQ/132', '神经蛙', 0, '2024-08-09 14:11:23', '2024-08-09 14:11:23');
 
 SET FOREIGN_KEY_CHECKS = 1;

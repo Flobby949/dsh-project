@@ -25,8 +25,10 @@
     </ProTable>
     <BookDialog ref="dialogRef" />
     <Dialog :model-value="showQrCodeFlag" :width="400" :maxHeight="200" title="书籍二维码" :cancel-dialog="cancelDialog">
-      <el-image v-if="qrcode" :src="qrcode" width="500"></el-image>
-      <div v-else>请先创建相关论坛后查看二维码</div>
+      <div class="code-dialog">
+        <el-image v-if="qrcode" :src="qrcode" width="500"></el-image>
+        <div v-else>请先创建相关论坛后查看二维码</div>
+      </div>
       <template #footer>
         <slot name="footer">
           <el-button type="primary" v-loading.fullscreen.lock="fullscreenLoading" @click="downloadQrCode">下载</el-button>
@@ -189,3 +191,13 @@ const deleteData = async (id: number) => {
   proTable.value.getTableList()
 }
 </script>
+
+<style scoped>
+.code-dialog {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+</style>

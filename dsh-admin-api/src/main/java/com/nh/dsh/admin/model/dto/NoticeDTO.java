@@ -42,5 +42,6 @@ public class NoticeDTO {
      * 0-不置顶，1,-置顶
      */
     @Schema(description = "是否置顶")
+    @NotNull
     private Integer isTop;
 }

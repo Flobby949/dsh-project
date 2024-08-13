@@ -39,11 +39,11 @@ import { ref, unref, watch, nextTick, useSlots } from 'vue'
 import VueTypes from 'vue-types'
 import { isNumber } from '@/utils/is'
 const props = defineProps({
-  width: VueTypes.string.def('50%'),
+  width: VueTypes.string.def('50vw'),
   modelValue: VueTypes.bool.def(false),
   title: VueTypes.string.def(''),
-  fullscreen: VueTypes.bool.def(true),
-  maxHeight: VueTypes.oneOfType([String, Number]).def('500px'),
+  fullscreen: VueTypes.bool.def(false),
+  maxHeight: VueTypes.oneOfType([String, Number]).def('75vh'),
   cancelDialog: VueTypes.func.def(),
   marginTop: VueTypes.string.def('5vh')
 })

@@ -47,7 +47,7 @@ const dialogProps = ref<DialogProps>({
   title: '',
   row: {},
   labelWidth: 160,
-  fullscreen: true
+  fullscreen: false
 })
 
 // 接收父组件传过来的参数

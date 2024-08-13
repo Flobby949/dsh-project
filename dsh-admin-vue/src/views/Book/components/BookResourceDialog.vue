@@ -1,5 +1,5 @@
 <template>
-  <Dialog :model-value="dialogVisible" :maxHeight="400" :title="dialogProps.title" :fullscreen="dialogProps.fullscreen" :cancel-dialog="cancelDialog">
+  <Dialog :model-value="dialogVisible" :title="dialogProps.title" :fullscreen="dialogProps.fullscreen" :cancel-dialog="cancelDialog">
     <div class="el-dialog__body">
       <ProTable rowKey="id" ref="proTable" title="书籍资源列表" :columns="columns" :requestApi="getTableList" :dataCallback="dataCallback">
         <!-- 表格 header 按钮 -->
@@ -23,8 +23,8 @@
       </ProTable>
     </div>
   </Dialog>
-  <Dialog :model-value="showQrCodeFlag" :maxHeight="350" :width="500" title="资源二维码" :cancel-dialog="cancelResourceDialog">
-    <el-image :src="qrcode" style="height: 300px; width: 300px"></el-image>
+  <Dialog :model-value="showQrCodeFlag" :maxHeight="300" :width="500" title="资源二维码" :cancel-dialog="cancelResourceDialog">
+    <div class="code-dialog"><el-image :src="qrcode" style="height: 300px; width: 300px"></el-image></div>
     <template #footer>
       <slot name="footer">
         <el-button type="primary" v-loading.fullscreen.lock="fullscreenLoading" @click="downloadQrCode">下载</el-button>
@@ -67,7 +67,7 @@ const dialogProps = ref<DialogProps>({
   title: '',
   row: {},
   labelWidth: 160,
-  fullscreen: true,
+  fullscreen: false,
   maxHeight: '80vh'
 })
 
@@ -178,9 +178,12 @@ const deleteData = async (id: number) => {
 }
 </script>
 
-<style scoped lang="less">
-.el-dialog__body {
-  height: 50vh;
-  overflow: auto;
+<style scoped>
+.code-dialog {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 </style>
