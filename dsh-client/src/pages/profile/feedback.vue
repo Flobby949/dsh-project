@@ -25,7 +25,7 @@ const uploadImage = () => {
     success: (chooseImageRes) => {
       const tempFilePaths = chooseImageRes.tempFilePaths;
       uni.uploadFile({
-        url: 'http://106.15.104.19/dsh-client/dsh-client-api/common/upload/img', //仅为示例，非真实的接口地址
+        url: 'http://8.153.16.66/dsh-client-api/common/upload/img', //仅为示例，非真实的接口地址
         filePath: tempFilePaths[0],
         name: 'file',
         success: (uploadFileRes) => {

@@ -151,7 +151,7 @@ const onCommentImg = async () => {
 const uploadFile = (file) => {
   // 文件上传
   uni.uploadFile({
-    url: 'http://106.15.104.19/dsh-client/dsh-client-api/common/upload/img',
+    url: 'http://8.153.16.66/dsh-client-api/common/upload/img',
     name: 'file', // 后端数据字段名
     filePath: file,
     success: (res) => {

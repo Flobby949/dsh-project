@@ -33,6 +33,11 @@ import CommentCard from '../../components/CommentCard/CommentCard.vue'
 import { commentDetail, forumCommentAdd } from '@/service/forum.js'
 import { onLoad } from '@dcloudio/uni-app'
 import CommentReplyItem from './components/CommentReplyItem.vue'
+import Recorder from 'recorder-core'
+import RecordApp from 'recorder-core/src/app-support/app.js'
+import '@/uni_modules/Recorder-UniCore/app-uni-support.js'
+import 'recorder-core/src/engine/mp3'
+import 'recorder-core/src/engine/mp3-engine'
 
 const props = defineProps({
   id: {
@@ -41,14 +46,10 @@ const props = defineProps({
   },
 })
 
+// var vue3This=getCurrentInstance().proxy;
 onLoad(() => {
   getCommentDetail()
-  uni.authorize({
-    scope: 'scope.record',
-    success:() => {
-        console.log('录音');
-    }
-})
+  RecordApp.UniRenderjsRegister()
 })
 
 const commentDetailInfo = ref([])
@@ -97,16 +98,14 @@ const micTime = ref(0)
 const intervalId = ref();
 const minutes = computed(() => String(Math.floor(micTime.value / 60)).padStart(2, '0'));
 const seconds = computed(() => String(micTime.value % 60).padStart(2, '0'));
-const recorderManager = uni.getRecorderManager()
 const changeMicStatus = () => {
   startMicFlag.value = !startMicFlag.value
 
-  console.log(recorderManager);
   if (startMicFlag.value) {
-    recorderManager.start()
+    // recorderManager.start()
     startTimer()
   } else {
-    recorderManager.stop()
+    // recorderManager.stop()
     stopTimer()
   }
 }

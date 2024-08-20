@@ -17,7 +17,7 @@
           <text class="card-actions-item-text">收藏</text>
         </view>
       </view>
-      <view class="reply" v-if="comment.replyList.length > 0 && showReply">
+      <view class="reply" v-if="comment.replyList != null && comment.replyList.length > 0 && showReply">
         <view v-for="(item, index) in comment.replyList" :key="index">
           <view class="reply-item" v-if="item.parentId === comment.id" >
             <text style="color: rgb(33, 116, 212);">{{ item.username }}</text>
