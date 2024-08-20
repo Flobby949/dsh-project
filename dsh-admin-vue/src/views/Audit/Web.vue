@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="font-bold p-2 m-4 text-4xl text-gray-500"> 网站审核 </div>
-    <iframe src="http://liushaohan.gnway.cc/web" frameborder="0" width="100%" scrolling="auto" style="height: 883px"></iframe>
+    <iframe src="http://demo.dianhuiyun.com.cn:8000/web" frameborder="0" width="100%" scrolling="auto" style="height: 883px"></iframe>
   </div>
 </template>
 

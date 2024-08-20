@@ -135,7 +135,7 @@ const openDrawer = (title: string, row = {}) => {
 let qrcode
 const showQrCodeFlag = ref(false)
 const showQrCode = (row = {}) => {
-  qrcode = useQRCode(`http://demo.dianhuiyun.com.cn/dsh-client-h5/#/pages/book/resource?resourceId=${row.id}&secret=${row.secret}`)
+  qrcode = useQRCode(`http://demo.dianhuiyun.com.cn:8000/dsh-client-h5/#/pages/book/resource?resourceId=${row.id}&secret=${row.secret}`)
   qrRow.value = row
   showQrCodeFlag.value = true
 }
