@@ -10,6 +10,14 @@ export const exchange = (exchangeDTO) => {
   })
 }
 
+export const check = (checkDto) => {
+  return http({
+    method: 'POST',
+    url: BOOK_API + '/check',
+    data: checkDto
+  })
+}
+
 export const resource = (codeDTO) => {
   return http({
     method: 'POST',

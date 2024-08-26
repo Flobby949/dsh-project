@@ -34,7 +34,15 @@ public class BookController {
     public Result<String> exchangeBookLink(@RequestBody Map<String, String> body) {
         String cardNum = body.get("cardNum");
         String openId = body.get("openId");
-        return Result.ok(bookExchangeService.exchangeBookLink(cardNum, openId));
+        String verifyCode = body.get("verifyCode");
+        return Result.ok(bookExchangeService.exchangeBookLink(cardNum, openId, verifyCode));
+    }
+
+    @PostMapping("/check")
+    public Result<String> checkVerifyCodeAvailable(@RequestBody Map<String, String> body) {
+        String cardNum = body.get("cardNum");
+        String openId = body.get("openId");
+        return Result.ok(bookExchangeService.checkVerifyCodeAvailable(cardNum, openId));
     }
 
     @PostMapping("/resource")

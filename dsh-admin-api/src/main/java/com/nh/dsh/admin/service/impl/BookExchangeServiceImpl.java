@@ -1,5 +1,6 @@
 package com.nh.dsh.admin.service.impl;
 
+import cn.hutool.crypto.SecureUtil;
 import cn.hutool.extra.qrcode.QrCodeUtil;
 import com.alibaba.excel.EasyExcel;
 import com.alibaba.excel.read.listener.PageReadListener;
@@ -12,8 +13,11 @@ import com.nh.dsh.admin.mapper.BookExchangeMapper;
 import com.nh.dsh.admin.model.dto.BookExchangeDTO;
 import com.nh.dsh.admin.model.entity.BookExchangeEntity;
 import com.nh.dsh.admin.model.query.BookExchangeQuery;
+import com.nh.dsh.admin.model.vo.BookExchangeVO;
 import com.nh.dsh.admin.service.BookExchangeService;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.BeanUtils;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -40,12 +44,18 @@ import java.util.zip.ZipOutputStream;
 public class BookExchangeServiceImpl extends BaseServiceImpl<BookExchangeMapper, BookExchangeEntity> implements BookExchangeService {
 
     @Override
-    public PageResult<BookExchangeEntity> page(BookExchangeQuery query) {
+    public PageResult<BookExchangeVO> page(BookExchangeQuery query) {
         Page<BookExchangeEntity> page = new Page<>(query.getPage(), query.getLimit());
         LambdaQueryWrapper<BookExchangeEntity> wrapper = new LambdaQueryWrapper<>();
         wrapper.eq(BookExchangeEntity::getBookId, query.getBookId());
         Page<BookExchangeEntity> result = this.page(page, wrapper);
-        return new PageResult<>(result.getRecords(), result.getTotal());
+        List<BookExchangeVO> resultList = result.getRecords().stream().map(item -> {
+            BookExchangeVO exchange = new BookExchangeVO();
+            BeanUtils.copyProperties(item, exchange);
+            exchange.setQrCodeLink(generateQrCodeLink(item));
+            return exchange;
+        }).toList();
+        return new PageResult<>(resultList, result.getTotal());
     }
 
     @Override
@@ -99,11 +109,10 @@ public class BookExchangeServiceImpl extends BaseServiceImpl<BookExchangeMapper,
                 .stream()
                 .forEach(item -> {
             try {
-                String verifyCode = item.getVerifyCode();
-                String link = String.format("http://demo.dianhuiyun.com.cn/dsh-client-h5/#/pages/exchange/exchange?cardNum=%s", verifyCode);
-                map.put(verifyCode + ".png", generateQrCode(link));
+                String link = generateQrCodeLink(item);
+                map.put(item.getId() + ".png", generateQrCode(link));
             } catch (IOException e) {
-                log.info("{} 二维码生成失败, {}", item.getVerifyCode(), e.getMessage());
+                log.error("{} 二维码生成失败, {}", item.getId(), e.getMessage());
             }
         });
         try {
@@ -136,5 +145,17 @@ public class BookExchangeServiceImpl extends BaseServiceImpl<BookExchangeMapper,
 
         zos.close();
         return baos.toByteArray();
+    }
+
+    private String generateQrCodeLink(BookExchangeEntity bookExchange) {
+        String cardNum = SecureUtil
+                .aes("dsh".getBytes())
+                .encryptBase64(String.format("%s&%s", bookExchange.getBookLink(), bookExchange.getId()));
+        String link = String
+                .format("http://demo.dianhuiyun.com.cn/dsh-client-h5/#/pages/exchange/exchange?cardNum=%s", cardNum);
+        if (StringUtils.isNotBlank(bookExchange.getVerifyCode())) {
+            link += "&verifyCode=" + bookExchange.getVerifyCode();
+        }
+        return link;
     }
 }

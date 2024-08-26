@@ -197,8 +197,22 @@ export namespace Book {
   export interface BookExchange {
     id: number
     bookId: number
-    userId: number
+    userFlag: number
     status: number
+    verifyCode: string
+    qrCodeLink: string
+    exchangeTime: string
+    createTime: string
+  }
+
+  export interface BookExchangeVO {
+    id: number
+    bookId: number
+    userFlag: number
+    status: number
+    verifyCode: string
+    bookLink: string
+    qrCodeLink: string
     exchangeTime: string
     createTime: string
   }

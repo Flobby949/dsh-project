@@ -136,8 +136,8 @@ const columns: ColumnProps[] = [
 
 let qrcode
 const showQrCodeFlag = ref(false)
-const showQrCode = (row = {}) => {
-  qrcode = useQRCode(`http://demo.dianhuiyun.com.cn:8000/dsh-client-h5/#/pages/exchange/exchange?cardNum=${row.verifyCode}`)
+const showQrCode = (row) => {
+  qrcode = useQRCode(row.qrCodeLink)
   showQrCodeFlag.value = true
 }
 const fullscreenLoading = ref(false)

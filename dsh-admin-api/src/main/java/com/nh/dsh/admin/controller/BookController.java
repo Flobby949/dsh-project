@@ -4,11 +4,11 @@ import com.nh.dsh.admin.common.result.PageResult;
 import com.nh.dsh.admin.common.result.Result;
 import com.nh.dsh.admin.model.dto.BookDTO;
 import com.nh.dsh.admin.model.dto.BookResourceDTO;
-import com.nh.dsh.admin.model.entity.BookExchangeEntity;
 import com.nh.dsh.admin.model.query.BookExchangeQuery;
 import com.nh.dsh.admin.model.query.BookQuery;
 import com.nh.dsh.admin.model.query.BookResourceQuery;
 import com.nh.dsh.admin.model.vo.AuditResourceVO;
+import com.nh.dsh.admin.model.vo.BookExchangeVO;
 import com.nh.dsh.admin.model.vo.BookResourceVO;
 import com.nh.dsh.admin.model.vo.BookVO;
 import com.nh.dsh.admin.security.cache.TokenStoreCache;
@@ -144,9 +144,8 @@ public class BookController {
     @PostMapping("exchange/page")
     @Operation(summary = "二维码列表")
     @PreAuthorize("hasAuthority('sys:book:view')")
-    public Result<PageResult<BookExchangeEntity>> exchangePage(@RequestBody BookExchangeQuery query) {
-        PageResult<BookExchangeEntity> page = bookExchangeService.page(query);
-        return Result.ok(page);
+    public Result<PageResult<BookExchangeVO>> exchangePage(@RequestBody BookExchangeQuery query) {
+        return Result.ok(bookExchangeService.page(query));
     }
 
     // @GetMapping("exchange/{id}")

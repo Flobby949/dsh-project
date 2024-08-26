@@ -1,22 +1,33 @@
-<script setup>
+<script lang="js" setup>
 import { ref } from 'vue'
 import { onLoad } from '@dcloudio/uni-app'
-import { exchange } from '@/service/book'
+import { exchange, check } from '@/service/book'
 
 const wxOpenId = ref()
 const cardNum = ref()
+const verifyCode = ref()
+/**
+ * 1. 获取路由携带的参数，cardNum和verifyCode，保存
+ * 2. 微信认证，获取微信openId
+ * 3. 根据cardNum和OpenId，判断是否需要输入verifyCode，如果不需要，直接跳转
+ * 4. 如果需要，自动填入或手动输入，然后点击校验
+ */
 onLoad((e) => {
   cardNum.value = uni.getStorageSync("cardNum") || null
+  verifyCode.value = uni.getStorageSync("verifyCode") || null
   if (e.cardNum) {
     uni.setStorageSync("cardNum", e.cardNum)
     cardNum.value = e.cardNum
   }
+  if (e.verifyCode) {
+    uni.setStorageSync("verifyCode", e.verifyCode)
+    verifyCode.value = e.verifyCode
+  }
   if (e.wxId) {
     wxOpenId.value = e.wxId
-    // 如果有防伪码，直接触发校验
-    if (cardNum.value != null) {
-      checkExchange()
-    }
+    checkVerifyAvailable()
+  } else {
+    wxCheck()
   }
 })
 
@@ -30,7 +41,7 @@ const wxCheck = () => {
 }
 
 const checkExchange = () => {
-  if (cardNum.value == null) {
+  if (verifyCode.value == null) {
     uni.showToast({
       title: "请输入防伪码",
       icon: "error"
@@ -38,6 +49,7 @@ const checkExchange = () => {
     return
   }
   const dto = {
+    'verifyCode': verifyCode.value,
     'cardNum': cardNum.value,
     'openId': wxOpenId.value
   }
@@ -46,11 +58,24 @@ const checkExchange = () => {
   })
 }
 
+const checkVerifyAvailable = () => {
+    const dto = {
+    'cardNum': cardNum.value,
+    'openId': wxOpenId.value
+  }
+  check(dto).then((res) => {
+    if (res.data != null) {
+      window.location.href = res.data
+    }
+  })
+}
+
 </script>
+
 <template>
   <view class="container">
-    <button class="btn" v-if="!wxOpenId" @click="wxCheck">微信校验</button>
-    <input class="input-bar" type="text" v-model="cardNum" placeholder="请输入防伪卡号" />
+    <!-- <button class="btn" v-if="!wxOpenId" @click="wxCheck">微信校验</button> -->
+    <input class="input-bar" type="text" v-model="verifyCode" placeholder="请输入防伪卡号" />
     <button class="btn" @click="checkExchange">校验资源</button>
   </view>
 </template>

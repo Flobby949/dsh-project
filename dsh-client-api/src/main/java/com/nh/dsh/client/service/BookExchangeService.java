@@ -12,5 +12,8 @@ import com.nh.dsh.client.model.entity.BookExchangeEntity;
 
 public interface BookExchangeService extends IService<BookExchangeEntity> {
 
-    String exchangeBookLink(String cardNum, String openId);
+    String exchangeBookLink(String cardNum, String openId, String verifyCode);
+
+    String checkVerifyCodeAvailable(String cardNum, String openId);
+
 }
