@@ -373,3 +373,20 @@ export namespace User {
     createTime: string
   }
 }
+
+export namespace Comment {
+  export interface CommentItemVO {
+    id: number
+    type: number
+    content: string
+    fileType: number
+    files: string[]
+    userId: number
+    username: string
+    avatar: string
+    createTime: string
+    enabled: number
+    replyNum: number
+    replyList: CommentItemVO[]
+  }
+}

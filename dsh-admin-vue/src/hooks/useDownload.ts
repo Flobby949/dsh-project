@@ -22,8 +22,10 @@ export const useDownload = async (api: (param: any) => Promise<any>, tempName: s
     // 这个地方的 type，经测试不传也没事，因为会自动识别文件类型
     // const blob = new Blob([res], {
     //   type: 'application/vnd.ms-excel'
+    // 或
+    // type: 'application/zip'
     // })
-    const blob = new Blob([res], { type: 'application/zip' })
+    const blob = new Blob([res])
     // 兼容edge不支持createObjectURL方法
     if ('msSaveOrOpenBlob' in navigator) return window.navigator.msSaveOrOpenBlob(blob, tempName + fileType)
     const blobUrl = window.URL.createObjectURL(blob)

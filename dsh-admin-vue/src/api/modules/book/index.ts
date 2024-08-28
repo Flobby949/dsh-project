@@ -25,6 +25,14 @@ export const BookApi = {
       {
         responseType: 'blob'
       }
+    ),
+  downloadExchangeXlsx: (bookId: number) =>
+    http.post(
+      _API + `/book/exchange/downloadXlsx?bookId=${bookId}`,
+      {},
+      {
+        responseType: 'blob'
+      }
     )
 }
 
@@ -33,6 +41,7 @@ export const BookResourceApi = {
   add: (params: any) => http.post(_API + '/book/resource/save', params),
   remove: (params: number[]) => http.post(_API + '/book/resource/delete', params),
   edit: (params: any) => http.post(_API + '/book/resource/update', params),
+  enabled: (params: any) => http.post(_API + '/book/resource/enabled', params),
   download: (bookId: number) =>
     http.post(
       _API + `/book/resource/download?bookId=${bookId}`,

@@ -15,7 +15,7 @@
         </template>
         <!-- 表格操作 -->
         <template #operation="scope">
-          <!-- <el-button type="primary" link :icon="List">资源码</el-button> -->
+          <el-button type="primary" link :icon="Edit" @click="enabledChange">{{ scope.row.enabled === 0 ? '失效' : '生效' }}</el-button>
           <el-button type="primary" link :icon="Grid" @click="showQrCode(scope.row)">二维码</el-button>
           <el-button type="primary" link :icon="Edit" @click="openDrawer('编辑', scope.row)">编辑</el-button>
           <el-button type="danger" link :icon="Delete" @click="deleteData(scope.row.id)">删除</el-button>
@@ -44,7 +44,7 @@ import ProTable from '@/components/ProTable/index.vue'
 import BookResourceEditDialog from './BookResourceEditDialog.vue'
 import { useQRCode } from '@vueuse/integrations/useQRCode'
 import { useDownload } from '@/hooks/useDownload'
-import { ElMessageBox } from 'element-plus'
+import { ElMessageBox, ElMessage } from 'element-plus'
 import ImportResource from '@/components/Upload/ImportResource.vue'
 import { useHandleData } from '@/hooks/useHandleData'
 
@@ -115,6 +115,14 @@ const columns: ColumnProps[] = [
     label: '链接',
     width: 350
   },
+  {
+    prop: 'enabled',
+    label: '状态',
+    width: 150,
+    render: (scope) => {
+      return <el-tag type={scope.row.enabled === 1 ? 'danger' : 'success'}>{scope.row.enabled === 1 ? '失效' : '生效'}</el-tag>
+    }
+  },
   { prop: 'operation', label: '操作', fixed: 'right', width: 300 }
 ]
 
@@ -161,7 +169,7 @@ const downloadFile = async () => {
 }
 
 const uploadTemplate = () => {
-  window.location.href = 'http://106.15.104.19:9000/dsh/%E5%A4%9A%E4%BA%8C%E7%BB%B4%E7%A0%81%E6%A8%A1%E6%9D%BF.xlsx'
+  window.location.href = 'http://demo.dianhuiyun.com.cn:9000/dsh/%E5%A4%9A%E8%B5%84%E6%BA%90%E5%AF%BC%E5%85%A5%E6%A8%A1%E6%9D%BF.xlsx'
 }
 
 const importRes = ref()
@@ -175,6 +183,17 @@ const afterUpload = () => {
 const deleteData = async (id: number) => {
   await useHandleData(BookResourceApi.remove, [id], `删除书籍资源`)
   proTable.value.getTableList()
+}
+
+const enabledChange = async (row = {}) => {
+  try {
+    await BookResourceApi.enabled(row)
+    proTable.value.getTableList()
+    ElMessage.success('操作成功')
+  } catch (error) {
+    ElMessage.error('操作失败')
+    console.error('屏蔽操作失败:', error)
+  }
 }
 </script>
 

@@ -4,12 +4,14 @@
       <ProTable rowKey="id" ref="proTable" title="资源兑换列表" :columns="columns" :requestApi="getTableList" :dataCallback="dataCallback">
         <!-- 表格 header 按钮 -->
         <template #tableHeader>
+          <el-button type="primary" :icon="Download" @click="downloadFileTemplate">下载上传模板</el-button>
+          <el-button type="primary" :icon="Download" @click="downloadFile">下载兑换码zip</el-button>
+          <el-button type="primary" :icon="Download" @click="downloadFileXlsx">下载兑换码xlsx</el-button>
           <ImportResource v-model:code="importRes" :file-size="1" :api="BookApi.importExchange" @check-validate="afterUpload" :bookId="dialogProps.row.id">
             <template #empty>
               <el-button type="primary" :icon="UploadFilled">导入兑换码</el-button>
             </template>
           </ImportResource>
-          <el-button type="primary" :icon="Download" @click="downloadFile">下载兑换码</el-button>
         </template>
         <!-- 表格操作 -->
         <template #operation="scope">
@@ -172,6 +174,16 @@ const downloadFile = () => {
   ElMessageBox.confirm('确认下载全部兑换码?', '温馨提示', { type: 'warning' }).then(() =>
     useDownload(BookApi.downloadExchange, '兑换二维码', dialogProps.value.row.id, true, '.zip')
   )
+}
+
+const downloadFileXlsx = () => {
+  ElMessageBox.confirm('确认下载兑换码表格吗?', '温馨提示', { type: 'warning' }).then(() =>
+    useDownload(BookApi.downloadExchangeXlsx, '兑换二维码', dialogProps.value.row.id, true, '.xlsx')
+  )
+}
+
+const downloadFileTemplate = () => {
+  window.location.href = 'http://demo.dianhuiyun.com.cn:9000/dsh/%E4%B9%A6%E9%93%BE%E5%AF%BC%E5%85%A5%E6%A8%A1%E6%9D%BF.xlsx'
 }
 </script>
 

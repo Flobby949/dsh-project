@@ -1,6 +1,6 @@
 import http from '@/api'
 import { _API } from '@/api/axios/servicePort'
-import { Forum, ResPage } from '@/api/interface/index'
+import { Forum, ResPage, Comment } from '@/api/interface/index'
 
 /**
  * @name 论坛融合管理模块
@@ -10,4 +10,12 @@ export const MixedApi = {
   add: (params: any) => http.post(_API + '/forum/save', params),
   remove: (params: number[]) => http.post(_API + '/forum/delete', params),
   edit: (params: any) => http.post(_API + '/forum/update', params)
+}
+/**
+ * @name 论坛帖子模块
+ */
+export const CommentApi = {
+  list: (params: number) => http.post<Comment.CommentItemVO[]>(_API + '/forum/comment/list?forumId=' + params),
+  remove: (params: number) => http.post(_API + '/forum/comment/delete?commentId=' + params),
+  enabled: (params: number) => http.post(_API + '/forum/comment/enabled?commentId=' + params)
 }
