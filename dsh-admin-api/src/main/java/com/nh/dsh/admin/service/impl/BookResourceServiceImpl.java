@@ -77,16 +77,18 @@ public class BookResourceServiceImpl extends BaseServiceImpl<BookResourceMapper,
                 .orderByDesc(BookResourceEntity::getCreateTime);
         Page<BookResourceEntity> pageResult = baseMapper.selectPage(page, wrapper);
         List<BookResourceVO> vos = BookResourceConvert.INSTANCE.convertList(pageResult.getRecords());
-        vos.forEach(item -> {
-            item.setSecret(codeConfig.getSecret());
-        });
+        vos.forEach(item -> item.setSecret(codeConfig.getSecret()));
         return new PageResult<>(vos, pageResult.getTotal());
     }
 
     @Override
     public ResponseEntity<byte[]> downloadResourcesQrCode(int bookId) {
         Map<String, byte[]> map = new HashMap<>();
-        list(new LambdaQueryWrapper<BookResourceEntity>().eq(BookResourceEntity::getBookId, bookId))
+        list(new LambdaQueryWrapper<BookResourceEntity>()
+                .eq(BookResourceEntity::getBookId, bookId)
+                .eq(BookResourceEntity::getValidStatus, 0)
+                .eq(BookResourceEntity::getEnabled, 0)
+        )
                 .stream()
                 .forEach(item -> {
             try {
@@ -149,6 +151,13 @@ public class BookResourceServiceImpl extends BaseServiceImpl<BookResourceMapper,
             return vo;
         }).sorted(Comparator.comparingInt(AuditResourceVO::getIsChanged).reversed()).toList();
         return new PageResult<>(result, page.getTotal());
+    }
+
+    @Override
+    public void resourceEnabled(BookResourceDTO dto) {
+        BookResourceEntity entity = BookResourceConvert.INSTANCE.convert(dto);
+        entity.setEnabled(1);
+        baseMapper.updateById(entity);
     }
 
     private byte[] generateQrCode(String resource) throws IOException {

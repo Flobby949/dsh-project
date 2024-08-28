@@ -4,7 +4,9 @@ import com.nh.dsh.admin.common.result.PageResult;
 import com.nh.dsh.admin.common.result.Result;
 import com.nh.dsh.admin.model.dto.ForumDTO;
 import com.nh.dsh.admin.model.query.ForumQuery;
+import com.nh.dsh.admin.model.vo.CommentItemVO;
 import com.nh.dsh.admin.model.vo.ForumVO;
+import com.nh.dsh.admin.service.CommentService;
 import com.nh.dsh.admin.service.ForumService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -28,6 +30,7 @@ import java.util.List;
 @RequestMapping("/forum")
 public class ForumController {
     private final ForumService forumService;
+    private final CommentService commentService;
 
     @PostMapping("page")
     @PreAuthorize("hasAuthority('sys:forum:view')")
@@ -54,6 +57,23 @@ public class ForumController {
     @PreAuthorize("hasAuthority('sys:forum:remove')")
     public Result<String> delete(@RequestBody List<Integer> ids) {
         forumService.deleteInBatch(ids);
+        return Result.ok();
+    }
+
+    @PostMapping("comment/list")
+    public Result<List<CommentItemVO>> commentList(@RequestParam(name = "forumId") Integer forumId) {
+        return Result.ok(commentService.listCommentByForumId(forumId));
+    }
+
+    @PostMapping("comment/delete")
+    public Result<String> commentDelete(@RequestParam(name = "commentId") Integer id) {
+        commentService.removeComment(id);
+        return Result.ok();
+    }
+
+    @PostMapping("comment/enabled")
+    public Result<String> commentEnabled(@RequestParam(name = "commentId") Integer commentId) {
+        commentService.commentEnabledChange(commentId);
         return Result.ok();
     }
 }

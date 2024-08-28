@@ -34,4 +34,6 @@ public interface BookResourceService extends IService<BookResourceEntity> {
     void importResources(Integer bookId, MultipartFile file);
 
     PageResult<AuditResourceVO> auditResourcePage(BookResourceQuery query);
+
+    void resourceEnabled(BookResourceDTO dto);
 }

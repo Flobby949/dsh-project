@@ -30,5 +30,14 @@ public class BookResourceEntity extends BaseEntity {
     @Schema(description = "二维码")
     private String codeCover;
 
+    /**
+     * 0：已启用
+     * 1: 未启用
+     */
+    private Integer enabled;
+    /**
+     * 0：正常
+     * 1: 非法
+     */
     private Integer validStatus;
 }

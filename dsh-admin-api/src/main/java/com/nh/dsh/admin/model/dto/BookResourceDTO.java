@@ -32,4 +32,6 @@ public class BookResourceDTO {
     @Schema(description = "链接")
     @NotBlank(message = "链接不能为空")
     private String link;
+
+    private Integer enabled;
 }
