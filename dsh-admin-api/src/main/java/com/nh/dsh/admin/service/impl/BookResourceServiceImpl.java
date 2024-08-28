@@ -155,8 +155,8 @@ public class BookResourceServiceImpl extends BaseServiceImpl<BookResourceMapper,
 
     @Override
     public void resourceEnabled(BookResourceDTO dto) {
-        BookResourceEntity entity = BookResourceConvert.INSTANCE.convert(dto);
-        entity.setEnabled(1);
+        BookResourceEntity entity = baseMapper.selectById(dto.getId());
+        entity.setEnabled(entity.getEnabled() ^ 1);
         baseMapper.updateById(entity);
     }
 

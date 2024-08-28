@@ -7,14 +7,17 @@ import com.nh.dsh.admin.model.dto.BookResourceDTO;
 import com.nh.dsh.admin.model.query.BookExchangeQuery;
 import com.nh.dsh.admin.model.query.BookQuery;
 import com.nh.dsh.admin.model.query.BookResourceQuery;
-import com.nh.dsh.admin.model.vo.*;
+import com.nh.dsh.admin.model.vo.AuditResourceVO;
+import com.nh.dsh.admin.model.vo.BookExchangeVO;
+import com.nh.dsh.admin.model.vo.BookResourceVO;
+import com.nh.dsh.admin.model.vo.BookVO;
 import com.nh.dsh.admin.security.cache.TokenStoreCache;
 import com.nh.dsh.admin.service.BookExchangeService;
 import com.nh.dsh.admin.service.BookResourceService;
 import com.nh.dsh.admin.service.BookService;
-import com.nh.dsh.admin.service.CommentService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -174,6 +177,13 @@ public class BookController {
     @PreAuthorize("hasAuthority('sys:book:view')")
     public ResponseEntity<byte[]> downloadExchangeQrCode(@RequestParam(name = "bookId") Integer bookId) {
         return bookExchangeService.downloadExchangeQrCode(bookId);
+    }
+
+    @PostMapping("exchange/downloadXlsx")
+    @Operation(summary = "下载兑换资源")
+    @PreAuthorize("hasAuthority('sys:book:view')")
+    public void downloadExchangeXlsx(@RequestParam(name = "bookId") Integer bookId, HttpServletResponse response) {
+        bookExchangeService.downloadExchangeXlsx(bookId, response);
     }
 
 }

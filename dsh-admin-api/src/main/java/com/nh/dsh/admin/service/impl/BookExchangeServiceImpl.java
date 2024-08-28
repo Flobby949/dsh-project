@@ -15,6 +15,7 @@ import com.nh.dsh.admin.model.entity.BookExchangeEntity;
 import com.nh.dsh.admin.model.query.BookExchangeQuery;
 import com.nh.dsh.admin.model.vo.BookExchangeVO;
 import com.nh.dsh.admin.service.BookExchangeService;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
@@ -28,6 +29,8 @@ import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.*;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
@@ -123,6 +126,33 @@ public class BookExchangeServiceImpl extends BaseServiceImpl<BookExchangeMapper,
         } catch (IOException e) {
             log.error("二维码生成失败", e);
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @Override
+    public void downloadExchangeXlsx(Integer bookId, HttpServletResponse response) {
+        LambdaQueryWrapper<BookExchangeEntity> wrapper = new LambdaQueryWrapper<>();
+        wrapper.eq(BookExchangeEntity::getBookId, bookId);
+        wrapper.eq(BookExchangeEntity::getStatus, 0);
+        List<BookExchangeVO> resultList = list(wrapper).stream().map(item -> {
+            BookExchangeVO exchange = new BookExchangeVO();
+            BeanUtils.copyProperties(item, exchange);
+            exchange.setQrCodeLink(generateQrCodeLink(item));
+            return exchange;
+        }).toList();
+
+        response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+        response.setCharacterEncoding("utf-8");
+
+        String fileName = URLEncoder.encode("书链兑换表", StandardCharsets.UTF_8).replaceAll("\\+", "%20");
+        response.setHeader("Content-disposition", "attachment;filename*=utf-8''" + fileName + ".xlsx");
+        try {
+            EasyExcel.write(response.getOutputStream(), BookExchangeVO.class)
+                    .sheet("sheet1")
+                    .doWrite(resultList);
+        } catch (IOException e) {
+            log.error("导出失败", e);
+            throw new ServerException(e.getMessage());
         }
     }
 

@@ -5,6 +5,7 @@ import com.nh.dsh.admin.common.result.PageResult;
 import com.nh.dsh.admin.model.entity.BookExchangeEntity;
 import com.nh.dsh.admin.model.query.BookExchangeQuery;
 import com.nh.dsh.admin.model.vo.BookExchangeVO;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -28,4 +29,6 @@ public interface BookExchangeService extends IService<BookExchangeEntity> {
     void bookLinkImport(Integer bookId, MultipartFile file);
 
     ResponseEntity<byte[]> downloadExchangeQrCode(int bookId);
+
+    void downloadExchangeXlsx(Integer bookId, HttpServletResponse response);
 }
