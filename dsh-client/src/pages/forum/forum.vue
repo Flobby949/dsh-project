@@ -141,9 +141,7 @@ const onCommentImg = async () => {
       // 文件路径
       const tempFiles = res.tempFilePaths
       // 上传
-      uploadFile(tempFiles[0]).then((fileRes) => {
-        console.log(fileRes);
-      })
+      uploadFile(tempFiles[0])
     },
   })
 }
