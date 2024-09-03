@@ -45,7 +45,7 @@
 
 <script setup>
 import { doCommentAction } from '@/service/forum'
-import { ref, computed } from 'vue'
+import { ref } from 'vue'
 
 const props = defineProps({
   comment: {

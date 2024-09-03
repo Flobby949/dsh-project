@@ -1,6 +1,6 @@
 <template>
   <view class="page-info">
-    <comment-card :comment="commentDetailInfo" :showReply="false" :clickable="false" @click="reply(commentDetailInfo)"></comment-card>
+    <!-- <comment-card :comment="commentDetailInfo" :showReply="false" :clickable="false" @click="reply(commentDetailInfo)"></comment-card> -->
     <view v-for="(item, index) in commentDetailInfo.replyList" :key="index">
       <comment-reply-item :reply="item" :parentId="commentDetailInfo.id"  @click="reply(item)" />
     </view>
@@ -67,6 +67,7 @@ const commentReplyParams = ref({
   type: 1
 })
 const reply = (comment) => {
+  console.log('**************************************');
   console.log(comment);
   placeholder.value = '回复' + comment.username
   commentReplyParams.value.parentId = comment.id
