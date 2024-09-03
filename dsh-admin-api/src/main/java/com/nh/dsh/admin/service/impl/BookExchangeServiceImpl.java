@@ -178,8 +178,8 @@ public class BookExchangeServiceImpl extends BaseServiceImpl<BookExchangeMapper,
     }
 
     private String generateQrCodeLink(BookExchangeEntity bookExchange) {
-        String cardNum = SecureUtil
-                .aes("dsh".getBytes())
+        String cardNum = new SecureUtil()
+                .aes("dianhuiyun123456".getBytes())
                 .encryptBase64(String.format("%s&%s", bookExchange.getBookLink(), bookExchange.getId()));
         String link = String
                 .format("http://demo.dianhuiyun.com.cn/dsh-client-h5/#/pages/exchange/exchange?cardNum=%s", cardNum);

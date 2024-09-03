@@ -10,6 +10,10 @@
       :dataCallback="dataCallback"
       :searchCol="{ xs: 1, sm: 2, md: 3, lg: 4, xl: 4 }"
     >
+      <!-- 表格操作 -->
+      <template #operation="scope">
+        <el-button type="primary" link @click="enabledChange">{{ scope.row.enabled === 0 ? '失效' : '生效' }}</el-button>
+      </template>
     </ProTable>
   </div>
 </template>
@@ -20,6 +24,7 @@ import { ColumnProps } from '@/components/ProTable/interface'
 import ProTable from '@/components/ProTable/index.vue'
 import { BookResourceApi } from '@/api/modules/book'
 import { useAuthButtons } from '@/hooks/useAuthButtons'
+import { ElMessage } from 'element-plus'
 const { BUTTONS } = useAuthButtons()
 // 获取 ProTable 元素，调用其获取刷新数据方法（还能获取到当前查询参数，方便导出携带参数）
 const proTable = ref()
@@ -73,15 +78,43 @@ const columns: ColumnProps[] = [
       return (
         <>
           {BUTTONS.value.status ? (
-            <el-switch model-value={scope.row.status} active-text={scope.row.isChanged ? '是' : '否'} active-value={1} inactive-value={0} />
+            <el-switch model-value={scope.row.isChanged} active-text={scope.row.isChanged ? '是' : '否'} active-value={1} inactive-value={0} />
           ) : (
             <el-tag type={scope.row.isChanged ? 'danger' : 'success'}>{scope.row.isChanged ? '是' : '否'}</el-tag>
           )}
         </>
       )
     }
-  }
+  },
+  {
+    prop: 'enabled',
+    label: '是否失效',
+    width: 150,
+    render: (scope) => {
+      return (
+        <>
+          {BUTTONS.value.status ? (
+            <el-switch model-value={scope.row.enabled} active-text={scope.row.enabled ? '是' : '否'} active-value={1} inactive-value={0} />
+          ) : (
+            <el-tag type={scope.row.enabled ? 'danger' : 'success'}>{scope.row.enabled ? '是' : '否'}</el-tag>
+          )}
+        </>
+      )
+    }
+  },
+  { prop: 'operation', label: '操作', fixed: 'right', width: 240 }
 ]
+
+const enabledChange = async (row = {}) => {
+  try {
+    await BookResourceApi.enabled(row)
+    proTable.value.getTableList()
+    ElMessage.success('操作成功')
+  } catch (error) {
+    ElMessage.error('操作失败')
+    console.error('屏蔽操作失败:', error)
+  }
+}
 </script>
 
 <style scoped></style>

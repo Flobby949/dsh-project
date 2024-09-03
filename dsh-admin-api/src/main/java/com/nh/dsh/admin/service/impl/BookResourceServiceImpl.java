@@ -13,6 +13,7 @@ import com.nh.dsh.admin.convert.BookResourceConvert;
 import com.nh.dsh.admin.mapper.BookMapper;
 import com.nh.dsh.admin.mapper.BookResourceMapper;
 import com.nh.dsh.admin.model.dto.BookResourceDTO;
+import com.nh.dsh.admin.model.dto.IdDTO;
 import com.nh.dsh.admin.model.dto.ResourceImportDTO;
 import com.nh.dsh.admin.model.entity.BookEntity;
 import com.nh.dsh.admin.model.entity.BookResourceEntity;
@@ -148,13 +149,14 @@ public class BookResourceServiceImpl extends BaseServiceImpl<BookResourceMapper,
             vo.setBookName(bookEntity.getBookName());
             vo.setBookCover(bookEntity.getBookCover());
             vo.setIsChanged(item.getValidStatus());
+            vo.setEnabled(item.getEnabled());
             return vo;
         }).sorted(Comparator.comparingInt(AuditResourceVO::getIsChanged).reversed()).toList();
         return new PageResult<>(result, page.getTotal());
     }
 
     @Override
-    public void resourceEnabled(BookResourceDTO dto) {
+    public void resourceEnabled(IdDTO dto) {
         BookResourceEntity entity = baseMapper.selectById(dto.getId());
         entity.setEnabled(entity.getEnabled() ^ 1);
         baseMapper.updateById(entity);

@@ -18,4 +18,5 @@ public class AuditResourceVO {
     private String resourceName;
     private String link;
     private Integer isChanged;
+    private Integer enabled;
 }

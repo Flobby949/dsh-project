@@ -4,6 +4,7 @@ import com.nh.dsh.admin.common.result.PageResult;
 import com.nh.dsh.admin.common.result.Result;
 import com.nh.dsh.admin.model.dto.BookDTO;
 import com.nh.dsh.admin.model.dto.BookResourceDTO;
+import com.nh.dsh.admin.model.dto.IdDTO;
 import com.nh.dsh.admin.model.query.BookExchangeQuery;
 import com.nh.dsh.admin.model.query.BookQuery;
 import com.nh.dsh.admin.model.query.BookResourceQuery;
@@ -98,7 +99,7 @@ public class BookController {
     @PostMapping("resource/enabled")
     @Operation(summary = "资源启用禁用")
     @PreAuthorize("hasAuthority('sys:book:add')")
-    public Result<String> resourceEnabled(@RequestBody @Valid BookResourceDTO dto) {
+    public Result<String> resourceEnabled(@RequestBody @Valid IdDTO dto) {
         bookResourceService.resourceEnabled(dto);
         return Result.ok();
     }

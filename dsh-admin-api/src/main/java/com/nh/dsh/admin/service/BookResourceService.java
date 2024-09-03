@@ -3,6 +3,7 @@ package com.nh.dsh.admin.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.nh.dsh.admin.common.result.PageResult;
 import com.nh.dsh.admin.model.dto.BookResourceDTO;
+import com.nh.dsh.admin.model.dto.IdDTO;
 import com.nh.dsh.admin.model.entity.BookResourceEntity;
 import com.nh.dsh.admin.model.query.BookResourceQuery;
 import com.nh.dsh.admin.model.vo.AuditResourceVO;
@@ -35,5 +36,5 @@ public interface BookResourceService extends IService<BookResourceEntity> {
 
     PageResult<AuditResourceVO> auditResourcePage(BookResourceQuery query);
 
-    void resourceEnabled(BookResourceDTO dto);
+    void resourceEnabled(IdDTO dto);
 }

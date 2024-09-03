@@ -39,7 +39,7 @@ public class BookExchangeServiceImpl extends BaseServiceImpl<BookExchangeMapper,
             throw new ServerException("不是本系统的用户");
         }
         String[] decryptStr = SecureUtil
-                .aes("dsh".getBytes())
+                .aes("dianhuiyun123456".getBytes())
                 .decryptStr(cardNum).split("&");
         BookExchangeEntity bookExchange = baseMapper.selectById(decryptStr[1]);
         if (StringUtils.isNotBlank(verifyCode) && bookExchange.getVerifyCode().equals(verifyCode)) {
