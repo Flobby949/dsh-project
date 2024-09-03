@@ -285,8 +285,8 @@ const uploadFile = (file) => {
         console.log('上传成功')
         console.log(dataList)
         const commentData = {
-              forumId: props.id,
-              content:'语音消息',
+              forumId: commentDetailInfo.value.forumId,
+              content:'【语音消息】',
               type: 1,
               fileType: 1,
               parentId: props.id,
