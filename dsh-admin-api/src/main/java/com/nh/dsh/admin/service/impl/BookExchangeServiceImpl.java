@@ -188,4 +188,10 @@ public class BookExchangeServiceImpl extends BaseServiceImpl<BookExchangeMapper,
         }
         return link;
     }
+
+    // public static void main(String[] args) {
+    //     System.out.println(new SecureUtil()
+    //             .aes("dianhuiyun123456".getBytes())
+    //             .encryptBase64("123456"));
+    // }
 }

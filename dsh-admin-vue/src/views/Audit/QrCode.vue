@@ -12,7 +12,7 @@
     >
       <!-- 表格操作 -->
       <template #operation="scope">
-        <el-button type="primary" link @click="enabledChange">{{ scope.row.enabled === 0 ? '失效' : '生效' }}</el-button>
+        <el-button type="primary" link @click="enabledChange(scope.row)">{{ scope.row.enabled === 0 ? '失效' : '生效' }}</el-button>
       </template>
     </ProTable>
   </div>

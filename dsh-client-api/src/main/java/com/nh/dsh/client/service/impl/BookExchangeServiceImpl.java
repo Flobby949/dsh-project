@@ -1,5 +1,6 @@
 package com.nh.dsh.client.service.impl;
 
+import cn.hutool.core.codec.Base64Decoder;
 import cn.hutool.crypto.SecureUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.nh.dsh.client.common.exception.ServerException;
@@ -66,8 +67,8 @@ public class BookExchangeServiceImpl extends BaseServiceImpl<BookExchangeMapper,
             throw new ServerException("不是本系统的用户");
         }
         String[] decryptStr = SecureUtil
-                .aes("dsh".getBytes())
-                .decryptStr(cardNum).split("&");
+                .aes("dianhuiyun123456".getBytes())
+                .decryptStr(Base64Decoder.decode(cardNum)).split("&");
         BookExchangeEntity bookExchange = baseMapper.selectById(decryptStr[1]);
         if (bookExchange == null) {
             return null;
@@ -104,4 +105,9 @@ public class BookExchangeServiceImpl extends BaseServiceImpl<BookExchangeMapper,
         baseMapper.updateById(bookExchange);
         return bookExchange.getBookLink();
     }
+
+    // public static void main(String[] args) {
+    //     //   /RkqR7Q78tDxWF8fgtRoAw==
+    //     System.out.println(SecureUtil.aes("dianhuiyun123456".getBytes()).decryptStr(Base64Decoder.decode("/RkqR7Q78tDxWF8fgtRoAw==")));
+    // }
 }
