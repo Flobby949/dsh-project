@@ -23,7 +23,14 @@
             </view>
         </view>
       </view>
-      <uni-icons type="arrow-up" size="30" color="#bbbbbb" @click="overPopup">发送录音</uni-icons>
+      <view class="row">
+          <view class="sendButton" @Click="closePopup" style="color: #12b089;background-color:#fff;border:#12b089 1rpx solid">
+            <span>取消录音</span>
+          </view>
+          <view class="sendButton" @click="overPopup">
+            <span>发送录音</span>
+          </view>
+        </view>
     </uni-popup>
   </view>
 </template>
@@ -262,8 +269,10 @@ const resetTimer = () => {
   micTime.value = 0;
 }
 const closePopup = () => {
+  console.log('取消录音')
   resetTimer()
   startMicFlag.value = false
+  micCount.value = 0
 }
 const overPopup = () => {
   recStop()
@@ -353,9 +362,29 @@ const uploadFile = (file) => {
     border-radius: 100%;
     height: 150rpx;
     width: 150rpx;
-    background-color: rgb(21, 79, 227);
+    background-color: #177cb0;
   }
+  
 }
+.row{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+      .sendButton{
+        width: 150rpx;
+        height: 50rpx;
+        font-size: 30rpx;
+        border-radius: 10rpx;
+        margin: 10rpx;
+        padding: 5rpx;
+        text-align: center;
+        color:#fff;
+        border: #057748 1rpx solid;
+        background-color: #12b089;
+        }   
+  }
 
 
     .wave {
