@@ -65,8 +65,8 @@ const httpInterceptor = {
     options.header = {
       ...options.header,
     }
-    // const token = uni.getStorageSync('token') || 'no-token'
-    const token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJuYmYiOjE3MjU0Mjg2NjgsImV4cCI6MTcyNTYwMTQ2OCwiaWF0IjoxNzI1NDI4NjY4LCJ1c2VySWQiOjEyfQ.M7-HG8qJfhtZKgO-yRKDoGS0WhouP2wo67uAuyTjls4'
+    const token = uni.getStorageSync('token') || 'no-token'
+    // const token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJuYmYiOjE3MjU0Mjg2NjgsImV4cCI6MTcyNTYwMTQ2OCwiaWF0IjoxNzI1NDI4NjY4LCJ1c2VySWQiOjEyfQ.M7-HG8qJfhtZKgO-yRKDoGS0WhouP2wo67uAuyTjls4'
     if (token) {
       options.header.Authorization = token
     }

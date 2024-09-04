@@ -75,7 +75,10 @@ const checkVerifyAvailable = () => {
 <template>
   <view class="container">
     <!-- <button class="btn" v-if="!wxOpenId" @click="wxCheck">微信校验</button> -->
-    <input class="input-bar" type="text" v-model="verifyCode" placeholder="请输入防伪卡号" />
+    <view class="row">
+        卡号：<input class="input-bar" type="text" v-model="verifyCode" placeholder="请输入防伪卡号" />
+    </view>
+    
     <button class="btn" @click="checkExchange">校验资源</button>
   </view>
 </template>
@@ -86,15 +89,39 @@ page {
   height: 100%;
 }
 .container {
-  padding: 10rpx;
-
-  .btn {
+  height: 100vh;
+  padding: 30rpx;
+  border-radius: 20rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #fff;
+  .row{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    margin-top: 100rpx;
+  }
+  .input-bar {
+    background-color: #fff;
+    border: solid 1rpx #d3d3d3;
+    border-radius: 8rpx;
+    padding-left:20rpx;
+    width: 400rpx;
+    height: 70rpx;
     margin: 10rpx;
   }
-
-  .input-bar {
-    height: 150rpx;
-    margin: 10rpx;
+  .btn {
+        width: 200rpx;
+        height: 70rpx;
+        font-size: 30rpx;
+        border-radius: 10rpx;
+        margin: 10rpx;
+        text-align: center;
+        color:#fff;
+        border: #057748 1rpx solid;
+        background-color: #12b089;
   }
 }
 </style>
