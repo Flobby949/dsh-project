@@ -14,18 +14,22 @@ const verifyCode = ref()
  */
 onLoad((e) => {
   cardNum.value = uni.getStorageSync("cardNum") || null
-  verifyCode.value = uni.getStorageSync("verifyCode") || null
+  // verifyCode.value = uni.getStorageSync("verifyCode") || null
   if (e.cardNum) {
     uni.setStorageSync("cardNum", e.cardNum)
     cardNum.value = e.cardNum
   }
-  if (e.verifyCode) {
-    uni.setStorageSync("verifyCode", e.verifyCode)
-    verifyCode.value = e.verifyCode
-  }
+  console.log(e.verifyCode)
+  // if (e.verifyCode) {
+    
+  //   // verifyCode.value = e.verifyCode
+  // }
+  // if (e.verifyCode === undefined){
+  //     checkVerifyAvailable()
+  // }
   if (e.wxId) {
     wxOpenId.value = e.wxId
-    checkVerifyAvailable()
+     checkVerifyAvailable()
   } else {
     wxCheck()
   }
@@ -39,6 +43,15 @@ const wxCheck = () => {
   const url = ref(`https://open.weixin.qq.com/connect/oauth2/authorize?appid=${appid}&redirect_uri=${redirect_uri}&response_type=code&scope=${scope}&state=STATE#wechat_redirect`)
   window.location.href = url.value
 }
+const fabPattern = {
+  icon: 'home',
+} 
+
+const goHome = () => {
+  uni.switchTab({
+     url: '/pages/index/index'
+  })
+}
 
 const checkExchange = () => {
   if (verifyCode.value == null) {
@@ -46,6 +59,7 @@ const checkExchange = () => {
       title: "请输入防伪码",
       icon: "error"
     })
+    
     return
   }
   const dto = {
@@ -55,6 +69,7 @@ const checkExchange = () => {
   }
   exchange(dto).then((res) => {
     window.location.href = res.data
+    uni.setStorageSync("verifyCode", verifyCode.value)
   })
 }
 
@@ -80,6 +95,7 @@ const checkVerifyAvailable = () => {
     </view>
     
     <button class="btn" @click="checkExchange">校验资源</button>
+    <uni-fab ref="fab" :pattern="fabPattern" horizontal="right" @click="goHome" />
   </view>
 </template>
 

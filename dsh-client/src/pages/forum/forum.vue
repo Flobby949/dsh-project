@@ -27,7 +27,9 @@
     <view class="follow-btn" @click="followAction">
       <image src="@/static/guanzhu.png" style="width: 150rpx;height:150rpx"></image>
     </view>
+    <uni-fab ref="fab1" :pattern="fabPattern1" horizontal="right" vertical="top" @click="goHome" />
     <uni-fab ref="fab" :pattern="fabPattern" horizontal="right" @click="showComment" />
+    
     <uni-popup ref="commentPop" type="bottom" background-color="#fff">
       <view class="commentPop">
         <uni-easyinput type="textarea" placeholder="请输入评论" v-model="commentContent" />
@@ -58,6 +60,16 @@ const props = defineProps({
 
 const fabPattern = {
   icon: 'chat-filled'
+}
+
+const fabPattern1 = {
+  icon: 'home'
+} 
+
+const goHome = () => {
+  uni.switchTab({
+     url: '/pages/index/index'
+  })
 }
 
 onLoad(() => {
